@@ -34,6 +34,27 @@
     .log{margin-top:18px;border-top:1px solid var(--border);padding-top:14px;color:var(--muted);font-size:0.95rem}.ending{font-size:1.14rem;line-height:1.8}
     .char-select{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}.char-card h3{margin:0 0 8px}.char-card p{margin:0;color:var(--muted);line-height:1.6}
     .memory-list{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.memory{padding:6px 10px;border:1px solid var(--border);border-radius:999px;background:rgba(255,255,255,0.15);font-size:0.88rem}.faded{opacity:.78}.broken .choice-btn{border-style:dashed}.silent .choice-btn{font-style:italic}
+    .visual-stage{
+  width:100%;
+  height:300px;
+  position:relative;
+  margin-bottom:20px;
+  border-radius:15px;
+  overflow:hidden;
+}
+
+#bgVisual{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+#charVisual{
+  position:absolute;
+  bottom:0;
+  right:20px;
+  height:100%;
+}
     @media (max-width:640px){#text{min-height:280px}.panel{padding:18px}}
   </style>
 </head>
@@ -51,7 +72,16 @@
         <div class="pill" id="memoryPill">Memory Fragments 0/3</div>
       </div>
     </div>
-    <div class="panel" id="panel"><div id="game"></div></div>
+    <div class="panel" id="panel">
+
+  <div class="visual-stage">
+    <img id="bgVisual">
+    <img id="charVisual">
+  </div>
+
+  <div id="game"></div>
+
+</div>
   </div>
 <script>
 const state={character:null,node:"intro",act:0,violence:0,memories:[],history:[],swordState:"honorable",laviniaSilenced:false};
