@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ash of Rome</title>
+  <style>
+    :root{
+      --bg:#f4efe6; --panel:#fffaf2; --text:#222; --muted:#5f5a52; --accent:#b08b42;
+      --border:#dbcdb7; --choice:#f8f1e5; --choice-hover:#efe2cb; --shadow: rgba(0,0,0,0.08);
+    }
+    body.dark-1{--bg:#e5ddd1;--panel:#efe7da;--text:#2f2822;--muted:#6c6256;--accent:#8f6a45;--border:#c8b8a2;--choice:#e8ddcf;--choice-hover:#d8c5af;--shadow: rgba(0,0,0,0.12);}
+    body.dark-2{--bg:#bbb0a3;--panel:#d1c4b5;--text:#251f1b;--muted:#514941;--accent:#6e5541;--border:#aa9987;--choice:#cbbba8;--choice-hover:#b49e8a;--shadow: rgba(0,0,0,0.18);}
+    body.dark-3{--bg:#766f68;--panel:#8b8177;--text:#f0ebe6;--muted:#e1d8ce;--accent:#6b3b2d;--border:#655a52;--choice:#72675f;--choice-hover:#5f554e;--shadow: rgba(0,0,0,0.30);}
+    body.dark-4{--bg:#524d48;--panel:#645d57;--text:#f3ede6;--muted:#d7ccc2;--accent:#5a2f28;--border:#4a433e;--choice:#5d5650;--choice-hover:#49423d;--shadow: rgba(0,0,0,0.40);}
+    body.dark-5{--bg:#383534;--panel:#474241;--text:#f4f0eb;--muted:#cbc2bc;--accent:#4d2521;--border:#322e2d;--choice:#4a4442;--choice-hover:#3c3735;--shadow: rgba(0,0,0,0.50);}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Georgia,"Times New Roman",serif;background:linear-gradient(180deg, rgba(255,255,255,0.12), transparent 35%),linear-gradient(180deg, #8fc7ff 0%, var(--bg) 38%, var(--bg) 100%);color:var(--text);transition:background 900ms ease,color 600ms ease;min-height:100vh}
+    body.dark-1{background: linear-gradient(180deg, #d8d0b9 0%, var(--bg) 40%, var(--bg) 100%)}
+    body.dark-2{background: linear-gradient(180deg, #bda889 0%, var(--bg) 42%, var(--bg) 100%)}
+    body.dark-3{background: linear-gradient(180deg, #7d776f 0%, var(--bg) 45%, var(--bg) 100%)}
+    body.dark-4{background: linear-gradient(180deg, #67635f 0%, var(--bg) 46%, var(--bg) 100%)}
+    body.dark-5{background: linear-gradient(180deg, #3f3e3d 0%, var(--bg) 48%, var(--bg) 100%)}
+    .wrap{max-width:980px;margin:0 auto;padding:28px 18px 70px}
+    .topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:16px;flex-wrap:wrap}
+    .title{font-size:clamp(1.9rem,3vw,3rem);letter-spacing:0.02em;margin:0}.subtitle{color:var(--muted);margin-top:6px;font-size:0.98rem}
+    .stats{display:flex;gap:10px;flex-wrap:wrap}.pill{border:1px solid var(--border);background:var(--panel);box-shadow:0 8px 24px var(--shadow);border-radius:999px;padding:8px 12px;font-size:0.9rem;color:var(--muted)}
+    .panel{background:var(--panel);border:1px solid var(--border);border-radius:22px;padding:22px;box-shadow:0 14px 40px var(--shadow);transition:background 600ms ease,border-color 600ms ease}
+    .scene-title{margin:0 0 6px;font-size:1.5rem}.scene-meta{margin:0 0 18px;color:var(--muted);font-size:0.95rem}
+    #text{white-space:pre-line;line-height:1.72;font-size:1.08rem;min-height:220px;margin-bottom:18px}
+    .choices{display:grid;gap:12px;margin-top:8px}.choice-btn,.small-btn,.char-card{appearance:none;border:1px solid var(--border);background:var(--choice);color:var(--text);padding:14px 16px;border-radius:16px;cursor:pointer;font:inherit;text-align:left;transition:transform 140ms ease,background 180ms ease,border-color 180ms ease,opacity 180ms ease;width:100%}
+    .choice-btn:hover,.small-btn:hover,.char-card:hover{background:var(--choice-hover);transform:translateY(-1px)}
+    .controls{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}.small-btn{padding:10px 12px;border-radius:12px;background:transparent;width:auto}.small-btn.primary{background:var(--choice)}
+    .log{margin-top:18px;border-top:1px solid var(--border);padding-top:14px;color:var(--muted);font-size:0.95rem}.ending{font-size:1.14rem;line-height:1.8}
+    .char-select{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}.char-card h3{margin:0 0 8px}.char-card p{margin:0;color:var(--muted);line-height:1.6}
+    .memory-list{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.memory{padding:6px 10px;border:1px solid var(--border);border-radius:999px;background:rgba(255,255,255,0.15);font-size:0.88rem}.faded{opacity:.78}.broken .choice-btn{border-style:dashed}.silent .choice-btn{font-style:italic}
+    @media (max-width:640px){#text{min-height:280px}.panel{padding:18px}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div>
+        <h1 class="title">Ash of Rome</h1>
+        <div class="subtitle">A browser-based interactive tragedy inspired by Titus Andronicus.</div>
+      </div>
+      <div class="stats">
+        <div class="pill" id="actPill">Act —</div>
+        <div class="pill" id="characterPill">Character —</div>
+        <div class="pill" id="violencePill">Violence 0</div>
+        <div class="pill" id="memoryPill">Memory Fragments 0/3</div>
+      </div>
+    </div>
+    <div class="panel" id="panel"><div id="game"></div></div>
+  </div>
+<script>
+const state={character:null,node:"intro",act:0,violence:0,memories:[],history:[],swordState:"honorable",laviniaSilenced:false};
+const memoryFragments={honor:"Honor in Rome",family:"Family Pride",grief:"The Seed of Grief"};
+const entered=new Set();
+const nodes={
+intro:{render(){return `
+<h2 class="scene-title">Choose a path into the tragedy</h2>
+<p class="scene-meta">Act 1 begins in brightness. Act 2 strips that brightness away.</p>
+<div id="text">Rome still appears ordered. The sky is warm and open. Marble walls still glow pearl white. Honor still has a name.
+
+You may begin as Titus, the honored Roman general, or as Lavinia, who begins with voice, grace, and freedom before the world reduces her to silence.
+
+No matter what you choose, this tragedy does not spare anyone.</div>
+<div class="char-select">
+<button class="char-card" data-action="select-character" data-character="Titus"><h3>Titus</h3><p>Begin as a disciplined and honorable Roman general. Your choices sound rational at first, but revenge reshapes them into something crueler.</p></button>
+<button class="char-card" data-action="select-character" data-character="Lavinia"><h3>Lavinia</h3><p>Begin with full voice, movement, and expression. As the story progresses, the game removes those powers and leaves you struggling to communicate.</p></button>
+</div>`;}},
+act1_titus_1:{act:1,title:"Level 1 — Return to Rome",meta:"The better state. Order, sunlight, ceremony.",text:`You enter Rome through applause and sunlight. The crowd calls you noble. Marble towers shine behind them. At your side hangs Virtus, a sword polished bright enough to resemble an oath.
+
+A captured enemy kneels before the altar. He asks for mercy. Even now, the city expects strength from you, not softness.`,choices:[{label:"Spare him. Rome shows strength through mercy.",next:"act1_titus_2",violence:1,note:"He is taken away, but executed offstage in the name of order."},{label:"Execute him. Rome must be feared.",next:"act1_titus_2",violence:2,note:"The execution is immediate, praised as discipline."},{label:"Let the gods decide his fate.",next:"act1_titus_2",violence:1,note:"Priests intervene. He dies anyway, wrapped in ritual."}]},
+act1_titus_2:{act:1,title:"Level 2 — The Throne Decision",meta:"Politics still sounds like reason.",text:`The city asks who should guide Rome. The nobles speak of bloodlines. Soldiers speak of power. Everyone calls their preference justice.
+
+You are asked to lend your reputation to the choice. The air is still warm, but something harder has begun to move beneath it.`,choices:[{label:"Choose the rightful heir. Order must prevail.",next:"act1_titus_3",violence:1,note:"Your support deepens division under the language of law."},{label:"Choose the stronger leader. Rome needs power.",next:"act1_titus_3",violence:2,note:"Your choice is praised as practical, and feared for the same reason."},{label:"Refuse to decide. Let fate unfold.",next:"act1_titus_3",violence:1,note:"By stepping back, you still leave the city to conflict."}]},
+act1_titus_3:{act:1,title:"Level 3 — Seeds of Revenge",meta:"Choice still looks moral, but every branch feeds the same root.",text:`An insult against your house becomes public. Voices rise. The white walls no longer look pure; they reflect every expression too clearly.
+
+You are asked to answer the wrong done to your family.`,choices:[{label:"Forgive them. This ends here.",next:"memory_honor",violence:1,note:"Your mercy is mocked. The wound remains open."},{label:"Punish them fairly.",next:"memory_honor",violence:2,note:"The punishment satisfies no one and sharpens resentment."},{label:"Make them suffer.",next:"memory_honor",violence:3,note:"Your anger terrifies the court and feeds the cycle openly."}]},
+act1_lavinia_1:{act:1,title:"Level 1 — A Daughter in Bright Rome",meta:"The better state. Speech, grace, and daylight.",text:`You are Lavinia. The day is clear. The city is bright with gold, ivory, and promise. In this version of the world, your words still belong to you.
+
+You move through the palace where every corridor seems clean enough to suggest that order is permanent.`,choices:[{label:"Speak gently with the court.",next:"act1_lavinia_2",violence:0,note:"The court smiles, but watches every alliance."},{label:"Speak boldly and defend your family.",next:"act1_lavinia_2",violence:1,note:"Your confidence gains respect and also attention."},{label:"Remain careful and observant.",next:"act1_lavinia_2",violence:0,note:"Silence does not protect; it only delays."}]},
+act1_lavinia_2:{act:1,title:"Level 2 — The Forest Invitation",meta:"The last place that still feels peaceful.",text:`The hunt begins beneath a beautiful sky. Leaves carry the light. The forest appears harmless from a distance, almost painted.
+
+You sense a small shift in the air. Nothing visible. Only the feeling that the world has stepped half an inch out of line.`,choices:[{label:"Stay on the safe path.",next:"memory_family",violence:0,note:"The path narrows. Safety proves theatrical."},{label:"Explore deeper into the forest.",next:"memory_family",violence:1,note:"Curiosity only changes the scenery, not the outcome."},{label:"Call out for company.",next:"memory_family",violence:0,note:"The trees return your voice with no help attached."}]},
+memory_honor:{act:1,title:"Side Quest — Fragment of Memory",meta:"Collecting Titus's past.",onEnter(){collectMemory('honor')},text:`You find a fragment of Titus's memory:
+
+He stands younger, sword unstained, believing Rome and honor are the same thing. Virtus feels ceremonial in his hand. A symbol, not an appetite.
+
+The fragment fades, and the brightness of the present already looks less innocent than before.`,choices:[{label:"Continue toward the forest and the turning point.",next:"turning_point",violence:0,note:"The memory does not save anyone."}]},
+memory_family:{act:1,title:"Side Quest — Fragment of Memory",meta:"Collecting Titus's past.",onEnter(){collectMemory('family')},text:`You uncover another fragment of Titus's memory:
+
+There is laughter in the household. Pride, lineage, duty. Family feels like a structure that cannot collapse because everyone agrees to believe in it.
+
+The fragment breaks apart in your hands.`,choices:[{label:"Walk farther into the forest.",next:"turning_point",violence:0,note:"The trees seem darker than they were moments ago."}]},
+turning_point:{act:1,title:"Turning Point — The Forest Closes",meta:"The last moment before the worse begins.",text:`The sunlight thins. What was golden becomes pale. Birds vanish from the soundscape.
+
+A branch cracks behind you. For an instant, the game still pretends that speed, caution, or confidence might matter.
+
+Then the scene shifts, and the player learns something the characters do not: this story was moving here from the beginning.`,choices:[{label:"Who is there?",next:"act2_silence",violence:1,note:"Your voice goes unanswered."},{label:"Show yourself.",next:"act2_silence",violence:1,note:"The forest answers with force, not clarity."},{label:"Run.",next:"act2_silence",violence:1,note:"Escape becomes impossible."}]},
+act2_silence:{act:2,title:"Level 4 — Silence",meta:"The worse state. Speech collapses. Color drains.",onEnter(){state.laviniaSilenced=true;if(state.character==='Lavinia') collectMemory('grief')},text(){const intro=state.character==='Lavinia'?`You wake in a world bleached into grey-brown ruin. You try to speak. Nothing comes. You reach forward and the absence of your hands becomes the center of the screen.
+
+The game removes what used to define you.`:`News reaches Titus. The bright architecture of Rome now looks stained and brittle. His breathing fills the silence. The world has changed from orderly to wounded.
+
+Somewhere beyond words, Lavinia tries to communicate through pain.`;return intro+`\n\nEven here, the interface pretends you still have options.`},choices(){return state.character==='Lavinia'?[{label:"Scratch meaning into the dirt.",next:"act2_breaking",violence:1,note:"The message is only partly understood."},{label:"Gesture desperately with your body.",next:"act2_breaking",violence:1,note:"They see your distress, not its cause."},{label:"Freeze in stillness.",next:"act2_breaking",violence:0,note:"Silence communicates grief, but not justice."}]:[{label:"Ask gently what happened.",next:"act2_breaking",violence:1,note:"No gentle question can contain the answer."},{label:"Demand names.",next:"act2_breaking",violence:2,note:"Your voice hardens before your plan does."},{label:"Swear revenge immediately.",next:"act2_breaking",violence:3,note:"The oath arrives faster than the facts."}]},silent:true},
+act2_breaking:{act:2,title:"Level 5 — The Breaking of Titus",meta:"Reason narrows into revenge.",onEnter(){state.swordState='corrupted'},text:`Virtus no longer looks ceremonial. The blade keeps a dark stain that washing will not remove. It no longer represents order. It represents what order becomes when grief is given steel.
+
+Titus appears before Rome as if still honorable, but the dialogue inside him has changed. Rational language remains, yet each sentence now hides a threat.`,choices:[{label:"We will seek justice.",next:"memory_grief_node",violence:2,note:"Justice now means harm spoken in a noble tone."},{label:"We will make them pay.",next:"memory_grief_node",violence:3,note:"Payment will not balance anything."},{label:"They will suffer as we did.",next:"memory_grief_node",violence:4,note:"The wish is no longer balance, but transformation through pain."}]},
+memory_grief_node:{act:2,title:"Side Quest — Final Fragment",meta:"Collecting Titus's memories does not redeem him.",onEnter(){collectMemory('grief')},text(){return `The final fragment opens:\n\nTitus remembers not only duty, but injury. He remembers how quickly honor could become pride, and pride become vengeance. The seed was always there. Grief merely fed it.\n\nYou now hold ${state.memories.length} of 3 memory fragments. They explain the tragedy, but they do not stop it.`},choices:[{label:"Continue into revenge.",next:"act2_blood",violence:0,note:"Understanding does not interrupt the descent."}]},
+act2_blood:{act:2,title:"Level 6 — Blood Demands Blood",meta:"The choice is no longer whether to hurt, only how.",text:`An enemy is within reach. In another story, this might be the place where mercy interrupts violence. In this one, mercy only changes the texture of the same ending.
+
+The room smells like old iron and wet stone.`,choices:[{label:"End it quickly.",next:"act2_feast",violence:2,note:"The act is efficient and still brutal."},{label:"Force a confession.",next:"act2_feast",violence:3,note:"Pain is dressed as truth."},{label:"Make them suffer.",next:"act2_feast",violence:4,note:"Cruelty becomes its own motive."}],broken:true},
+act2_feast:{act:2,title:"Level 7 — The Feast",meta:"Calm surface, monstrous underneath.",text:`A table is prepared. Candles tremble. The room tries to imitate ceremony, but the walls now look yellowed, cracked, and hungry.
+
+This is one of the ugliest forms of revenge: not the open strike, but the performance of civility wrapped around horror.`,choices:[{label:"Remain calm.",next:"final_choice",violence:2,note:"Your control makes the scene colder."},{label:"Taunt them.",next:"final_choice",violence:3,note:"Your words sharpen the violence before it lands."},{label:"Reveal the truth slowly.",next:"final_choice",violence:4,note:"The cruelty lies in prolonging understanding."}],broken:true},
+final_choice:{act:2,title:"Level 8 — No Choice Left",meta:"The tragedy closes on itself.",text:`Bodies, rage, and consequence surround you. The game offers a final decision not because it can save anyone, but because tragedy loves the shape of free will.
+
+The sword in your hand once felt honorable. Now it feels shameful, heavy, almost animal.
+
+You can pretend to stop. Or you can finish what the story already decided.`,choices:[{label:"Stop.",next:"ending",violence:1,note:"You hesitate. The violence continues anyway."},{label:"Finish it.",next:"ending",violence:2,note:"You move without illusion."}],broken:true},
+ending:{act:2,title:"Ending — Ash",meta:"All paths end in ruin. Only the tone changes.",render(){let tone='';const v=state.violence;if(v<=8) tone='You reached the ending through the language of restraint, but restraint never prevented blood. The result is tragic, not cleansing.'; else if(v<=13) tone='You reached the ending through escalating revenge. Each choice seemed understandable. Together they made violence feel inevitable.'; else tone='You reached the ending by leaning into revenge until it swallowed honor whole. The tragedy becomes almost bestial: people reducing themselves to appetite, wound, and retaliation.'; const charLine=state.character==='Lavinia'?'Lavinia\'s path makes the loss of voice literal. The game strips language away and lets the world misunderstand her until violence speaks louder than she can.':'Titus\'s path makes corruption gradual. He begins as a Roman general and ends as a man who has taught himself to call revenge justice.'; const memoryLine=state.memories.length===3?'You collected all memory fragments. They reveal that the tragedy was not a sudden fall, but a buried tendency brought into the open.':'You missed some memory fragments. The story still ends the same, but less of Titus\'s inner ruin is visible.'; return `<h2 class="scene-title">${this.title}</h2><p class="scene-meta">${this.meta}</p><div id="text" class="ending">The sky is now dirty grey. Pearl white walls have turned brown with age and blood. Rome no longer resembles civilization; it resembles the remains of something that once believed itself civilized.
+
+${tone}
+
+${charLine}
+
+${memoryLine}
+
+No matter how you moved through the story, it ended in the same place: revenge consumed honor, violence replaced speech, and human beings became animal in instinct if not in shape.</div><div class="memory-list">${state.memories.map(k=>`<div class="memory">${memoryFragments[k]}</div>`).join('')||`<div class="memory faded">No memory fragments collected</div>`}</div><div class="controls"><button class="small-btn primary" data-action="restart">Play again</button></div><div class="log">Final violence score: ${state.violence}. Sword state: ${state.swordState}. Ending remains fixed by design.</div>`}}
+};
+function selectCharacter(name){state.character=name;state.node=name==='Titus'?'act1_titus_1':'act1_lavinia_1';state.history.push('Character selected: '+name);render()}
+function collectMemory(key){if(!state.memories.includes(key)) state.memories.push(key)}
+function updateTheme(){const level=Math.min(5,Math.floor(state.violence/3)+(state.act>=2?1:0));document.body.className=level?'dark-'+level:'';const panel=document.getElementById('panel');panel.classList.toggle('broken',state.act>=2);panel.classList.toggle('silent',state.laviniaSilenced&&state.character==='Lavinia')}
+function getNode(id){return nodes[id]}
+function choose(index){const node=getNode(state.node);const choices=typeof node.choices==='function'?node.choices():node.choices;const choice=choices[index];state.violence+=choice.violence||0;state.history.push(choice.label+' — '+(choice.note||''));state.node=choice.next;render()}
+function restart(){state.character=null;state.node='intro';state.act=0;state.violence=0;state.memories=[];state.history=[];state.swordState='honorable';state.laviniaSilenced=false;entered.clear();render()}
+function render(){const mount=document.getElementById('game');const node=getNode(state.node);if(node.act) state.act=node.act;if(typeof node.onEnter==='function'&&!entered.has(state.node)){node.onEnter();entered.add(state.node)} if(node.render){mount.innerHTML=node.render()} else {const text=typeof node.text==='function'?node.text():node.text;const choices=typeof node.choices==='function'?node.choices():node.choices;mount.innerHTML=`<h2 class="scene-title">${node.title}</h2><p class="scene-meta">${node.meta}</p><div id="text">${text}</div><div class="choices">${choices.map((c,i)=>`<button class="choice-btn" data-action="choose" data-index="${i}">${c.label}</button>`).join('')}</div><div class="log">${state.history.length?'Last choice: '+state.history[state.history.length-1]:'Make your first choice.'}</div>`} document.getElementById('actPill').textContent='Act '+(state.act||'—');document.getElementById('characterPill').textContent='Character '+(state.character||'—');document.getElementById('violencePill').textContent='Violence '+state.violence;document.getElementById('memoryPill').textContent='Memory Fragments '+state.memories.length+'/3';updateTheme()}
+document.addEventListener('click', (e)=>{const btn=e.target.closest('[data-action]'); if(!btn) return; const action=btn.dataset.action; if(action==='select-character') selectCharacter(btn.dataset.character); if(action==='choose') choose(Number(btn.dataset.index)); if(action==='restart') restart();});
+render();
+</script>
+</body>
+</html>
