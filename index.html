@@ -34,58 +34,58 @@
     }
 
     body.stage-2{
-      --bg:#e6dbc9;
-      --sky1:#ccb996;
-      --sky2:#e6dbc9;
-      --panel:#efe4d4;
-      --text:#2b241f;
-      --muted:#62584f;
+      --bg:#e7dbc9;
+      --sky1:#c9b38b;
+      --sky2:#e7dbc9;
+      --panel:#efe2d0;
+      --text:#2a231d;
+      --muted:#64594f;
       --accent:#8a6948;
-      --border:#c3b19a;
-      --choice:#e8dcc9;
-      --choiceHover:#dac6ad;
-      --shadow:rgba(0,0,0,0.14);
+      --border:#c1ae97;
+      --choice:#e7d8c5;
+      --choiceHover:#d8c2a7;
+      --shadow:rgba(0,0,0,0.15);
     }
 
     body.stage-3{
       --bg:#b8aa9a;
-      --sky1:#9c8a77;
+      --sky1:#9d8975;
       --sky2:#b8aa9a;
-      --panel:#cabbaa;
+      --panel:#cbbcab;
       --text:#25201b;
-      --muted:#4f4740;
-      --accent:#6d5340;
-      --border:#a2907e;
-      --choice:#c1b09e;
-      --choiceHover:#b09986;
-      --shadow:rgba(0,0,0,0.20);
+      --muted:#50473f;
+      --accent:#6d5440;
+      --border:#a28f7d;
+      --choice:#c2b19f;
+      --choiceHover:#b19a86;
+      --shadow:rgba(0,0,0,0.22);
     }
 
     body.stage-4{
-      --bg:#6f6760;
-      --sky1:#605851;
-      --sky2:#6f6760;
-      --panel:#81766d;
-      --text:#f0e9e1;
+      --bg:#706760;
+      --sky1:#5f5751;
+      --sky2:#706760;
+      --panel:#82776d;
+      --text:#f1ebe3;
       --muted:#ddd1c7;
-      --accent:#6b392f;
-      --border:#5b534c;
-      --choice:#756b63;
-      --choiceHover:#645b54;
-      --shadow:rgba(0,0,0,0.28);
+      --accent:#673730;
+      --border:#5a524c;
+      --choice:#766b63;
+      --choiceHover:#655b54;
+      --shadow:rgba(0,0,0,0.30);
     }
 
     body.stage-5{
       --bg:#3c3836;
-      --sky1:#333233;
+      --sky1:#303032;
       --sky2:#3c3836;
       --panel:#4b4542;
-      --text:#f4eee8;
-      --muted:#cdc3bb;
+      --text:#f4efe8;
+      --muted:#cec4bb;
       --accent:#552823;
       --border:#342f2d;
-      --choice:#514a47;
-      --choiceHover:#433d3a;
+      --choice:#514947;
+      --choiceHover:#423d3a;
       --shadow:rgba(0,0,0,0.45);
     }
 
@@ -95,13 +95,13 @@
       margin:0;
       font-family: Georgia, "Times New Roman", serif;
       color:var(--text);
-      background: linear-gradient(180deg, var(--sky1) 0%, var(--sky2) 42%, var(--bg) 100%);
+      background:linear-gradient(180deg, var(--sky1) 0%, var(--sky2) 42%, var(--bg) 100%);
       min-height:100vh;
-      transition: background 0.8s ease, color 0.5s ease;
+      transition:background 0.8s ease, color 0.5s ease;
     }
 
     .container{
-      max-width:960px;
+      max-width:980px;
       margin:0 auto;
       padding:24px 16px 56px;
     }
@@ -110,14 +110,14 @@
       display:flex;
       justify-content:space-between;
       align-items:flex-start;
-      flex-wrap:wrap;
       gap:16px;
+      flex-wrap:wrap;
       margin-bottom:18px;
     }
 
     h1{
       margin:0;
-      font-size:clamp(2rem,4vw,3rem);
+      font-size:clamp(2rem, 4vw, 3rem);
       letter-spacing:0.02em;
     }
 
@@ -148,8 +148,45 @@
       border:1px solid var(--border);
       border-radius:24px;
       box-shadow:0 16px 44px var(--shadow);
-      padding:24px;
-      transition: background 0.5s ease, border-color 0.5s ease;
+      padding:22px;
+    }
+
+    .visual-stage{
+      width:100%;
+      height:360px;
+      position:relative;
+      overflow:hidden;
+      border-radius:18px;
+      margin-bottom:18px;
+      border:1px solid var(--border);
+      background:#d9d1c6;
+      box-shadow:0 10px 24px rgba(0,0,0,0.12) inset;
+    }
+
+    #bgVisual{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      filter:saturate(0.98) contrast(1.02);
+    }
+
+    .scene-overlay{
+      position:absolute;
+      inset:0;
+      background:linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.02) 45%, rgba(0,0,0,0.28) 100%);
+      pointer-events:none;
+    }
+
+    #charVisual{
+      position:absolute;
+      bottom:0;
+      right:24px;
+      height:96%;
+      max-width:40%;
+      object-fit:contain;
+      filter:drop-shadow(0 8px 18px rgba(0,0,0,0.35));
+      display:none;
     }
 
     .scene-title{
@@ -158,13 +195,13 @@
     }
 
     .scene-meta{
-      margin:0 0 18px 0;
+      margin:0 0 16px 0;
       color:var(--muted);
       line-height:1.5;
     }
 
     .story{
-      min-height:220px;
+      min-height:210px;
       white-space:pre-line;
       line-height:1.82;
       font-size:1.06rem;
@@ -190,7 +227,7 @@
       border-radius:16px;
       padding:14px 16px;
       cursor:pointer;
-      transition: background 0.18s ease, transform 0.12s ease, border-color 0.18s ease;
+      transition:background 0.18s ease, transform 0.12s ease, border-color 0.18s ease;
     }
 
     .choice:hover{
@@ -200,7 +237,7 @@
 
     .character-grid{
       display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+      grid-template-columns:repeat(auto-fit, minmax(240px,1fr));
       gap:14px;
       margin-top:16px;
     }
@@ -212,7 +249,7 @@
       padding:16px;
       cursor:pointer;
       text-align:left;
-      transition: background 0.18s ease, transform 0.12s ease;
+      transition:background 0.18s ease, transform 0.12s ease;
     }
 
     .character-card:hover{
@@ -276,7 +313,7 @@
     }
 
     .symbol{
-      letter-spacing:0.1em;
+      letter-spacing:0.08em;
       font-style:italic;
     }
 
@@ -290,7 +327,12 @@
 
     @media (max-width:640px){
       .card{ padding:18px; }
-      .story{ min-height:260px; }
+      .visual-stage{ height:250px; }
+      #charVisual{
+        right:10px;
+        max-width:52%;
+      }
+      .story{ min-height:250px; }
     }
   </style>
 </head>
@@ -299,7 +341,7 @@
     <div class="header">
       <div>
         <h1>Ash of Rome</h1>
-        <div class="sub">A text-based interactive tragedy inspired by Titus Andronicus. The world begins bright and orderly, then decays into revenge, violence, and inevitability.</div>
+        <div class="sub">A visual interactive tragedy inspired by Titus Andronicus. Act 1 is bright and ordered. Act 2 decays into revenge, silence, and inevitability.</div>
       </div>
       <div class="stats">
         <div class="pill" id="actStat">Act —</div>
@@ -311,6 +353,11 @@
     </div>
 
     <div class="card" id="card">
+      <div class="visual-stage">
+        <img id="bgVisual" src="" alt="Scene background">
+        <div class="scene-overlay"></div>
+        <img id="charVisual" src="" alt="Character">
+      </div>
       <div id="game"></div>
     </div>
   </div>
@@ -383,7 +430,6 @@
       if(selected.memory) addMemory(selected.memory);
       if(selected.sword) state.sword = selected.sword;
       if(selected.silent === true) state.laviniaSilent = true;
-
       if(selected.note) state.log.push(selected.note);
 
       state.node = selected.next;
@@ -409,6 +455,64 @@
         return "You moved through the story by degrees, each decision a little harsher than the last. The descent felt reasonable while it was happening. That is part of the horror.";
       } else {
         return "You embraced revenge openly. By the end, honor had rotted into appetite. The people on screen no longer resemble civilized Romans as much as wounded creatures acting on instinct.";
+      }
+    }
+
+    function setVisuals(bg, char){
+      const bgVisual = document.getElementById("bgVisual");
+      const charVisual = document.getElementById("charVisual");
+      bgVisual.src = bg || "";
+      charVisual.src = char || "";
+      charVisual.style.display = char ? "block" : "none";
+    }
+
+    function currentVisual(){
+      const brightRome = "https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=1400&q=80";
+      const forestBright = "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1400&q=80";
+      const forestDark = "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1400&q=80";
+      const ruinsDark = "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1400&q=80";
+      const hallDark = "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1400&q=80";
+      const ashEnding = "https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=1400&q=80";
+
+      const titusBright = "https://via.placeholder.com/420x700/e2d7c5/222222?text=Titus";
+      const titusMid = "https://via.placeholder.com/420x700/c8b59f/222222?text=Titus";
+      const titusDark = "https://via.placeholder.com/420x700/6e6158/f5f0eb?text=Dark+Titus";
+      const titusCorrupt = "https://via.placeholder.com/420x700/4e4440/f5f0eb?text=Corrupted+Titus";
+      const laviniaBright = "https://via.placeholder.com/420x700/f1e4dc/222222?text=Lavinia";
+      const laviniaSilent = "https://via.placeholder.com/420x700/8a7f77/f5f0eb?text=Silent+Lavinia";
+      const memoryTitus = "https://via.placeholder.com/420x700/e0d7c8/222222?text=Young+Titus";
+
+      switch(state.node){
+        case "intro":
+          return { bg: brightRome, char: "" };
+        case "titus1":
+        case "titus2":
+          return { bg: brightRome, char: titusBright };
+        case "titus3":
+          return { bg: brightRome, char: titusMid };
+        case "lavinia1":
+          return { bg: brightRome, char: laviniaBright };
+        case "lavinia2":
+          return { bg: forestBright, char: laviniaBright };
+        case "memoryHonor":
+        case "memoryFamily":
+          return { bg: brightRome, char: memoryTitus };
+        case "turningPoint":
+          return { bg: forestDark, char: state.character === "Lavinia" ? laviniaBright : titusMid };
+        case "act2silence":
+          return { bg: ruinsDark, char: state.character === "Lavinia" ? laviniaSilent : titusDark };
+        case "act2breaking":
+        case "memoryGrief":
+          return { bg: ruinsDark, char: titusDark };
+        case "bloodDemandsBlood":
+          return { bg: ruinsDark, char: titusCorrupt };
+        case "feast":
+        case "finalChoice":
+          return { bg: hallDark, char: titusCorrupt };
+        case "ending":
+          return { bg: ashEnding, char: "" };
+        default:
+          return { bg: brightRome, char: "" };
       }
     }
 
@@ -447,24 +551,9 @@ No matter what path you choose, the tragedy closes in the same place.</div>
 
 A captured enemy kneels before you and begs for mercy. The crowd watches, eager to see what form Roman strength will take.`,
         choices: [
-          {
-            label: "Spare him. Rome shows strength through mercy.",
-            next: "titus2",
-            violence: 1,
-            note: "He is removed from sight and executed anyway in the name of order."
-          },
-          {
-            label: "Execute him. Rome must be feared.",
-            next: "titus2",
-            violence: 2,
-            note: "The crowd praises the execution as disciplined necessity."
-          },
-          {
-            label: "Let the gods decide his fate.",
-            next: "titus2",
-            violence: 1,
-            note: "Priests take over. Ritual only changes the style of the death."
-          }
+          { label: "Spare him. Rome shows strength through mercy.", next: "titus2", violence: 1, note: "He is removed from sight and executed anyway in the name of order." },
+          { label: "Execute him. Rome must be feared.", next: "titus2", violence: 2, note: "The crowd praises the execution as disciplined necessity." },
+          { label: "Let the gods decide his fate.", next: "titus2", violence: 1, note: "Priests take over. Ritual only changes the style of the death." }
         ]
       },
 
@@ -476,24 +565,9 @@ A captured enemy kneels before you and begs for mercy. The crowd watches, eager 
 
 You are asked where your support lies. The sky is still bright, but the brightness has begun to look theatrical, as if the city is performing order instead of possessing it.`,
         choices: [
-          {
-            label: "Choose the rightful heir. Order must prevail.",
-            next: "titus3",
-            violence: 1,
-            note: "Your choice deepens division under the language of law."
-          },
-          {
-            label: "Choose the stronger leader. Rome needs power.",
-            next: "titus3",
-            violence: 2,
-            note: "Practicality hardens into threat almost at once."
-          },
-          {
-            label: "Refuse to choose. Let fate unfold.",
-            next: "titus3",
-            violence: 1,
-            note: "Refusal still feeds the same conflict."
-          }
+          { label: "Choose the rightful heir. Order must prevail.", next: "titus3", violence: 1, note: "Your choice deepens division under the language of law." },
+          { label: "Choose the stronger leader. Rome needs power.", next: "titus3", violence: 2, note: "Practicality hardens into threat almost at once." },
+          { label: "Refuse to choose. Let fate unfold.", next: "titus3", violence: 1, note: "Refusal still feeds the same conflict." }
         ]
       },
 
@@ -505,24 +579,9 @@ You are asked where your support lies. The sky is still bright, but the brightne
 
 Virtus still gleams, but now it feels less ceremonial in your hand. Less oath than tool.`,
         choices: [
-          {
-            label: "Forgive them. This ends here.",
-            next: "memoryHonor",
-            violence: 1,
-            note: "Mercy is interpreted as weakness. The wound remains open."
-          },
-          {
-            label: "Punish them fairly.",
-            next: "memoryHonor",
-            violence: 2,
-            note: "Fairness satisfies no one. Resentment sharpens."
-          },
-          {
-            label: "Make them suffer.",
-            next: "memoryHonor",
-            violence: 3,
-            note: "Revenge becomes visible, and therefore easier to continue."
-          }
+          { label: "Forgive them. This ends here.", next: "memoryHonor", violence: 1, note: "Mercy is interpreted as weakness. The wound remains open." },
+          { label: "Punish them fairly.", next: "memoryHonor", violence: 2, note: "Fairness satisfies no one. Resentment sharpens." },
+          { label: "Make them suffer.", next: "memoryHonor", violence: 3, note: "Revenge becomes visible, and therefore easier to continue." }
         ]
       },
 
@@ -534,24 +593,9 @@ Virtus still gleams, but now it feels less ceremonial in your hand. Less oath th
 
 Your voice still belongs to you. Your body still obeys you. The world still appears answerable to language.`,
         choices: [
-          {
-            label: "Speak gently with the court.",
-            next: "lavinia2",
-            violence: 0,
-            note: "Gentleness earns approval, but also attention."
-          },
-          {
-            label: "Speak boldly for your family.",
-            next: "lavinia2",
-            violence: 1,
-            note: "Confidence gives you presence, but it also makes you visible."
-          },
-          {
-            label: "Remain careful and observant.",
-            next: "lavinia2",
-            violence: 0,
-            note: "Silence delays conflict, but never removes it."
-          }
+          { label: "Speak gently with the court.", next: "lavinia2", violence: 0, note: "Gentleness earns approval, but also attention." },
+          { label: "Speak boldly for your family.", next: "lavinia2", violence: 1, note: "Confidence gives you presence, but it also makes you visible." },
+          { label: "Remain careful and observant.", next: "lavinia2", violence: 0, note: "Silence delays conflict, but never removes it." }
         ]
       },
 
@@ -563,24 +607,9 @@ Your voice still belongs to you. Your body still obeys you. The world still appe
 
 Still, something in the air feels slightly wrong. Not enough to name. Enough to feel.`,
         choices: [
-          {
-            label: "Stay on the safe path.",
-            next: "memoryFamily",
-            violence: 0,
-            note: "The path narrows. Safety proves decorative."
-          },
-          {
-            label: "Explore deeper into the forest.",
-            next: "memoryFamily",
-            violence: 1,
-            note: "Curiosity changes the route, not the result."
-          },
-          {
-            label: "Call out for company.",
-            next: "memoryFamily",
-            violence: 0,
-            note: "Your voice echoes back with no protection attached."
-          }
+          { label: "Stay on the safe path.", next: "memoryFamily", violence: 0, note: "The path narrows. Safety proves decorative." },
+          { label: "Explore deeper into the forest.", next: "memoryFamily", violence: 1, note: "Curiosity changes the route, not the result." },
+          { label: "Call out for company.", next: "memoryFamily", violence: 0, note: "Your voice echoes back with no protection attached." }
         ]
       },
 
@@ -594,12 +623,7 @@ A younger Titus stands before Rome believing honor and identity are the same thi
 
 The memory fades too quickly to trust.`,
         choices: [
-          {
-            label: "Take the fragment and continue.",
-            next: "turningPoint",
-            memory: "honor",
-            note: "You keep the memory, but it changes nothing."
-          }
+          { label: "Take the fragment and continue.", next: "turningPoint", memory: "honor", note: "You keep the memory, but it changes nothing." }
         ]
       },
 
@@ -613,12 +637,7 @@ There is warmth in the household. Family pride appears solid, almost architectur
 
 Then it cracks apart.`,
         choices: [
-          {
-            label: "Take the fragment and walk on.",
-            next: "turningPoint",
-            memory: "family",
-            note: "The forest feels darker after the memory ends."
-          }
+          { label: "Take the fragment and walk on.", next: "turningPoint", memory: "family", note: "The forest feels darker after the memory ends." }
         ]
       },
 
@@ -630,24 +649,9 @@ Then it cracks apart.`,
 
 For one last moment, the game pretends that caution, confidence, or speed might save you. Then it reveals what tragedy always reveals: the path was narrowing long before you saw it.`,
         choices: [
-          {
-            label: "Who is there?",
-            next: "act2silence",
-            violence: 1,
-            note: "No answer comes that language can meet."
-          },
-          {
-            label: "Show yourself.",
-            next: "act2silence",
-            violence: 1,
-            note: "The world responds with force, not clarity."
-          },
-          {
-            label: "Run.",
-            next: "act2silence",
-            violence: 1,
-            note: "Movement becomes useless. Escape is denied."
-          }
+          { label: "Who is there?", next: "act2silence", violence: 1, note: "No answer comes that language can meet." },
+          { label: "Show yourself.", next: "act2silence", violence: 1, note: "The world responds with force, not clarity." },
+          { label: "Run.", next: "act2silence", violence: 1, note: "Movement becomes useless. Escape is denied." }
         ]
       },
 
@@ -679,48 +683,15 @@ Even now, the game still offers choices.`;
         choices: () => {
           if(state.character === "Lavinia"){
             return [
-              {
-                label: "[trace symbols in the dirt]",
-                next: "act2breaking",
-                violence: 1,
-                silent: true,
-                note: "They only partly understand what you try to say."
-              },
-              {
-                label: "[gesture with your body]",
-                next: "act2breaking",
-                violence: 1,
-                silent: true,
-                note: "They see pain, but not its full meaning."
-              },
-              {
-                label: "[stand in stillness]",
-                next: "act2breaking",
-                violence: 0,
-                silent: true,
-                note: "Silence communicates suffering, not explanation."
-              }
+              { label: "[trace symbols in the dirt]", next: "act2breaking", violence: 1, silent: true, note: "They only partly understand what you try to say." },
+              { label: "[gesture with your body]", next: "act2breaking", violence: 1, silent: true, note: "They see pain, but not its full meaning." },
+              { label: "[stand in stillness]", next: "act2breaking", violence: 0, silent: true, note: "Silence communicates suffering, not explanation." }
             ];
           } else {
             return [
-              {
-                label: "Ask what happened.",
-                next: "act2breaking",
-                violence: 1,
-                note: "The question is calm. The answer cannot be."
-              },
-              {
-                label: "Demand names.",
-                next: "act2breaking",
-                violence: 2,
-                note: "You leap from grief toward revenge."
-              },
-              {
-                label: "Swear revenge at once.",
-                next: "act2breaking",
-                violence: 3,
-                note: "The oath arrives before reason does."
-              }
+              { label: "Ask what happened.", next: "act2breaking", violence: 1, note: "The question is calm. The answer cannot be." },
+              { label: "Demand names.", next: "act2breaking", violence: 2, note: "You leap from grief toward revenge." },
+              { label: "Swear revenge at once.", next: "act2breaking", violence: 3, note: "The oath arrives before reason does." }
             ];
           }
         }
@@ -734,27 +705,9 @@ Even now, the game still offers choices.`;
 
 Titus still appears composed to others. But his decisions no longer come from order. They come from injury.`,
         choices: [
-          {
-            label: "We will seek justice.",
-            next: "memoryGrief",
-            violence: 2,
-            sword: "Stained",
-            note: "Justice now sounds like revenge wearing formal language."
-          },
-          {
-            label: "We will make them pay.",
-            next: "memoryGrief",
-            violence: 3,
-            sword: "Stained",
-            note: "Balance gives way to retaliation."
-          },
-          {
-            label: "They will suffer as we did.",
-            next: "memoryGrief",
-            violence: 4,
-            sword: "Stained",
-            note: "Pain becomes the measure of meaning."
-          }
+          { label: "We will seek justice.", next: "memoryGrief", violence: 2, sword: "Stained", note: "Justice now sounds like revenge wearing formal language." },
+          { label: "We will make them pay.", next: "memoryGrief", violence: 3, sword: "Stained", note: "Balance gives way to retaliation." },
+          { label: "They will suffer as we did.", next: "memoryGrief", violence: 4, sword: "Stained", note: "Pain becomes the measure of meaning." }
         ]
       },
 
@@ -768,12 +721,7 @@ Titus remembers not only duty, but wounded pride. He remembers how quickly honor
 
 The memory does not redeem him. It only explains him.`,
         choices: [
-          {
-            label: "Take the fragment and continue.",
-            next: "bloodDemandsBlood",
-            memory: "grief",
-            note: "You now understand more, and can prevent nothing."
-          }
+          { label: "Take the fragment and continue.", next: "bloodDemandsBlood", memory: "grief", note: "You now understand more, and can prevent nothing." }
         ]
       },
 
@@ -787,27 +735,9 @@ In this story, mercy only changes the texture of the same ruin.
 
 The room smells of iron, damp stone, and exhaustion.`,
         choices: [
-          {
-            label: "End it quickly.",
-            next: "feast",
-            violence: 2,
-            sword: "Corrupted",
-            note: "Efficiency does not cleanse cruelty."
-          },
-          {
-            label: "Force a confession.",
-            next: "feast",
-            violence: 3,
-            sword: "Corrupted",
-            note: "Pain is made to imitate truth."
-          },
-          {
-            label: "Make them suffer.",
-            next: "feast",
-            violence: 4,
-            sword: "Corrupted",
-            note: "Cruelty no longer needs an excuse."
-          }
+          { label: "End it quickly.", next: "feast", violence: 2, sword: "Corrupted", note: "Efficiency does not cleanse cruelty." },
+          { label: "Force a confession.", next: "feast", violence: 3, sword: "Corrupted", note: "Pain is made to imitate truth." },
+          { label: "Make them suffer.", next: "feast", violence: 4, sword: "Corrupted", note: "Cruelty no longer needs an excuse." }
         ]
       },
 
@@ -819,24 +749,9 @@ The room smells of iron, damp stone, and exhaustion.`,
 
 This is revenge at its ugliest: not open force alone, but force dressed in ritual and politeness.`,
         choices: [
-          {
-            label: "Remain calm.",
-            next: "finalChoice",
-            violence: 2,
-            note: "Cold control makes the horror sharper."
-          },
-          {
-            label: "Taunt them.",
-            next: "finalChoice",
-            violence: 3,
-            note: "Words become blades before the blade is drawn."
-          },
-          {
-            label: "Reveal the truth slowly.",
-            next: "finalChoice",
-            violence: 4,
-            note: "Delay becomes a form of cruelty."
-          }
+          { label: "Remain calm.", next: "finalChoice", violence: 2, note: "Cold control makes the horror sharper." },
+          { label: "Taunt them.", next: "finalChoice", violence: 3, note: "Words become blades before the blade is drawn." },
+          { label: "Reveal the truth slowly.", next: "finalChoice", violence: 4, note: "Delay becomes a form of cruelty." }
         ]
       },
 
@@ -850,18 +765,8 @@ The game offers one final decision, not because it can save anyone, but because 
 
 Virtus now feels nothing like honor. It feels like history reduced to a weapon.`,
         choices: [
-          {
-            label: "Stop.",
-            next: "ending",
-            violence: 1,
-            note: "You hesitate. The violence continues anyway."
-          },
-          {
-            label: "Finish it.",
-            next: "ending",
-            violence: 2,
-            note: "You move without the comfort of illusion."
-          }
+          { label: "Stop.", next: "ending", violence: 1, note: "You hesitate. The violence continues anyway." },
+          { label: "Finish it.", next: "ending", violence: 2, note: "You move without the comfort of illusion." }
         ]
       },
 
@@ -929,6 +834,9 @@ No matter what choices you made, the story ends the same way: revenge consumes h
           <div class="note">${state.log.length ? state.log[state.log.length - 1] : "Choose a path."}</div>
         `;
       }
+
+      const visual = currentVisual();
+      setVisuals(visual.bg, visual.char);
 
       updateStats();
       updateTheme();
