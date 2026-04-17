@@ -3,22 +3,21 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Ash of Rome — Polished Browser Game</title>
+<title>Ash of Rome</title>
 <style>
   :root{
-    --ui-bg: rgba(255,250,242,0.95);
-    --ui-border: rgba(143,116,82,0.35);
+    --ui-bg: rgba(255,250,243,0.94);
+    --ui-border: rgba(126,99,69,0.28);
     --ui-text: #231a14;
     --ui-muted: #6d5b4c;
     --gold: #caa56a;
     --wine: #7f2d26;
-    --panel-shadow: 0 20px 45px rgba(0,0,0,0.25);
+    --shadow: 0 20px 45px rgba(0,0,0,0.24);
   }
 
   *{ box-sizing:border-box; }
-
+  html,body{ margin:0; height:100%; }
   body{
-    margin:0;
     font-family: Georgia, "Times New Roman", serif;
     background:#111;
     color:#fff;
@@ -43,54 +42,50 @@
   .layer{
     position:absolute;
     inset:0;
-    transition: opacity .9s ease, filter .9s ease, transform .9s ease;
+    transition: opacity .9s ease, transform .9s ease, filter .9s ease, background .9s ease;
   }
 
   #skyLayer{
     background:
-      radial-gradient(circle at 78% 15%, rgba(255,244,187,0.96) 0 5%, rgba(255,236,155,0.4) 6%, transparent 12%),
-      linear-gradient(180deg,#8fd0ff 0%, #dbeefb 35%, #f7ecd9 100%);
+      radial-gradient(circle at 80% 16%, rgba(255,244,187,.95) 0 5%, rgba(255,231,135,.26) 6%, transparent 14%),
+      linear-gradient(180deg,#8fd1ff 0%, #dff0fb 35%, #f8eddc 100%);
   }
 
-  #hazeLayer{
+  #mistLayer{
     background:
-      radial-gradient(circle at 20% 30%, rgba(255,255,255,0.35) 0 9%, transparent 18%),
-      radial-gradient(circle at 60% 20%, rgba(255,255,255,0.25) 0 8%, transparent 18%),
-      radial-gradient(circle at 82% 34%, rgba(255,255,255,0.18) 0 6%, transparent 16%);
-    opacity:.9;
+      radial-gradient(circle at 20% 30%, rgba(255,255,255,.35) 0 9%, transparent 17%),
+      radial-gradient(circle at 62% 21%, rgba(255,255,255,.22) 0 8%, transparent 18%),
+      radial-gradient(circle at 84% 33%, rgba(255,255,255,.16) 0 6%, transparent 16%);
+    opacity:.85;
   }
 
-  #farLayer, #midLayer, #frontDecor, #taskLayer{
+  #farLayer,#midLayer,#frontLayer,#taskLayer{
     position:absolute;
     inset:0;
     overflow:hidden;
     pointer-events:none;
   }
 
-  #farLayer{ transform:translateX(0); }
-  #midLayer{ transform:translateX(0); }
-  #frontDecor{ transform:translateX(0); }
-
   #ground{
     position:absolute;
     left:0; right:0; bottom:0;
-    height:138px;
+    height:148px;
+    z-index:3;
     background:
-      radial-gradient(circle at 12% 28%, rgba(255,255,255,0.08) 0 10px, transparent 11px),
-      radial-gradient(circle at 35% 66%, rgba(0,0,0,0.12) 0 7px, transparent 8px),
-      radial-gradient(circle at 74% 44%, rgba(255,255,255,0.06) 0 9px, transparent 10px),
-      linear-gradient(180deg,#d3b17d 0%, #9f784e 52%, #6b4b2b 100%);
-    box-shadow: inset 0 12px 20px rgba(255,255,255,0.08);
+      radial-gradient(circle at 12% 30%, rgba(255,255,255,.08) 0 9px, transparent 10px),
+      radial-gradient(circle at 34% 68%, rgba(0,0,0,.12) 0 7px, transparent 8px),
+      radial-gradient(circle at 72% 45%, rgba(255,255,255,.06) 0 8px, transparent 9px),
+      linear-gradient(180deg,#d2b07d 0%, #9e784d 52%, #6b4b2a 100%);
+    box-shadow: inset 0 12px 22px rgba(255,255,255,.08);
     transition: background .9s ease;
-    z-index:2;
   }
 
   #player{
     position:absolute;
-    bottom:126px;
-    left:120px;
-    width:110px;
-    height:180px;
+    left:110px;
+    bottom:132px;
+    width:120px;
+    height:188px;
     z-index:20;
     transform-origin:center bottom;
   }
@@ -99,13 +94,13 @@
     width:100%;
     height:100%;
     overflow:visible;
-    filter: drop-shadow(0 10px 18px rgba(0,0,0,0.25));
+    filter: drop-shadow(0 12px 20px rgba(0,0,0,.25));
   }
 
-  #player.walking .leg-left{ animation:legL .34s infinite linear; transform-origin:50% 10%; }
-  #player.walking .leg-right{ animation:legR .34s infinite linear; transform-origin:50% 10%; }
-  #player.walking .arm-left{ animation:armL .34s infinite linear; transform-origin:50% 10%; }
-  #player.walking .arm-right{ animation:armR .34s infinite linear; transform-origin:50% 10%; }
+  #player.walking .leg-left{ animation:legL .34s infinite linear; transform-origin:50% 8%; }
+  #player.walking .leg-right{ animation:legR .34s infinite linear; transform-origin:50% 8%; }
+  #player.walking .arm-left{ animation:armL .34s infinite linear; transform-origin:50% 8%; }
+  #player.walking .arm-right{ animation:armR .34s infinite linear; transform-origin:50% 8%; }
 
   @keyframes legL{ 0%{transform:rotate(16deg)} 50%{transform:rotate(-16deg)} 100%{transform:rotate(16deg)} }
   @keyframes legR{ 0%{transform:rotate(-16deg)} 50%{transform:rotate(16deg)} 100%{transform:rotate(-16deg)} }
@@ -114,11 +109,10 @@
 
   .task{
     position:absolute;
-    bottom:134px;
+    bottom:138px;
     width:88px;
     height:110px;
     z-index:18;
-    pointer-events:none;
   }
 
   .task-badge{
@@ -127,12 +121,12 @@
     margin:auto;
     width:78px;
     height:78px;
-    border-radius:22px;
-    background:rgba(255,250,243,0.95);
-    border:2px solid rgba(129,95,54,0.28);
+    border-radius:24px;
+    background:rgba(255,250,243,.96);
+    border:2px solid rgba(129,95,54,.28);
     box-shadow:
-      0 0 0 0 rgba(255,255,255,0.65),
-      inset 0 -8px 18px rgba(187,149,95,0.18);
+      0 0 0 0 rgba(255,255,255,.65),
+      inset 0 -8px 18px rgba(187,149,95,.16);
     animation:pulse 1.8s infinite;
     display:flex;
     align-items:center;
@@ -145,22 +139,23 @@
   }
 
   .task.done .task-badge{
-    background:rgba(170,218,160,0.95);
+    background:rgba(170,218,160,.95);
     color:#173311;
     animation:none;
   }
 
   @keyframes pulse{
-    0%{ box-shadow:0 0 0 0 rgba(255,255,255,0.55), inset 0 -8px 18px rgba(187,149,95,0.18); transform:scale(1); }
-    70%{ box-shadow:0 0 0 22px rgba(255,255,255,0), inset 0 -8px 18px rgba(187,149,95,0.18); transform:scale(1.04); }
-    100%{ box-shadow:0 0 0 0 rgba(255,255,255,0), inset 0 -8px 18px rgba(187,149,95,0.18); transform:scale(1); }
+    0%{ box-shadow:0 0 0 0 rgba(255,255,255,.55), inset 0 -8px 18px rgba(187,149,95,.16); transform:scale(1); }
+    70%{ box-shadow:0 0 0 22px rgba(255,255,255,0), inset 0 -8px 18px rgba(187,149,95,.16); transform:scale(1.04); }
+    100%{ box-shadow:0 0 0 0 rgba(255,255,255,0), inset 0 -8px 18px rgba(187,149,95,.16); transform:scale(1); }
   }
 
   #ui{
     position:absolute;
-    inset:16px auto auto 16px;
-    width:min(470px, calc(100vw - 32px));
-    z-index:30;
+    left:16px;
+    top:16px;
+    width:min(500px, calc(100vw - 32px));
+    z-index:40;
   }
 
   #hud{
@@ -177,18 +172,18 @@
     border-radius:999px;
     padding:8px 12px;
     font-size:13px;
-    box-shadow:0 6px 16px rgba(0,0,0,0.14);
-    backdrop-filter: blur(6px);
+    box-shadow:0 6px 16px rgba(0,0,0,.14);
+    backdrop-filter: blur(8px);
   }
 
   #dialogue{
     background:var(--ui-bg);
     color:var(--ui-text);
     border:1px solid var(--ui-border);
-    border-radius:24px;
+    border-radius:26px;
     padding:16px;
-    box-shadow:var(--panel-shadow);
-    min-height:154px;
+    min-height:160px;
+    box-shadow:var(--shadow);
     backdrop-filter: blur(8px);
   }
 
@@ -198,18 +193,18 @@
     align-items:flex-start;
   }
 
-  #portraitWrap{
-    flex:0 0 94px;
-    width:94px;
-    height:112px;
+  #portrait{
+    flex:0 0 96px;
+    width:96px;
+    height:116px;
     border-radius:18px;
     overflow:hidden;
-    border:1px solid rgba(126,99,69,0.28);
-    background:linear-gradient(180deg,#efe4d3 0%, #d6c0a1 100%);
-    box-shadow: inset 0 -8px 16px rgba(0,0,0,0.08);
+    border:1px solid rgba(126,99,69,.26);
+    background:linear-gradient(180deg,#efe4d3 0%, #d7c2a3 100%);
+    box-shadow: inset 0 -8px 16px rgba(0,0,0,.08);
   }
 
-  #portraitWrap svg{
+  #portrait svg{
     width:100%;
     height:100%;
     display:block;
@@ -246,17 +241,18 @@
   .choice{
     width:100%;
     text-align:left;
-    border:1px solid rgba(126,99,69,0.25);
+    border:1px solid rgba(126,99,69,.24);
     background:linear-gradient(180deg,#f6ead8 0%, #ead8bd 100%);
     color:var(--ui-text);
     border-radius:16px;
     padding:11px 12px;
     cursor:pointer;
-    box-shadow: inset 0 -4px 10px rgba(140,102,52,0.08);
+    box-shadow: inset 0 -4px 10px rgba(140,102,52,.08);
+    font:inherit;
   }
 
   .choice:hover{
-    background:linear-gradient(180deg,#f8eddc 0%, #e5cda8 100%);
+    background:linear-gradient(180deg,#faf0e1 0%, #e6cdaa 100%);
   }
 
   #memories{
@@ -279,7 +275,7 @@
     position:absolute;
     left:16px;
     bottom:16px;
-    z-index:35;
+    z-index:45;
     display:flex;
     gap:8px;
     align-items:flex-end;
@@ -289,8 +285,8 @@
     width:62px;
     height:62px;
     border-radius:18px;
-    border:1px solid rgba(255,255,255,0.22);
-    background:rgba(20,17,14,0.52);
+    border:1px solid rgba(255,255,255,.22);
+    background:rgba(20,17,14,.52);
     color:#fff;
     display:flex;
     align-items:center;
@@ -310,11 +306,11 @@
     position:absolute;
     right:16px;
     bottom:18px;
-    z-index:35;
-    max-width:min(370px,60vw);
-    background:rgba(20,17,14,0.56);
+    z-index:45;
+    max-width:min(380px, 60vw);
+    background:rgba(20,17,14,.56);
     color:#fff;
-    border:1px solid rgba(255,255,255,0.12);
+    border:1px solid rgba(255,255,255,.12);
     border-radius:18px;
     padding:13px 15px;
     line-height:1.45;
@@ -326,23 +322,23 @@
     position:absolute;
     top:16px;
     right:16px;
-    z-index:40;
-    background:rgba(20,17,14,0.58);
+    z-index:50;
+    background:rgba(20,17,14,.58);
     color:#fff;
-    border:1px solid rgba(255,255,255,0.16);
+    border:1px solid rgba(255,255,255,.16);
     border-radius:16px;
     padding:10px 14px;
     font-size:14px;
     cursor:pointer;
     backdrop-filter: blur(8px);
+    font:inherit;
   }
 
-  #introOverlay,
-  #endingOverlay{
+  #introOverlay,#endingOverlay{
     position:absolute;
     inset:0;
-    z-index:60;
-    background:linear-gradient(180deg, rgba(0,0,0,0.28), rgba(0,0,0,0.5));
+    z-index:70;
+    background:linear-gradient(180deg, rgba(0,0,0,.28), rgba(0,0,0,.5));
     display:flex;
     align-items:center;
     justify-content:center;
@@ -351,12 +347,12 @@
 
   .panel{
     width:min(860px,96vw);
-    background:rgba(255,247,236,0.96);
+    background:rgba(255,247,236,.96);
     color:#231a14;
-    border:1px solid rgba(126,99,69,0.24);
+    border:1px solid rgba(126,99,69,.24);
     border-radius:30px;
     padding:28px;
-    box-shadow:0 30px 60px rgba(0,0,0,0.28);
+    box-shadow:0 30px 60px rgba(0,0,0,.28);
   }
 
   .panel h1{
@@ -378,12 +374,12 @@
   }
 
   .start-card{
-    border:1px solid rgba(126,99,69,0.22);
+    border:1px solid rgba(126,99,69,.22);
     background:linear-gradient(180deg,#f8eddc 0%, #ead8bc 100%);
     border-radius:22px;
     padding:20px;
     cursor:pointer;
-    box-shadow: inset 0 -8px 18px rgba(134,98,54,0.08);
+    box-shadow: inset 0 -8px 18px rgba(134,98,54,.08);
   }
 
   .start-card:hover{
@@ -403,14 +399,14 @@
   .hidden{ display:none !important; }
 
   @media (max-width: 760px){
-    #ui{ width:min(100vw - 24px, 470px); left:12px; top:12px; }
+    #ui{ width:min(100vw - 24px, 500px); left:12px; top:12px; }
     #hint{ max-width:72vw; font-size:13px; }
     #controls{ left:12px; bottom:12px; gap:6px; }
     .ctrl{ width:56px; height:56px; }
     .ctrl.big{ width:90px; font-size:14px; }
-    #player{ width:96px; height:162px; bottom:126px; }
+    #player{ width:100px; height:166px; bottom:132px; }
     .dialogue-top{ gap:10px; }
-    #portraitWrap{ width:82px; height:100px; flex-basis:82px; }
+    #portrait{ width:84px; height:102px; flex-basis:84px; }
     .panel h1{ font-size:38px; }
     #dialogueTitle{ font-size:21px; }
   }
@@ -420,10 +416,10 @@
 <div id="game">
   <div id="scene">
     <div id="skyLayer" class="layer"></div>
-    <div id="hazeLayer" class="layer"></div>
+    <div id="mistLayer" class="layer"></div>
     <div id="farLayer" class="layer"></div>
     <div id="midLayer" class="layer"></div>
-    <div id="frontDecor" class="layer"></div>
+    <div id="frontLayer" class="layer"></div>
     <div id="taskLayer"></div>
     <div id="ground"></div>
     <div id="player"></div>
@@ -442,7 +438,7 @@
 
     <div id="dialogue">
       <div class="dialogue-top">
-        <div id="portraitWrap"></div>
+        <div id="portrait"></div>
         <div class="dialogue-main">
           <h2 id="dialogueTitle">Ash of Rome</h2>
           <div id="dialogueMeta">Movement-based tragedy</div>
@@ -465,11 +461,11 @@
   <div id="introOverlay">
     <div class="panel">
       <h1>Ash of Rome</h1>
-      <p>This version is much more polished: layered scene art, decorative flowers and architecture, face portraits, richer atmosphere, music and ambient sound, and stronger visual contrast between the bright beginning and the ruined end.</p>
+      <p>This is the best one-file version I can make in browser code alone: layered scene art, decorative flowers and architecture, face portraits, richer atmosphere, sound support, and a much stronger shift from the beautiful beginning to the ruined end.</p>
       <div class="start-grid">
         <div class="start-card" data-start="Titus">
           <h3>Titus</h3>
-          <div class="mini">Begin as an honorable Roman general. As revenge grows, his world darkens, his face hardens, and his sword changes from noble to shameful.</div>
+          <div class="mini">Begin as an honorable Roman general. As revenge grows, his face hardens, the world decays, and his sword changes from noble to shameful.</div>
         </div>
         <div class="start-card" data-start="Lavinia">
           <h3>Lavinia</h3>
@@ -505,7 +501,6 @@ const state = {
   memories:[],
   silent:false,
   ending:false,
-  currentDialogTask:null,
   soundOn:false
 };
 
@@ -708,56 +703,51 @@ const levels = [
   }
 ];
 
-/* ---------- ART HELPERS ---------- */
+/* ART */
 
 function portraitSVG(name){
   const isTitus = name === "Titus";
   const dark = state.act === 2;
   if(isTitus){
     return `
-    <svg viewBox="0 0 94 112" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 96 116" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <linearGradient id="bgT" x1="0" x2="0" y1="0" y2="1">
-          <stop offset="0" stop-color="${dark ? '#8b786a' : '#edd9bb'}"/>
-          <stop offset="1" stop-color="${dark ? '#5e5248' : '#d9b487'}"/>
+        <linearGradient id="ptbg" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stop-color="${dark ? '#8a7769' : '#edd9bc'}"/>
+          <stop offset="1" stop-color="${dark ? '#5f5349' : '#d8b487'}"/>
         </linearGradient>
       </defs>
-      <rect width="94" height="112" fill="url(#bgT)"/>
-      <rect x="0" y="84" width="94" height="28" fill="${dark ? '#51372e' : '#8e5f45'}"/>
-      <path d="M12 102 C22 78 32 66 47 66 C62 66 72 78 82 102 Z" fill="${dark ? '#6c6159' : '#bfa993'}"/>
-      <ellipse cx="47" cy="44" rx="21" ry="23" fill="#e5c6aa"/>
-      <path d="M27 40 C29 18 40 12 47 12 C58 12 69 20 68 41 C58 30 38 29 27 40 Z" fill="${dark ? '#6d645e' : '#7b6a57'}"/>
-      <rect x="36" y="34" width="6" height="2.5" rx="1.2" fill="#5f4738"/>
-      <rect x="52" y="34" width="6" height="2.5" rx="1.2" fill="#5f4738"/>
-      <circle cx="40" cy="39" r="1.8" fill="#2c211a"/>
-      <circle cx="54" cy="39" r="1.8" fill="#2c211a"/>
-      <path d="M47 40 L45 49 L49 49" fill="none" stroke="#b8846d" stroke-width="1.2"/>
-      <path d="M39 54 Q47 58 55 54" fill="none" stroke="${dark ? '#5b2420' : '#7a4537'}" stroke-width="2" stroke-linecap="round"/>
-      <path d="M23 83 L36 59 L58 59 L71 83 Z" fill="${dark ? '#5a4940' : '#c9b59e'}"/>
-      <path d="M14 96 L26 82 L37 104 Z" fill="${dark ? '#61201c' : '#9f2d23'}"/>
+      <rect width="96" height="116" fill="url(#ptbg)"/>
+      <rect y="87" width="96" height="29" fill="${dark ? '#51372e' : '#8d6047'}"/>
+      <path d="M13 104 C23 80 34 68 48 68 C62 68 73 80 83 104 Z" fill="${dark ? '#6c6158' : '#bda892'}"/>
+      <ellipse cx="48" cy="45" rx="21" ry="23" fill="#e6c6ab"/>
+      <path d="M28 41 C30 18 40 12 48 12 C59 12 69 20 69 40 C61 31 38 29 28 41 Z" fill="${dark ? '#6c635c' : '#7c6a57'}"/>
+      <circle cx="41" cy="40" r="1.8" fill="#2b211b"/>
+      <circle cx="55" cy="40" r="1.8" fill="#2b211b"/>
+      <path d="M48 41 L46 49 L50 49" fill="none" stroke="#bf8d72" stroke-width="1.2"/>
+      <path d="M40 55 Q48 59 56 55" fill="none" stroke="${dark ? '#5f2420' : '#7e4638'}" stroke-width="2" stroke-linecap="round"/>
+      <path d="M24 98 L34 83 L42 108 Z" fill="${dark ? '#611d19' : '#a12d22'}"/>
     </svg>`;
   }
   return `
-  <svg viewBox="0 0 94 112" xmlns="http://www.w3.org/2000/svg">
+  <svg viewBox="0 0 96 116" xmlns="http://www.w3.org/2000/svg">
     <defs>
-      <linearGradient id="bgL" x1="0" x2="0" y1="0" y2="1">
-        <stop offset="0" stop-color="${dark ? '#857467' : '#f0dfcf'}"/>
-        <stop offset="1" stop-color="${dark ? '#5b4e47' : '#d8bfad'}"/>
+      <linearGradient id="plbg" x1="0" x2="0" y1="0" y2="1">
+        <stop offset="0" stop-color="${dark ? '#867467' : '#f0dfcf'}"/>
+        <stop offset="1" stop-color="${dark ? '#5b4e47' : '#d8c0ad'}"/>
       </linearGradient>
     </defs>
-    <rect width="94" height="112" fill="url(#bgL)"/>
-    <rect x="0" y="86" width="94" height="26" fill="${dark ? '#4e3d45' : '#a06b7d'}"/>
-    <ellipse cx="47" cy="45" rx="19" ry="23" fill="#efd2bf"/>
-    <path d="M28 38 C28 16 38 10 47 10 C58 10 68 18 67 38 C63 24 31 22 28 38 Z" fill="${dark ? '#4f403f' : '#6e554e'}"/>
-    <path d="M28 34 C23 65 29 76 36 82" fill="none" stroke="${dark ? '#4f403f' : '#6e554e'}" stroke-width="6" stroke-linecap="round"/>
-    <path d="M66 34 C71 65 65 76 58 82" fill="none" stroke="${dark ? '#4f403f' : '#6e554e'}" stroke-width="6" stroke-linecap="round"/>
-    <circle cx="40" cy="40" r="1.8" fill="#2b221d"/>
-    <circle cx="54" cy="40" r="1.8" fill="#2b221d"/>
-    <path d="M37 34.5 Q40 33 43 34.5" fill="none" stroke="#5f4738" stroke-width="1.4" stroke-linecap="round"/>
-    <path d="M51 34.5 Q54 33 57 34.5" fill="none" stroke="#5f4738" stroke-width="1.4" stroke-linecap="round"/>
-    <path d="M47 41 L45.5 49 L49 49" fill="none" stroke="#be8f79" stroke-width="1.2"/>
-    <path d="M39 56 Q47 60 55 56" fill="none" stroke="${state.silent ? '#694547' : '#8b5565'}" stroke-width="2" stroke-linecap="round"/>
-    <path d="M24 100 C28 82 34 69 47 69 C60 69 66 82 70 100 Z" fill="${dark ? '#7b6c70' : '#ddcad2'}"/>
+    <rect width="96" height="116" fill="url(#plbg)"/>
+    <rect y="88" width="96" height="28" fill="${dark ? '#4e3c45' : '#a26d7d'}"/>
+    <ellipse cx="48" cy="45" rx="20" ry="23" fill="#efd3bf"/>
+    <path d="M29 38 C30 18 39 11 48 11 C60 11 68 20 67 39 C62 24 33 23 29 38 Z" fill="${dark ? '#4f403f' : '#6c554c'}"/>
+    <path d="M30 34 C25 66 30 76 37 82" fill="none" stroke="${dark ? '#4f403f' : '#6c554c'}" stroke-width="6" stroke-linecap="round"/>
+    <path d="M66 34 C71 66 66 76 59 82" fill="none" stroke="${dark ? '#4f403f' : '#6c554c'}" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="41" cy="40" r="1.8" fill="#2b221d"/>
+    <circle cx="55" cy="40" r="1.8" fill="#2b221d"/>
+    <path d="M48 41 L46.5 49 L50 49" fill="none" stroke="#be8e79" stroke-width="1.2"/>
+    <path d="M40 56 Q48 60 56 56" fill="none" stroke="${state.silent ? '#6d5353' : '#905765'}" stroke-width="2" stroke-linecap="round"/>
+    <path d="M24 102 C28 83 35 70 48 70 C61 70 68 83 72 102 Z" fill="${dark ? '#7a6b70' : '#ddcad2'}"/>
   </svg>`;
 }
 
@@ -765,102 +755,99 @@ function playerSVG(){
   const isTitus = state.character === "Titus";
   const dark = state.act === 2;
   const silent = state.silent;
+
   if(isTitus){
     return `
-    <svg viewBox="0 0 110 180" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 120 188" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <linearGradient id="capeGrad" x1="0" x2="0" y1="0" y2="1">
+        <linearGradient id="cape" x1="0" x2="0" y1="0" y2="1">
           <stop offset="0" stop-color="${dark ? '#651d19' : '#a12f22'}"/>
           <stop offset="1" stop-color="${dark ? '#3e1110' : '#6b2018'}"/>
         </linearGradient>
-        <linearGradient id="armorGrad" x1="0" x2="0" y1="0" y2="1">
+        <linearGradient id="armor" x1="0" x2="0" y1="0" y2="1">
           <stop offset="0" stop-color="${dark ? '#9b8f84' : '#d7c8b3'}"/>
           <stop offset="1" stop-color="${dark ? '#6d6159' : '#aa977f'}"/>
         </linearGradient>
       </defs>
-      <path d="M24 160 L19 74 L44 66 L40 160 Z" fill="url(#capeGrad)" opacity="0.92"/>
-      <ellipse cx="55" cy="32" rx="16" ry="18" fill="#e9cdb7"/>
-      <path d="M39 28 C41 10 50 6 56 6 C68 6 73 15 71 31 C66 23 46 20 39 28 Z" fill="${dark ? '#6f655e' : '#7a6b5b'}"/>
-      <rect x="44" y="47" width="22" height="8" rx="4" fill="#d4b197"/>
-      <path d="M36 56 L74 56 L81 118 L29 118 Z" fill="url(#armorGrad)"/>
-      <path d="M44 56 L55 63 L66 56" fill="none" stroke="#91785b" stroke-width="3" />
-      <circle cx="55" cy="86" r="6" fill="${dark ? '#a98a5d' : '#cfa468'}"/>
-      <path d="M30 70 H80" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
-      <path class="arm-left" d="M31 64 C18 82 19 105 27 118" fill="none" stroke="#ceb49d" stroke-width="10" stroke-linecap="round"/>
-      <path class="arm-right" d="M79 64 C93 79 90 102 84 116" fill="none" stroke="#ceb49d" stroke-width="10" stroke-linecap="round"/>
-      <path class="leg-left" d="M48 118 C44 140 43 153 43 172" fill="none" stroke="#745534" stroke-width="12" stroke-linecap="round"/>
-      <path class="leg-right" d="M62 118 C66 140 67 153 67 172" fill="none" stroke="#745534" stroke-width="12" stroke-linecap="round"/>
-      <rect x="84" y="68" width="7" height="64" rx="3.5" fill="${state.sword === 'Honorable' ? '#d8dde2' : state.sword === 'Stained' ? '#ad9e9e' : '#665d5a'}" transform="rotate(14 84 68)"/>
-      <rect x="82" y="122" width="12" height="6" rx="2" fill="${state.sword === 'Honorable' ? '#9b7b46' : '#5c3d29'}" transform="rotate(14 82 122)"/>
-      <circle cx="49" cy="31" r="1.8" fill="#2d221b"/>
-      <circle cx="61" cy="31" r="1.8" fill="#2d221b"/>
-      <path d="M55 32 L53.5 39 L56.5 39" fill="none" stroke="#bf8c72" stroke-width="1.2"/>
-      <path d="M48 45 Q55 48 62 45" fill="none" stroke="${dark ? '#5e2420' : '#7e4739'}" stroke-width="2" stroke-linecap="round"/>
+      <path d="M26 168 L21 78 L47 70 L42 168 Z" fill="url(#cape)" opacity="0.92"/>
+      <ellipse cx="60" cy="34" rx="16" ry="18" fill="#e9cdb7"/>
+      <path d="M43 30 C45 11 55 7 61 7 C73 7 79 16 76 33 C70 24 49 22 43 30 Z" fill="${dark ? '#6f655e' : '#7a6b5b'}"/>
+      <rect x="49" y="49" width="22" height="8" rx="4" fill="#d4b197"/>
+      <path d="M40 58 L80 58 L88 121 L32 121 Z" fill="url(#armor)"/>
+      <path d="M48 58 L60 66 L72 58" fill="none" stroke="#91785b" stroke-width="3"/>
+      <circle cx="60" cy="87" r="6.5" fill="${dark ? '#aa8a5d' : '#cfa468'}"/>
+      <path d="M33 72 H87" stroke="rgba(255,255,255,0.18)" stroke-width="2"/>
+      <path class="arm-left" d="M34 66 C20 85 21 108 30 122" fill="none" stroke="#ceb49d" stroke-width="10" stroke-linecap="round"/>
+      <path class="arm-right" d="M86 66 C100 82 98 106 90 120" fill="none" stroke="#ceb49d" stroke-width="10" stroke-linecap="round"/>
+      <path class="leg-left" d="M52 121 C47 144 47 158 47 178" fill="none" stroke="#745534" stroke-width="13" stroke-linecap="round"/>
+      <path class="leg-right" d="M68 121 C73 144 73 158 73 178" fill="none" stroke="#745534" stroke-width="13" stroke-linecap="round"/>
+      <rect x="92" y="69" width="7" height="66" rx="3.5" fill="${state.sword === 'Honorable' ? '#d8dde2' : state.sword === 'Stained' ? '#ad9e9e' : '#665d5a'}" transform="rotate(14 92 69)"/>
+      <rect x="90" y="125" width="13" height="6" rx="2" fill="${state.sword === 'Honorable' ? '#9b7b46' : '#5c3d29'}" transform="rotate(14 90 125)"/>
+      <circle cx="54" cy="33" r="1.8" fill="#2d221b"/>
+      <circle cx="66" cy="33" r="1.8" fill="#2d221b"/>
+      <path d="M60 34 L58.5 41 L61.5 41" fill="none" stroke="#bf8c72" stroke-width="1.2"/>
+      <path d="M53 47 Q60 50 67 47" fill="none" stroke="${dark ? '#5e2420' : '#7e4739'}" stroke-width="2" stroke-linecap="round"/>
     </svg>`;
   }
 
   return `
-  <svg viewBox="0 0 110 180" xmlns="http://www.w3.org/2000/svg">
+  <svg viewBox="0 0 120 188" xmlns="http://www.w3.org/2000/svg">
     <defs>
-      <linearGradient id="dressGrad" x1="0" x2="0" y1="0" y2="1">
+      <linearGradient id="dress" x1="0" x2="0" y1="0" y2="1">
         <stop offset="0" stop-color="${dark ? '#b8aaae' : '#ead8df'}"/>
         <stop offset="1" stop-color="${dark ? '#85757b' : '#c9b0ba'}"/>
       </linearGradient>
     </defs>
-    <ellipse cx="55" cy="32" rx="16" ry="18" fill="#efd2bf"/>
-    <path d="M38 27 C39 11 47 7 56 7 C68 7 72 18 70 31 C64 23 46 20 38 27 Z" fill="${dark ? '#50413e' : '#6c554c'}"/>
-    <path d="M39 32 C34 55 39 69 46 82" fill="none" stroke="${dark ? '#50413e' : '#6c554c'}" stroke-width="7" stroke-linecap="round"/>
-    <path d="M71 32 C76 55 71 69 64 82" fill="none" stroke="${dark ? '#50413e' : '#6c554c'}" stroke-width="7" stroke-linecap="round"/>
-    <path d="M34 58 C42 47 68 47 76 58 L83 121 L27 121 Z" fill="url(#dressGrad)"/>
-    <path class="arm-left" d="M34 67 C24 85 24 106 29 119" fill="none" stroke="#d9c1ad" stroke-width="9" stroke-linecap="round" opacity="${silent ? '.28' : '1'}"/>
-    <path class="arm-right" d="M76 67 C86 85 86 106 81 119" fill="none" stroke="#d9c1ad" stroke-width="9" stroke-linecap="round" opacity="${silent ? '.28' : '1'}"/>
-    <path class="leg-left" d="M49 121 C45 143 45 156 45 172" fill="none" stroke="#7b5968" stroke-width="12" stroke-linecap="round"/>
-    <path class="leg-right" d="M61 121 C65 143 65 156 65 172" fill="none" stroke="#7b5968" stroke-width="12" stroke-linecap="round"/>
-    <circle cx="49" cy="31" r="1.8" fill="#2d221b"/>
-    <circle cx="61" cy="31" r="1.8" fill="#2d221b"/>
-    <path d="M55 32 L53.5 39 L56.5 39" fill="none" stroke="#bf8c72" stroke-width="1.2"/>
-    <path d="M48 46 Q55 49 62 46" fill="none" stroke="${silent ? '#6d5353' : '#935766'}" stroke-width="2" stroke-linecap="round"/>
+    <ellipse cx="60" cy="34" rx="16" ry="18" fill="#efd2bf"/>
+    <path d="M43 29 C44 11 53 7 61 7 C73 7 78 18 76 31 C70 24 51 22 43 29 Z" fill="${dark ? '#50413e' : '#6c554c'}"/>
+    <path d="M44 34 C39 58 44 72 51 84" fill="none" stroke="${dark ? '#50413e' : '#6c554c'}" stroke-width="7" stroke-linecap="round"/>
+    <path d="M76 34 C81 58 76 72 69 84" fill="none" stroke="${dark ? '#50413e' : '#6c554c'}" stroke-width="7" stroke-linecap="round"/>
+    <path d="M38 60 C46 48 74 48 82 60 L90 124 L30 124 Z" fill="url(#dress)"/>
+    <path class="arm-left" d="M38 70 C28 89 28 110 34 123" fill="none" stroke="#d9c1ad" stroke-width="9" stroke-linecap="round" opacity="${silent ? '.28' : '1'}"/>
+    <path class="arm-right" d="M82 70 C92 89 92 110 86 123" fill="none" stroke="#d9c1ad" stroke-width="9" stroke-linecap="round" opacity="${silent ? '.28' : '1'}"/>
+    <path class="leg-left" d="M54 124 C50 146 50 160 50 178" fill="none" stroke="#7b5968" stroke-width="13" stroke-linecap="round"/>
+    <path class="leg-right" d="M66 124 C70 146 70 160 70 178" fill="none" stroke="#7b5968" stroke-width="13" stroke-linecap="round"/>
+    <circle cx="54" cy="33" r="1.8" fill="#2d221b"/>
+    <circle cx="66" cy="33" r="1.8" fill="#2d221b"/>
+    <path d="M60 34 L58.5 41 L61.5 41" fill="none" stroke="#bf8c72" stroke-width="1.2"/>
+    <path d="M53 48 Q60 51 67 48" fill="none" stroke="${silent ? '#6d5353' : '#935766'}" stroke-width="2" stroke-linecap="round"/>
   </svg>`;
 }
 
-function templeSVG(x, y, w, h, variant, dark=false){
+function templeSVG(x,y,w,h,dark=false){
   const wall = dark ? "#8c8378" : "#f5efe5";
   const roof = dark ? "#655b51" : "#d7c29a";
   const stroke = dark ? "#4f453d" : "#cdb58e";
   const vine = dark ? "#5c5a45" : "#7ca25c";
+  const flowers = dark ? "" : `
+    <circle cx="${w*0.17}" cy="${h*0.9}" r="7" fill="#d47f96"/>
+    <circle cx="${w*0.22}" cy="${h*0.88}" r="6" fill="#f0d18a"/>
+    <circle cx="${w*0.28}" cy="${h*0.91}" r="7" fill="#c57fc5"/>
+  `;
   const crack = dark ? `<path d="M${w*0.52} ${h*0.18} L${w*0.48} ${h*0.36} L${w*0.58} ${h*0.56} L${w*0.49} ${h*0.84}" stroke="#544841" stroke-width="2" fill="none"/>` : "";
-  const flowers = !dark ? `
-    <circle cx="${w*0.15}" cy="${h*0.9}" r="7" fill="#d47f96"/>
-    <circle cx="${w*0.19}" cy="${h*0.88}" r="6" fill="#f0d18a"/>
-    <circle cx="${w*0.24}" cy="${h*0.91}" r="7" fill="#c57fc5"/>
-  ` : "";
   return `
-  <svg class="temple temple-${variant}" viewBox="0 0 ${w} ${h}" style="position:absolute;left:${x}px;bottom:${y}px;width:${w}px;height:${h}px;overflow:visible">
+  <svg viewBox="0 0 ${w} ${h}" style="position:absolute;left:${x}px;bottom:${y}px;width:${w}px;height:${h}px;overflow:visible">
     <rect x="${w*0.04}" y="${h*0.08}" width="${w*0.92}" height="${h*0.07}" fill="${roof}" stroke="${stroke}" stroke-width="3"/>
     <polygon points="${w*0.02},${h*0.15} ${w*0.5},0 ${w*0.98},${h*0.15}" fill="${roof}" stroke="${stroke}" stroke-width="3"/>
     <rect x="${w*0.08}" y="${h*0.16}" width="${w*0.84}" height="${h*0.78}" rx="2" fill="${wall}" stroke="${stroke}" stroke-width="3"/>
     ${[0.16,0.34,0.52,0.70].map(fr=>`
       <rect x="${w*fr}" y="${h*0.2}" width="${w*0.1}" height="${h*0.65}" fill="${dark ? '#9a8f83' : '#fbf6ed'}" stroke="${stroke}" stroke-width="2"/>
-      <path d="M${w*(fr+0.01)} ${h*0.27} H${w*(fr+0.09)}" stroke="rgba(0,0,0,0.07)" stroke-width="2"/>
-      <path d="M${w*(fr+0.01)} ${h*0.41} H${w*(fr+0.09)}" stroke="rgba(0,0,0,0.07)" stroke-width="2"/>
-      <path d="M${w*(fr+0.01)} ${h*0.55} H${w*(fr+0.09)}" stroke="rgba(0,0,0,0.07)" stroke-width="2"/>
     `).join("")}
     <rect x="${w*0.06}" y="${h*0.86}" width="${w*0.88}" height="${h*0.08}" fill="${dark ? '#776b61' : '#e7dcc7'}" stroke="${stroke}" stroke-width="2"/>
     <path d="M${w*0.83} ${h*0.55} C${w*0.88} ${h*0.47} ${w*0.9} ${h*0.36} ${w*0.88} ${h*0.26}" stroke="${vine}" stroke-width="3" fill="none"/>
     <circle cx="${w*0.89}" cy="${h*0.35}" r="4" fill="${vine}"/>
-    ${crack}
     ${flowers}
+    ${crack}
   </svg>`;
 }
 
-function treeSVG(x, y, scale=1, dark=false, flowers=false){
+function treeSVG(x,y,scale=1,dark=false,flowers=false){
   const leaf1 = dark ? "#55624a" : "#6fa75e";
   const leaf2 = dark ? "#44523e" : "#4f8046";
   const trunk = dark ? "#4c392d" : "#7b5236";
   const bloom = dark ? "#6d5760" : "#e2a1ba";
-  const s = scale;
   return `
-  <svg viewBox="0 0 160 280" style="position:absolute;left:${x}px;bottom:${y}px;width:${160*s}px;height:${280*s}px;overflow:visible">
+  <svg viewBox="0 0 160 280" style="position:absolute;left:${x}px;bottom:${y}px;width:${160*scale}px;height:${280*scale}px;overflow:visible">
     <rect x="68" y="160" width="22" height="92" rx="9" fill="${trunk}"/>
     <circle cx="82" cy="110" r="52" fill="${leaf2}"/>
     <circle cx="52" cy="124" r="42" fill="${leaf1}"/>
@@ -875,7 +862,7 @@ function treeSVG(x, y, scale=1, dark=false, flowers=false){
   </svg>`;
 }
 
-function flowerPatchSVG(x, y, dark=false){
+function flowerPatchSVG(x,y,dark=false){
   const grass = dark ? "#5a5b44" : "#6f944b";
   const petal1 = dark ? "#7e6170" : "#da8eae";
   const petal2 = dark ? "#7a6b8d" : "#c8a2e0";
@@ -894,7 +881,7 @@ function flowerPatchSVG(x, y, dark=false){
   </svg>`;
 }
 
-function ruinSVG(x, y, w, h){
+function ruinSVG(x,y,w,h){
   return `
   <svg viewBox="0 0 ${w} ${h}" style="position:absolute;left:${x}px;bottom:${y}px;width:${w}px;height:${h}px;overflow:visible">
     <rect x="${w*0.1}" y="${h*0.2}" width="${w*0.75}" height="${h*0.65}" fill="#5d5753" stroke="#433d39" stroke-width="3"/>
@@ -937,7 +924,7 @@ function taskIconSVG(kind){
 function buildSceneArt(){
   const far = document.getElementById("farLayer");
   const mid = document.getElementById("midLayer");
-  const front = document.getElementById("frontDecor");
+  const front = document.getElementById("frontLayer");
   far.innerHTML = "";
   mid.innerHTML = "";
   front.innerHTML = "";
@@ -945,120 +932,107 @@ function buildSceneArt(){
   const env = currentLevel().environment;
 
   if(env === "romeBright"){
-    far.innerHTML += templeSVG(70, 128, 240, 260, 1, false);
-    far.innerHTML += templeSVG(380, 128, 290, 300, 2, false);
-    far.innerHTML += templeSVG(760, 128, 230, 240, 3, false);
-    front.innerHTML += flowerPatchSVG(40, 120, false);
-    front.innerHTML += flowerPatchSVG(330, 118, false);
-    front.innerHTML += flowerPatchSVG(720, 124, false);
-    front.innerHTML += `<svg viewBox="0 0 220 180" style="position:absolute;left:560px;bottom:118px;width:220px;height:180px;">
-      <rect x="88" y="46" width="44" height="92" fill="#f3e8d9" stroke="#c9af86" stroke-width="3"/>
-      <ellipse cx="110" cy="30" rx="24" ry="24" fill="#e9ceb5"/>
-      <path d="M92 66 C96 53 103 48 110 48 C117 48 124 53 128 66 L138 140 L82 140 Z" fill="#d5c0a8"/>
-      <path d="M110 54 L110 140" stroke="#c8ad86" stroke-width="4"/>
-    </svg>`;
+    far.innerHTML += templeSVG(70,128,240,260,false);
+    far.innerHTML += templeSVG(380,128,290,300,false);
+    far.innerHTML += templeSVG(760,128,230,240,false);
+    front.innerHTML += flowerPatchSVG(40,120,false);
+    front.innerHTML += flowerPatchSVG(330,118,false);
+    front.innerHTML += flowerPatchSVG(720,124,false);
   }
 
   if(env === "forestBright"){
-    far.innerHTML += treeSVG(80, 126, 1.2, false, true);
-    far.innerHTML += treeSVG(410, 126, 1.35, false, true);
-    far.innerHTML += treeSVG(820, 126, 1.1, false, true);
-    mid.innerHTML += treeSVG(250, 126, 1.0, false, true);
-    mid.innerHTML += treeSVG(670, 126, .95, false, true);
-    front.innerHTML += flowerPatchSVG(60, 122, false);
-    front.innerHTML += flowerPatchSVG(280, 119, false);
-    front.innerHTML += flowerPatchSVG(560, 123, false);
-    front.innerHTML += flowerPatchSVG(810, 118, false);
+    far.innerHTML += treeSVG(80,126,1.2,false,true);
+    far.innerHTML += treeSVG(410,126,1.35,false,true);
+    far.innerHTML += treeSVG(820,126,1.1,false,true);
+    mid.innerHTML += treeSVG(250,126,1.0,false,true);
+    mid.innerHTML += treeSVG(670,126,.95,false,true);
+    front.innerHTML += flowerPatchSVG(60,122,false);
+    front.innerHTML += flowerPatchSVG(280,119,false);
+    front.innerHTML += flowerPatchSVG(560,123,false);
+    front.innerHTML += flowerPatchSVG(810,118,false);
   }
 
   if(env === "forestDark"){
-    far.innerHTML += treeSVG(80, 126, 1.2, true, false);
-    far.innerHTML += treeSVG(420, 126, 1.35, true, false);
-    far.innerHTML += treeSVG(840, 126, 1.1, true, false);
-    mid.innerHTML += treeSVG(240, 126, 1.0, true, false);
-    mid.innerHTML += treeSVG(660, 126, .95, true, false);
-    front.innerHTML += flowerPatchSVG(60, 122, true);
-    front.innerHTML += flowerPatchSVG(360, 119, true);
-    front.innerHTML += `<svg viewBox="0 0 210 120" style="position:absolute;left:690px;bottom:120px;width:210px;height:120px">
-      <path d="M20 90 C52 70 74 64 112 72 C146 78 168 70 195 60" stroke="#4c3f33" stroke-width="10" fill="none" stroke-linecap="round"/>
-      <path d="M108 74 L112 40" stroke="#4c3f33" stroke-width="10" stroke-linecap="round"/>
-    </svg>`;
+    far.innerHTML += treeSVG(80,126,1.2,true,false);
+    far.innerHTML += treeSVG(420,126,1.35,true,false);
+    far.innerHTML += treeSVG(840,126,1.1,true,false);
+    mid.innerHTML += treeSVG(240,126,1.0,true,false);
+    mid.innerHTML += treeSVG(660,126,.95,true,false);
+    front.innerHTML += flowerPatchSVG(60,122,true);
+    front.innerHTML += flowerPatchSVG(360,119,true);
   }
 
   if(env === "romeDark"){
-    far.innerHTML += templeSVG(60, 128, 250, 260, 1, true);
-    far.innerHTML += templeSVG(370, 128, 290, 300, 2, true);
-    far.innerHTML += templeSVG(780, 128, 220, 236, 3, true);
-    mid.innerHTML += `<svg viewBox="0 0 280 220" style="position:absolute;left:520px;bottom:122px;width:280px;height:220px">
-      <rect x="66" y="120" width="140" height="50" fill="#695f58"/>
-      <path d="M55 120 L136 38 L216 120" fill="#6d625b" stroke="#4d433e" stroke-width="4"/>
-      <path d="M136 38 L136 170" stroke="#4d433e" stroke-width="4"/>
-      <path d="M100 62 L92 120 M176 62 L184 120" stroke="#4d433e" stroke-width="4"/>
-    </svg>`;
-    front.innerHTML += flowerPatchSVG(90, 121, true);
-    front.innerHTML += flowerPatchSVG(730, 118, true);
+    far.innerHTML += templeSVG(60,128,250,260,true);
+    far.innerHTML += templeSVG(370,128,290,300,true);
+    far.innerHTML += templeSVG(780,128,220,236,true);
+    front.innerHTML += flowerPatchSVG(90,121,true);
+    front.innerHTML += flowerPatchSVG(730,118,true);
   }
 
   if(env === "ruin"){
-    far.innerHTML += ruinSVG(120, 128, 250, 270);
-    far.innerHTML += ruinSVG(440, 128, 320, 300);
-    far.innerHTML += ruinSVG(840, 128, 170, 230);
-    front.innerHTML += `<svg viewBox="0 0 300 120" style="position:absolute;left:420px;bottom:120px;width:300px;height:120px">
-      <path d="M20 98 H110 L132 74 H176 L193 98 H284" stroke="#3f3733" stroke-width="11" stroke-linecap="round" fill="none"/>
-      <path d="M132 74 L118 46 M176 74 L188 40" stroke="#3f3733" stroke-width="8" stroke-linecap="round"/>
-    </svg>`;
+    far.innerHTML += ruinSVG(120,128,250,270);
+    far.innerHTML += ruinSVG(440,128,320,300);
+    far.innerHTML += ruinSVG(840,128,170,230);
   }
 }
 
-function updateVisualTheme(){
+function updateTheme(){
   const sky = document.getElementById("skyLayer");
-  const haze = document.getElementById("hazeLayer");
+  const mist = document.getElementById("mistLayer");
   const ground = document.getElementById("ground");
   const env = currentLevel().environment;
 
   if(env === "romeBright"){
-    sky.style.background = "radial-gradient(circle at 78% 15%, rgba(255,244,187,0.96) 0 5%, rgba(255,236,155,0.4) 6%, transparent 12%), linear-gradient(180deg,#8fd0ff 0%, #dbeefb 35%, #f7ecd9 100%)";
-    haze.style.opacity = ".9";
-    ground.style.background = "radial-gradient(circle at 12% 28%, rgba(255,255,255,0.08) 0 10px, transparent 11px), radial-gradient(circle at 35% 66%, rgba(0,0,0,0.12) 0 7px, transparent 8px), radial-gradient(circle at 74% 44%, rgba(255,255,255,0.06) 0 9px, transparent 10px), linear-gradient(180deg,#d3b17d 0%, #9f784e 52%, #6b4b2b 100%)";
+    sky.style.background = "radial-gradient(circle at 80% 16%, rgba(255,244,187,.95) 0 5%, rgba(255,231,135,.26) 6%, transparent 14%), linear-gradient(180deg,#8fd1ff 0%, #dff0fb 35%, #f8eddc 100%)";
+    mist.style.opacity = ".85";
+    ground.style.background = "radial-gradient(circle at 12% 30%, rgba(255,255,255,.08) 0 9px, transparent 10px), radial-gradient(circle at 34% 68%, rgba(0,0,0,.12) 0 7px, transparent 8px), radial-gradient(circle at 72% 45%, rgba(255,255,255,.06) 0 8px, transparent 9px), linear-gradient(180deg,#d2b07d 0%, #9e784d 52%, #6b4b2a 100%)";
   } else if(env === "forestBright"){
-    sky.style.background = "radial-gradient(circle at 76% 17%, rgba(255,243,184,0.9) 0 5%, rgba(255,228,140,0.34) 6%, transparent 12%), linear-gradient(180deg,#96d4ff 0%, #e4f3dd 38%, #e5d6bc 100%)";
-    haze.style.opacity = ".72";
+    sky.style.background = "radial-gradient(circle at 78% 16%, rgba(255,243,184,.9) 0 5%, rgba(255,228,140,.28) 6%, transparent 14%), linear-gradient(180deg,#96d4ff 0%, #e4f3dd 38%, #e5d6bc 100%)";
+    mist.style.opacity = ".72";
     ground.style.background = "linear-gradient(180deg,#b89667 0%, #886641 52%, #5d4328 100%)";
   } else if(env === "forestDark"){
-    sky.style.background = "radial-gradient(circle at 78% 16%, rgba(210,190,140,0.2) 0 4%, rgba(180,160,120,0.08) 6%, transparent 13%), linear-gradient(180deg,#6e6a67 0%, #736b66 34%, #60544a 100%)";
-    haze.style.opacity = ".2";
+    sky.style.background = "radial-gradient(circle at 80% 16%, rgba(210,190,140,.18) 0 4%, rgba(180,160,120,.08) 7%, transparent 14%), linear-gradient(180deg,#6e6a67 0%, #736b66 34%, #60544a 100%)";
+    mist.style.opacity = ".2";
     ground.style.background = "linear-gradient(180deg,#6a5a48 0%, #554534 55%, #3f3023 100%)";
   } else if(env === "romeDark"){
-    sky.style.background = "radial-gradient(circle at 80% 15%, rgba(180,160,130,0.12) 0 4%, rgba(100,90,80,0.05) 7%, transparent 14%), linear-gradient(180deg,#615d5b 0%, #6f6460 36%, #594f48 100%)";
-    haze.style.opacity = ".13";
+    sky.style.background = "radial-gradient(circle at 80% 15%, rgba(180,160,130,.12) 0 4%, rgba(100,90,80,.05) 7%, transparent 14%), linear-gradient(180deg,#615d5b 0%, #6f6460 36%, #594f48 100%)";
+    mist.style.opacity = ".13";
     ground.style.background = "linear-gradient(180deg,#7a634d 0%, #594533 56%, #412f24 100%)";
   } else {
     sky.style.background = "linear-gradient(180deg,#4e4b49 0%, #57514e 34%, #473f3a 100%)";
-    haze.style.opacity = ".08";
+    mist.style.opacity = ".08";
     ground.style.background = "linear-gradient(180deg,#5e5044 0%, #47392e 56%, #342820 100%)";
   }
 }
 
-/* ---------- AUDIO ---------- */
+function renderPlayer(){
+  const p = document.getElementById("player");
+  p.innerHTML = playerSVG();
+  p.classList.toggle("silent", !!state.silent);
+}
+
+function syncPortrait(){
+  document.getElementById("portrait").innerHTML = portraitSVG(state.character || "Titus");
+}
+
+/* AUDIO */
 
 let audioCtx = null;
 let masterGain = null;
 let ambientNodes = [];
+let lastStepTime = 0;
 
 function initAudio(){
   if(audioCtx) return;
   audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   masterGain = audioCtx.createGain();
-  masterGain.gain.value = 0.0;
+  masterGain.gain.value = 0;
   masterGain.connect(audioCtx.destination);
 }
 
 function stopAmbient(){
-  ambientNodes.forEach(n => {
-    try{
-      n.stop && n.stop();
-    }catch(e){}
-  });
+  ambientNodes.forEach(n => { try{ n.stop && n.stop(); }catch(e){} });
   ambientNodes = [];
 }
 
@@ -1069,25 +1043,25 @@ function startAmbient(){
 
   const now = audioCtx.currentTime;
 
-  const drone = audioCtx.createOscillator();
-  const droneGain = audioCtx.createGain();
-  drone.type = "sine";
-  drone.frequency.value = state.act === 1 ? 146.8 : 82.4;
-  droneGain.gain.value = state.act === 1 ? 0.015 : 0.026;
-  drone.connect(droneGain).connect(masterGain);
-  drone.start();
+  const osc1 = audioCtx.createOscillator();
+  const gain1 = audioCtx.createGain();
+  osc1.type = "sine";
+  osc1.frequency.value = state.act === 1 ? 146.8 : 82.4;
+  gain1.gain.value = state.act === 1 ? 0.015 : 0.026;
+  osc1.connect(gain1).connect(masterGain);
+  osc1.start();
 
-  const second = audioCtx.createOscillator();
-  const secondGain = audioCtx.createGain();
-  second.type = "triangle";
-  second.frequency.value = state.act === 1 ? 220 : 110;
-  secondGain.gain.value = state.act === 1 ? 0.008 : 0.014;
-  second.connect(secondGain).connect(masterGain);
-  second.start();
+  const osc2 = audioCtx.createOscillator();
+  const gain2 = audioCtx.createGain();
+  osc2.type = "triangle";
+  osc2.frequency.value = state.act === 1 ? 220 : 110;
+  gain2.gain.value = state.act === 1 ? 0.008 : 0.014;
+  osc2.connect(gain2).connect(masterGain);
+  osc2.start();
 
   const noiseBuffer = audioCtx.createBuffer(1, audioCtx.sampleRate * 2, audioCtx.sampleRate);
   const data = noiseBuffer.getChannelData(0);
-  for(let i=0;i<data.length;i++) data[i] = (Math.random()*2-1) * 0.4;
+  for(let i=0;i<data.length;i++) data[i] = (Math.random()*2-1)*0.4;
   const noise = audioCtx.createBufferSource();
   noise.buffer = noiseBuffer;
   noise.loop = true;
@@ -1102,18 +1076,18 @@ function startAmbient(){
   masterGain.gain.cancelScheduledValues(now);
   masterGain.gain.linearRampToValueAtTime(0.12, now + 1.2);
 
-  ambientNodes = [drone, second, noise];
+  ambientNodes = [osc1, osc2, noise];
 }
 
 function toggleSound(){
   state.soundOn = !state.soundOn;
   document.getElementById("soundBtn").textContent = state.soundOn ? "Sound: On" : "Sound: Off";
-  if(!audioCtx) initAudio();
+  initAudio();
   audioCtx.resume();
   if(state.soundOn) startAmbient();
   else {
     masterGain.gain.cancelScheduledValues(audioCtx.currentTime);
-    masterGain.gain.linearRampToValueAtTime(0.0, audioCtx.currentTime + 0.3);
+    masterGain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.25);
   }
 }
 
@@ -1131,7 +1105,6 @@ function playClickTone(){
   o.stop(audioCtx.currentTime + 0.14);
 }
 
-let lastStepTime = 0;
 function playStep(){
   if(!state.soundOn || !audioCtx) return;
   const now = audioCtx.currentTime;
@@ -1140,7 +1113,7 @@ function playStep(){
 
   const noiseBuffer = audioCtx.createBuffer(1, audioCtx.sampleRate * 0.05, audioCtx.sampleRate);
   const data = noiseBuffer.getChannelData(0);
-  for(let i=0;i<data.length;i++) data[i] = (Math.random()*2-1) * 0.6;
+  for(let i=0;i<data.length;i++) data[i] = (Math.random()*2-1)*0.6;
   const src = audioCtx.createBufferSource();
   src.buffer = noiseBuffer;
   const bp = audioCtx.createBiquadFilter();
@@ -1154,7 +1127,7 @@ function playStep(){
   src.stop(now + 0.06);
 }
 
-/* ---------- CORE ---------- */
+/* GAME */
 
 function currentLevel(){ return levels[state.currentLevelIndex]; }
 function visibleTasks(){ return currentLevel().tasks; }
@@ -1174,9 +1147,9 @@ function startGame(character){
     currentLevelIndex:0,
     memories:[],
     silent:false,
-    ending:false,
-    currentDialogTask:null
+    ending:false
   });
+
   document.getElementById("introOverlay").classList.add("hidden");
   document.getElementById("controls").classList.remove("hidden");
   document.getElementById("hint").classList.remove("hidden");
@@ -1188,21 +1161,11 @@ function startGame(character){
   if(state.soundOn) startAmbient();
 }
 
-function syncPortrait(){
-  document.getElementById("portraitWrap").innerHTML = portraitSVG(state.character || "Titus");
-}
-
-function renderPlayer(){
-  const p = document.getElementById("player");
-  p.innerHTML = playerSVG();
-  p.classList.toggle("silent", !!state.silent);
-}
-
 function applyEnvironment(){
   const lvl = currentLevel();
   state.act = lvl.act;
   if(typeof lvl.onEnter === "function") lvl.onEnter();
-  updateVisualTheme();
+  updateTheme();
   buildSceneArt();
   renderPlayer();
   syncPortrait();
@@ -1244,7 +1207,6 @@ function updateMemoriesUI(){
 }
 
 function showDialogue(title, meta, text, choices, task){
-  state.currentDialogTask = task || null;
   document.getElementById("dialogueTitle").textContent = title;
   document.getElementById("dialogueMeta").textContent = meta || "";
   document.getElementById("dialogueText").textContent = typeof text === "function" ? text() : text;
@@ -1268,7 +1230,6 @@ function showDialogue(title, meta, text, choices, task){
 }
 
 function closeDialogue(){
-  state.currentDialogTask = null;
   document.getElementById("dialogueTitle").textContent = currentLevel().title;
   document.getElementById("dialogueMeta").textContent = currentLevel().meta;
   document.getElementById("dialogueText").textContent = currentLevel().hint;
@@ -1357,7 +1318,7 @@ function nearestTask(){
   let bestDist = Infinity;
   visibleTasks().forEach(task => {
     if(task.done) return;
-    const dist = Math.abs((task.x + 44) - (state.playerX + 55));
+    const dist = Math.abs((task.x + 44) - (state.playerX + 60));
     if(dist < bestDist){
       bestDist = dist;
       best = task;
@@ -1369,7 +1330,7 @@ function nearestTask(){
 function interact(){
   if(state.ending || !state.started) return;
   const found = nearestTask();
-  if(found.task && found.dist < 90){
+  if(found.task && found.dist < 95){
     playClickTone();
     showDialogue(found.task.label, currentLevel().meta, found.task.text, found.task.choices, found.task);
   }
@@ -1385,8 +1346,8 @@ function placePlayer(){
   const shiftFront = (state.playerX - 120) * -0.14;
   document.getElementById("farLayer").style.transform = `translateX(${shiftFar}px)`;
   document.getElementById("midLayer").style.transform = `translateX(${shiftMid}px)`;
-  document.getElementById("frontDecor").style.transform = `translateX(${shiftFront}px)`;
-  document.getElementById("taskLayer").style.transform = `translateX(${shiftFront * 0.25}px)`;
+  document.getElementById("frontLayer").style.transform = `translateX(${shiftFront}px)`;
+  document.getElementById("taskLayer").style.transform = `translateX(${shiftFront * 0.22}px)`;
 }
 
 function tick(){
@@ -1402,7 +1363,7 @@ function tick(){
       state.facing = 1;
       moving = true;
     }
-    const maxX = window.innerWidth - 130;
+    const maxX = window.innerWidth - 135;
     state.playerX = Math.max(16, Math.min(maxX, state.playerX));
     document.getElementById("player").classList.toggle("walking", moving);
     if(moving) playStep();
@@ -1411,7 +1372,7 @@ function tick(){
   requestAnimationFrame(tick);
 }
 
-/* ---------- INPUT ---------- */
+/* INPUT */
 
 document.addEventListener("keydown", e => {
   if(!state.started) return;
@@ -1458,7 +1419,7 @@ document.getElementById("restartBtn").addEventListener("click", () => {
   startGame(state.character || "Titus");
 });
 
-/* ---------- INITIAL ---------- */
+/* INIT */
 
 syncPortrait();
 renderPlayer();
