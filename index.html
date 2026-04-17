@@ -2,29 +2,31 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1.0" />
-<title>Ash of Rome — Movement Version</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ash of Rome — Polished Browser Game</title>
 <style>
   :root{
-    --ui-bg: rgba(255,248,238,0.92);
-    --ui-border: #d9c8af;
-    --ui-text: #241d18;
-    --btn: #f4e7d2;
-    --btn-hover: #ead7bc;
+    --ui-bg: rgba(255,250,242,0.95);
+    --ui-border: rgba(143,116,82,0.35);
+    --ui-text: #231a14;
+    --ui-muted: #6d5b4c;
+    --gold: #caa56a;
+    --wine: #7f2d26;
+    --panel-shadow: 0 20px 45px rgba(0,0,0,0.25);
   }
 
-  *{box-sizing:border-box}
+  *{ box-sizing:border-box; }
 
   body{
     margin:0;
-    font-family:Georgia,"Times New Roman",serif;
+    font-family: Georgia, "Times New Roman", serif;
     background:#111;
     color:#fff;
     overflow:hidden;
-    touch-action:manipulation;
+    touch-action:none;
   }
 
-  #gameShell{
+  #game{
     position:relative;
     width:100vw;
     height:100vh;
@@ -32,294 +34,133 @@
     background:#111;
   }
 
-  #background{
+  #scene{
     position:absolute;
     inset:0;
-    background:linear-gradient(180deg,#89c8ff 0%,#f4efe1 44%,#efe5d2 100%);
-    transition:.8s;
+    overflow:hidden;
   }
 
-  .sun{
+  .layer{
     position:absolute;
-    width:110px;
-    height:110px;
-    border-radius:50%;
-    right:8%;
-    top:8%;
-    background:radial-gradient(circle,rgba(255,244,185,1) 0%,rgba(255,224,125,0.98) 55%,rgba(255,224,125,0.15) 75%,rgba(255,224,125,0) 100%);
-    transition:.8s;
+    inset:0;
+    transition: opacity .9s ease, filter .9s ease, transform .9s ease;
   }
 
-  #midground{
+  #skyLayer{
+    background:
+      radial-gradient(circle at 78% 15%, rgba(255,244,187,0.96) 0 5%, rgba(255,236,155,0.4) 6%, transparent 12%),
+      linear-gradient(180deg,#8fd0ff 0%, #dbeefb 35%, #f7ecd9 100%);
+  }
+
+  #hazeLayer{
+    background:
+      radial-gradient(circle at 20% 30%, rgba(255,255,255,0.35) 0 9%, transparent 18%),
+      radial-gradient(circle at 60% 20%, rgba(255,255,255,0.25) 0 8%, transparent 18%),
+      radial-gradient(circle at 82% 34%, rgba(255,255,255,0.18) 0 6%, transparent 16%);
+    opacity:.9;
+  }
+
+  #farLayer, #midLayer, #frontDecor, #taskLayer{
     position:absolute;
-    left:0;
-    right:0;
-    bottom:105px;
-    height:52%;
+    inset:0;
+    overflow:hidden;
     pointer-events:none;
   }
 
-  .building{
-    position:absolute;
-    bottom:0;
-    background:#f5efe5;
-    border:2px solid rgba(156,125,86,.4);
-    box-shadow:inset 0 -12px 25px rgba(0,0,0,.04);
-    transition:.8s;
-  }
-
-  .building:before{
-    content:"";
-    position:absolute;
-    left:8%;
-    right:8%;
-    top:14%;
-    bottom:12%;
-    background:repeating-linear-gradient(
-      90deg,
-      rgba(209,197,181,.55) 0 8px,
-      rgba(255,255,255,0) 8px 30px
-    );
-    opacity:.8;
-  }
-
-  .building.temple1{left:8%;width:180px;height:240px}
-  .building.temple2{left:30%;width:220px;height:280px}
-  .building.temple3{left:68%;width:170px;height:220px}
-
-  .roof{
-    position:absolute;
-    left:-8%;
-    width:116%;
-    height:20px;
-    top:-18px;
-    background:#d7c29a;
-    border:2px solid rgba(130,100,60,.35);
-    transition:.8s;
-  }
-
-  #forestLayer{
-    position:absolute;
-    inset:0;
-    pointer-events:none;
-    opacity:0;
-    transition:.8s;
-  }
-
-  .tree{
-    position:absolute;
-    bottom:105px;
-    width:110px;
-    height:250px;
-  }
-
-  .trunk{
-    position:absolute;
-    bottom:0;
-    left:42px;
-    width:24px;
-    height:110px;
-    background:#7b5236;
-    border-radius:8px;
-  }
-
-  .leaves{
-    position:absolute;
-    left:0;
-    bottom:80px;
-    width:110px;
-    height:110px;
-    background:radial-gradient(circle at 50% 45%,#74b166 0%,#54894a 72%,#3d6a39 100%);
-    border-radius:50%;
-  }
-
-  .tree.t1{left:12%}
-  .tree.t2{left:44%;transform:scale(1.1)}
-  .tree.t3{left:76%;transform:scale(.9)}
+  #farLayer{ transform:translateX(0); }
+  #midLayer{ transform:translateX(0); }
+  #frontDecor{ transform:translateX(0); }
 
   #ground{
     position:absolute;
-    left:0;
-    right:0;
-    bottom:0;
-    height:110px;
-    background:linear-gradient(180deg,#caa874 0%,#9a764f 55%,#745534 100%);
-    box-shadow:inset 0 18px 20px rgba(255,255,255,.08);
-    transition:.8s;
-  }
-
-  #ground:before{
-    content:"";
-    position:absolute;
-    inset:0;
+    left:0; right:0; bottom:0;
+    height:138px;
     background:
-      radial-gradient(circle at 12% 35%,rgba(255,255,255,.09) 0 12px,transparent 13px),
-      radial-gradient(circle at 34% 67%,rgba(0,0,0,.10) 0 8px,transparent 9px),
-      radial-gradient(circle at 73% 52%,rgba(255,255,255,.08) 0 10px,transparent 11px),
-      radial-gradient(circle at 88% 40%,rgba(0,0,0,.10) 0 8px,transparent 9px);
+      radial-gradient(circle at 12% 28%, rgba(255,255,255,0.08) 0 10px, transparent 11px),
+      radial-gradient(circle at 35% 66%, rgba(0,0,0,0.12) 0 7px, transparent 8px),
+      radial-gradient(circle at 74% 44%, rgba(255,255,255,0.06) 0 9px, transparent 10px),
+      linear-gradient(180deg,#d3b17d 0%, #9f784e 52%, #6b4b2b 100%);
+    box-shadow: inset 0 12px 20px rgba(255,255,255,0.08);
+    transition: background .9s ease;
+    z-index:2;
   }
 
   #player{
     position:absolute;
-    bottom:110px;
-    left:80px;
-    width:64px;
-    height:120px;
-    z-index:5;
+    bottom:126px;
+    left:120px;
+    width:110px;
+    height:180px;
+    z-index:20;
+    transform-origin:center bottom;
   }
 
-  .body{
-    position:absolute;
-    left:16px;
-    bottom:8px;
-    width:32px;
-    height:70px;
-    border-radius:16px 16px 10px 10px;
-    background:#cab9a4;
+  #player svg{
+    width:100%;
+    height:100%;
+    overflow:visible;
+    filter: drop-shadow(0 10px 18px rgba(0,0,0,0.25));
   }
 
-  .head{
-    position:absolute;
-    left:17px;
-    bottom:74px;
-    width:30px;
-    height:30px;
-    border-radius:50%;
-    background:#e7ccb5;
-  }
+  #player.walking .leg-left{ animation:legL .34s infinite linear; transform-origin:50% 10%; }
+  #player.walking .leg-right{ animation:legR .34s infinite linear; transform-origin:50% 10%; }
+  #player.walking .arm-left{ animation:armL .34s infinite linear; transform-origin:50% 10%; }
+  #player.walking .arm-right{ animation:armR .34s infinite linear; transform-origin:50% 10%; }
 
-  .cape{
-    position:absolute;
-    left:4px;
-    bottom:12px;
-    width:26px;
-    height:70px;
-    border-radius:16px 6px 10px 10px;
-    background:#9c2d1f;
-    opacity:.92;
-  }
-
-  .arm{
-    position:absolute;
-    width:10px;
-    height:38px;
-    background:#cab9a4;
-    border-radius:8px;
-    bottom:34px;
-  }
-
-  .arm.left{left:8px;transform-origin:top center}
-  .arm.right{right:8px;transform-origin:top center}
-
-  .leg{
-    position:absolute;
-    width:11px;
-    height:38px;
-    background:#6d4c2d;
-    border-radius:10px;
-    bottom:0;
-  }
-
-  .leg.left{left:18px;transform-origin:top center}
-  .leg.right{right:18px;transform-origin:top center}
-
-  .sword{
-    position:absolute;
-    right:-5px;
-    bottom:42px;
-    width:6px;
-    height:54px;
-    border-radius:4px;
-    background:linear-gradient(180deg,#f2f2f2 0%,#cfd5db 78%,#9b7b46 79%,#7b5a34 100%);
-    transform:rotate(14deg);
-    box-shadow:0 0 8px rgba(255,255,255,.22);
-    transition:.8s;
-  }
-
-  #player.lavinia .cape,
-  #player.lavinia .sword{display:none}
-
-  #player.lavinia .body{background:#d9c9d0}
-  #player.lavinia .leg{background:#7b5968}
-
-  #player.silent .arm{opacity:.35}
-
-  #player.walking .leg.left{animation:legL .35s infinite linear}
-  #player.walking .leg.right{animation:legR .35s infinite linear}
-  #player.walking .arm.left{animation:armL .35s infinite linear}
-  #player.walking .arm.right{animation:armR .35s infinite linear}
-
-  @keyframes legL{
-    0%{transform:rotate(18deg)}
-    50%{transform:rotate(-18deg)}
-    100%{transform:rotate(18deg)}
-  }
-
-  @keyframes legR{
-    0%{transform:rotate(-18deg)}
-    50%{transform:rotate(18deg)}
-    100%{transform:rotate(-18deg)}
-  }
-
-  @keyframes armL{
-    0%{transform:rotate(-15deg)}
-    50%{transform:rotate(15deg)}
-    100%{transform:rotate(-15deg)}
-  }
-
-  @keyframes armR{
-    0%{transform:rotate(15deg)}
-    50%{transform:rotate(-15deg)}
-    100%{transform:rotate(15deg)}
-  }
+  @keyframes legL{ 0%{transform:rotate(16deg)} 50%{transform:rotate(-16deg)} 100%{transform:rotate(16deg)} }
+  @keyframes legR{ 0%{transform:rotate(-16deg)} 50%{transform:rotate(16deg)} 100%{transform:rotate(-16deg)} }
+  @keyframes armL{ 0%{transform:rotate(-12deg)} 50%{transform:rotate(12deg)} 100%{transform:rotate(-12deg)} }
+  @keyframes armR{ 0%{transform:rotate(12deg)} 50%{transform:rotate(-12deg)} 100%{transform:rotate(12deg)} }
 
   .task{
     position:absolute;
-    bottom:110px;
-    width:72px;
-    height:88px;
-    z-index:4;
+    bottom:134px;
+    width:88px;
+    height:110px;
+    z-index:18;
+    pointer-events:none;
   }
 
-  .task-core{
+  .task-badge{
     position:absolute;
-    inset:0;
+    inset:auto 0 0 0;
     margin:auto;
-    width:58px;
-    height:58px;
-    border-radius:16px;
-    background:rgba(255,255,255,.84);
-    border:2px solid rgba(137,102,51,.35);
-    box-shadow:0 0 0 0 rgba(255,255,255,.75);
-    animation:pulse 1.6s infinite;
+    width:78px;
+    height:78px;
+    border-radius:22px;
+    background:rgba(255,250,243,0.95);
+    border:2px solid rgba(129,95,54,0.28);
+    box-shadow:
+      0 0 0 0 rgba(255,255,255,0.65),
+      inset 0 -8px 18px rgba(187,149,95,0.18);
+    animation:pulse 1.8s infinite;
     display:flex;
     align-items:center;
     justify-content:center;
-    color:#4d3522;
+    color:#5a3f24;
     font-weight:700;
     text-align:center;
-    font-size:11px;
-    padding:6px;
+    font-size:12px;
+    padding:8px;
+  }
+
+  .task.done .task-badge{
+    background:rgba(170,218,160,0.95);
+    color:#173311;
+    animation:none;
   }
 
   @keyframes pulse{
-    0%{box-shadow:0 0 0 0 rgba(255,255,255,.55);transform:scale(1)}
-    70%{box-shadow:0 0 0 18px rgba(255,255,255,0);transform:scale(1.04)}
-    100%{box-shadow:0 0 0 0 rgba(255,255,255,0);transform:scale(1)}
-  }
-
-  .task.done .task-core{
-    background:rgba(149,200,141,.92);
-    color:#173313;
-    animation:none;
+    0%{ box-shadow:0 0 0 0 rgba(255,255,255,0.55), inset 0 -8px 18px rgba(187,149,95,0.18); transform:scale(1); }
+    70%{ box-shadow:0 0 0 22px rgba(255,255,255,0), inset 0 -8px 18px rgba(187,149,95,0.18); transform:scale(1.04); }
+    100%{ box-shadow:0 0 0 0 rgba(255,255,255,0), inset 0 -8px 18px rgba(187,149,95,0.18); transform:scale(1); }
   }
 
   #ui{
     position:absolute;
-    left:14px;
-    top:14px;
-    width:min(430px,calc(100vw - 28px));
-    z-index:10;
+    inset:16px auto auto 16px;
+    width:min(470px, calc(100vw - 32px));
+    z-index:30;
   }
 
   #hud{
@@ -334,35 +175,65 @@
     color:var(--ui-text);
     border:1px solid var(--ui-border);
     border-radius:999px;
-    padding:7px 11px;
+    padding:8px 12px;
     font-size:13px;
-    box-shadow:0 6px 18px rgba(0,0,0,.12);
+    box-shadow:0 6px 16px rgba(0,0,0,0.14);
+    backdrop-filter: blur(6px);
   }
 
   #dialogue{
     background:var(--ui-bg);
     color:var(--ui-text);
     border:1px solid var(--ui-border);
-    border-radius:18px;
+    border-radius:24px;
     padding:16px;
-    box-shadow:0 16px 34px rgba(0,0,0,.18);
-    min-height:120px;
+    box-shadow:var(--panel-shadow);
+    min-height:154px;
+    backdrop-filter: blur(8px);
   }
 
-  #dialogue h2{
-    margin:0 0 6px;
-    font-size:22px;
+  .dialogue-top{
+    display:flex;
+    gap:14px;
+    align-items:flex-start;
   }
 
-  #dialogue .meta{
-    color:#6e645a;
+  #portraitWrap{
+    flex:0 0 94px;
+    width:94px;
+    height:112px;
+    border-radius:18px;
+    overflow:hidden;
+    border:1px solid rgba(126,99,69,0.28);
+    background:linear-gradient(180deg,#efe4d3 0%, #d6c0a1 100%);
+    box-shadow: inset 0 -8px 16px rgba(0,0,0,0.08);
+  }
+
+  #portraitWrap svg{
+    width:100%;
+    height:100%;
+    display:block;
+  }
+
+  .dialogue-main{
+    flex:1;
+    min-width:0;
+  }
+
+  #dialogueTitle{
+    margin:0 0 4px;
+    font-size:24px;
+  }
+
+  #dialogueMeta{
+    color:var(--ui-muted);
     font-size:13px;
     margin-bottom:10px;
   }
 
-  #dialogue .text{
+  #dialogueText{
     white-space:pre-line;
-    line-height:1.55;
+    line-height:1.58;
     font-size:16px;
   }
 
@@ -375,124 +246,23 @@
   .choice{
     width:100%;
     text-align:left;
-    border:1px solid var(--ui-border);
-    background:var(--btn);
+    border:1px solid rgba(126,99,69,0.25);
+    background:linear-gradient(180deg,#f6ead8 0%, #ead8bd 100%);
     color:var(--ui-text);
-    border-radius:14px;
+    border-radius:16px;
     padding:11px 12px;
     cursor:pointer;
+    box-shadow: inset 0 -4px 10px rgba(140,102,52,0.08);
   }
 
-  .choice:hover{background:var(--btn-hover)}
-
-  #introOverlay,
-  #endingOverlay{
-    position:absolute;
-    inset:0;
-    background:linear-gradient(180deg,rgba(0,0,0,.30),rgba(0,0,0,.48));
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    z-index:30;
-    padding:20px;
-  }
-
-  .panel{
-    width:min(760px,96vw);
-    background:rgba(255,247,236,.96);
-    color:#241d18;
-    border:1px solid #dbc6a7;
-    border-radius:24px;
-    padding:24px;
-    box-shadow:0 26px 50px rgba(0,0,0,.25);
-  }
-
-  .panel h1{
-    margin:0 0 10px;
-    font-size:42px;
-  }
-
-  .panel p{
-    line-height:1.6;
-    color:#5d5145;
-  }
-
-  .start-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-    gap:14px;
-    margin-top:20px;
-  }
-
-  .start-card{
-    border:1px solid #dbc6a7;
-    background:#f6ead8;
-    border-radius:18px;
-    padding:18px;
-    cursor:pointer;
-  }
-
-  .start-card:hover{background:#eedcbf}
-
-  .start-card h3{
-    margin:0 0 8px;
-    font-size:24px;
-  }
-
-  .mini{
-    font-size:14px;
-    color:#6b5c4d;
-  }
-
-  #controls{
-    position:absolute;
-    left:14px;
-    bottom:14px;
-    z-index:11;
-    display:flex;
-    gap:8px;
-    align-items:flex-end;
-  }
-
-  .ctrl{
-    width:60px;
-    height:60px;
-    border-radius:16px;
-    border:1px solid rgba(255,255,255,.24);
-    background:rgba(22,18,15,.55);
-    color:#fff;
-    font-size:24px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    user-select:none;
-  }
-
-  .ctrl.big{
-    width:88px;
-    font-size:16px;
-    padding:0 10px;
-  }
-
-  #hint{
-    position:absolute;
-    right:14px;
-    bottom:16px;
-    z-index:11;
-    max-width:min(360px,60vw);
-    background:rgba(22,18,15,.58);
-    color:#fff;
-    border:1px solid rgba(255,255,255,.15);
-    border-radius:16px;
-    padding:12px 14px;
-    line-height:1.45;
-    font-size:14px;
+  .choice:hover{
+    background:linear-gradient(180deg,#f8eddc 0%, #e5cda8 100%);
   }
 
   #memories{
-    margin-top:10px;
+    margin-top:12px;
     display:flex;
-    gap:6px;
+    gap:7px;
     flex-wrap:wrap;
   }
 
@@ -505,54 +275,161 @@
     font-size:12px;
   }
 
-  .hidden{display:none !important}
+  #controls{
+    position:absolute;
+    left:16px;
+    bottom:16px;
+    z-index:35;
+    display:flex;
+    gap:8px;
+    align-items:flex-end;
+  }
 
-  @media (max-width:740px){
-    #dialogue{min-height:110px;padding:14px}
-    #dialogue .text{font-size:15px}
-    .panel h1{font-size:34px}
-    #midground{bottom:98px}
-    #ground{height:98px}
-    #player{bottom:98px;width:58px;height:110px}
-    .task{bottom:98px}
-    #hint{max-width:70vw;font-size:13px}
-    #controls{gap:6px}
-    .ctrl{width:54px;height:54px}
+  .ctrl{
+    width:62px;
+    height:62px;
+    border-radius:18px;
+    border:1px solid rgba(255,255,255,0.22);
+    background:rgba(20,17,14,0.52);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
+    user-select:none;
+    backdrop-filter: blur(8px);
+  }
+
+  .ctrl.big{
+    width:98px;
+    font-size:15px;
+    letter-spacing:.03em;
+  }
+
+  #hint{
+    position:absolute;
+    right:16px;
+    bottom:18px;
+    z-index:35;
+    max-width:min(370px,60vw);
+    background:rgba(20,17,14,0.56);
+    color:#fff;
+    border:1px solid rgba(255,255,255,0.12);
+    border-radius:18px;
+    padding:13px 15px;
+    line-height:1.45;
+    font-size:14px;
+    backdrop-filter: blur(8px);
+  }
+
+  #soundBtn{
+    position:absolute;
+    top:16px;
+    right:16px;
+    z-index:40;
+    background:rgba(20,17,14,0.58);
+    color:#fff;
+    border:1px solid rgba(255,255,255,0.16);
+    border-radius:16px;
+    padding:10px 14px;
+    font-size:14px;
+    cursor:pointer;
+    backdrop-filter: blur(8px);
+  }
+
+  #introOverlay,
+  #endingOverlay{
+    position:absolute;
+    inset:0;
+    z-index:60;
+    background:linear-gradient(180deg, rgba(0,0,0,0.28), rgba(0,0,0,0.5));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+  }
+
+  .panel{
+    width:min(860px,96vw);
+    background:rgba(255,247,236,0.96);
+    color:#231a14;
+    border:1px solid rgba(126,99,69,0.24);
+    border-radius:30px;
+    padding:28px;
+    box-shadow:0 30px 60px rgba(0,0,0,0.28);
+  }
+
+  .panel h1{
+    margin:0 0 12px;
+    font-size:46px;
+  }
+
+  .panel p{
+    line-height:1.62;
+    color:#5c4e42;
+    margin:0 0 12px;
+  }
+
+  .start-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:14px;
+    margin-top:18px;
+  }
+
+  .start-card{
+    border:1px solid rgba(126,99,69,0.22);
+    background:linear-gradient(180deg,#f8eddc 0%, #ead8bc 100%);
+    border-radius:22px;
+    padding:20px;
+    cursor:pointer;
+    box-shadow: inset 0 -8px 18px rgba(134,98,54,0.08);
+  }
+
+  .start-card:hover{
+    background:linear-gradient(180deg,#fbf2e4 0%, #e6cfab 100%);
+  }
+
+  .start-card h3{
+    margin:0 0 8px;
+    font-size:28px;
+  }
+
+  .mini{
+    font-size:14px;
+    color:#6b5c4d;
+  }
+
+  .hidden{ display:none !important; }
+
+  @media (max-width: 760px){
+    #ui{ width:min(100vw - 24px, 470px); left:12px; top:12px; }
+    #hint{ max-width:72vw; font-size:13px; }
+    #controls{ left:12px; bottom:12px; gap:6px; }
+    .ctrl{ width:56px; height:56px; }
+    .ctrl.big{ width:90px; font-size:14px; }
+    #player{ width:96px; height:162px; bottom:126px; }
+    .dialogue-top{ gap:10px; }
+    #portraitWrap{ width:82px; height:100px; flex-basis:82px; }
+    .panel h1{ font-size:38px; }
+    #dialogueTitle{ font-size:21px; }
   }
 </style>
 </head>
 <body>
-<div id="gameShell">
-  <div id="background"></div>
-  <div class="sun" id="sun"></div>
-
-  <div id="midground">
-    <div id="romeLayer">
-      <div class="building temple1"><div class="roof"></div></div>
-      <div class="building temple2"><div class="roof"></div></div>
-      <div class="building temple3"><div class="roof"></div></div>
-    </div>
-    <div id="forestLayer">
-      <div class="tree t1"><div class="leaves"></div><div class="trunk"></div></div>
-      <div class="tree t2"><div class="leaves"></div><div class="trunk"></div></div>
-      <div class="tree t3"><div class="leaves"></div><div class="trunk"></div></div>
-    </div>
+<div id="game">
+  <div id="scene">
+    <div id="skyLayer" class="layer"></div>
+    <div id="hazeLayer" class="layer"></div>
+    <div id="farLayer" class="layer"></div>
+    <div id="midLayer" class="layer"></div>
+    <div id="frontDecor" class="layer"></div>
+    <div id="taskLayer"></div>
+    <div id="ground"></div>
+    <div id="player"></div>
   </div>
 
-  <div id="ground"></div>
-
-  <div id="player">
-    <div class="cape"></div>
-    <div class="arm left"></div>
-    <div class="arm right"></div>
-    <div class="body"></div>
-    <div class="head"></div>
-    <div class="leg left"></div>
-    <div class="leg right"></div>
-    <div class="sword" id="playerSword"></div>
-  </div>
-
-  <div id="taskLayer"></div>
+  <button id="soundBtn">Sound: Off</button>
 
   <div id="ui">
     <div id="hud">
@@ -563,10 +440,15 @@
       <div class="chip" id="tasksChip">Tasks 0/0</div>
     </div>
 
-    <div id="dialogue" class="hidden">
-      <h2 id="dialogueTitle"></h2>
-      <div class="meta" id="dialogueMeta"></div>
-      <div class="text" id="dialogueText"></div>
+    <div id="dialogue">
+      <div class="dialogue-top">
+        <div id="portraitWrap"></div>
+        <div class="dialogue-main">
+          <h2 id="dialogueTitle">Ash of Rome</h2>
+          <div id="dialogueMeta">Movement-based tragedy</div>
+          <div id="dialogueText">Choose a character to begin.</div>
+        </div>
+      </div>
       <div id="choices"></div>
       <div id="memories"></div>
     </div>
@@ -583,18 +465,18 @@
   <div id="introOverlay">
     <div class="panel">
       <h1>Ash of Rome</h1>
-      <p>Move left and right, walk to tasks, and interact to progress. Act 1 is brighter and cleaner. Act 2 becomes darker, uglier, and more violent.</p>
+      <p>This version is much more polished: layered scene art, decorative flowers and architecture, face portraits, richer atmosphere, music and ambient sound, and stronger visual contrast between the bright beginning and the ruined end.</p>
       <div class="start-grid">
         <div class="start-card" data-start="Titus">
           <h3>Titus</h3>
-          <div class="mini">Start as an honorable Roman general. His tasks and decisions become more violent, and his sword turns from honorable to shameful.</div>
+          <div class="mini">Begin as an honorable Roman general. As revenge grows, his world darkens, his face hardens, and his sword changes from noble to shameful.</div>
         </div>
         <div class="start-card" data-start="Lavinia">
           <h3>Lavinia</h3>
-          <div class="mini">Start with agency. Later, her voice is stripped away and interaction becomes more tragic.</div>
+          <div class="mini">Begin with grace, voice, and presence. Later the game strips those away and turns even movement into part of the tragedy.</div>
         </div>
       </div>
-      <p class="mini" style="margin-top:14px;">Desktop: arrow keys / A-D + E. Tablet/phone: use the on-screen buttons.</p>
+      <p class="mini" style="margin-top:14px;">Desktop: arrow keys / A-D + E. Mobile/tablet: use the on-screen controls.</p>
     </div>
   </div>
 
@@ -602,8 +484,8 @@
     <div class="panel">
       <h1>Ending — Ash</h1>
       <p id="endingText"></p>
-      <div id="endingMemories" style="display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 10px;"></div>
-      <button id="restartBtn" class="choice">Play again</button>
+      <div id="endingMemories" style="display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 12px;"></div>
+      <button class="choice" id="restartBtn">Play again</button>
     </div>
   </div>
 </div>
@@ -615,14 +497,16 @@ const state = {
   act:1,
   violence:0,
   sword:"Honorable",
-  playerX:80,
+  playerX:120,
   facing:1,
   movingLeft:false,
   movingRight:false,
   currentLevelIndex:0,
   memories:[],
   silent:false,
-  ending:false
+  ending:false,
+  currentDialogTask:null,
+  soundOn:false
 };
 
 const memoryLabels = {
@@ -637,14 +521,14 @@ const levels = [
     act:1,
     title:"Return to Rome",
     meta:"Bright Rome. Ceremony and public honor.",
-    environment:"rome",
-    hint:"Walk to the glowing task and press INTERACT.",
+    environment:"romeBright",
+    hint:"Walk to the glowing task icons and press INTERACT.",
     tasks:[
       {
         id:"prisoner",
-        x:260,
+        x:280,
         label:"Prisoner",
-        text:"A captured enemy kneels before Titus. The sky is bright. The marble still looks pearl white. The crowd expects strength.",
+        text:"A captured enemy kneels before Titus. The sky is bright. The marble still looks pearl white. Flowers spill along the steps and the crowd expects strength.",
         choices:[
           { label:"Spare him. Rome shows strength through mercy.", violence:1 },
           { label:"Execute him. Rome must be feared.", violence:2 },
@@ -653,7 +537,7 @@ const levels = [
       },
       {
         id:"succession",
-        x:620,
+        x:720,
         label:"Throne",
         text:"Now Rome asks who should guide it. Law, power, and pride all call themselves justice.",
         choices:[
@@ -669,14 +553,14 @@ const levels = [
     act:1,
     title:"Seeds of Revenge",
     meta:"Morality still looks possible.",
-    environment:"rome",
-    hint:"Finish both tasks. One is a memory fragment.",
+    environment:"romeBright",
+    hint:"Complete the tasks. One of them is a memory fragment.",
     tasks:[
       {
         id:"family_wrong",
-        x:210,
+        x:250,
         label:"Insult",
-        text:"A wrong against the family becomes impossible to ignore. Pride, injury, and revenge begin to weave together.",
+        text:"A wrong against the family becomes impossible to ignore. Pride, injury, and revenge begin to weave together beneath Rome's polished surface.",
         choices:[
           { label:"Forgive them.", violence:1 },
           { label:"Punish them fairly.", violence:2 },
@@ -685,9 +569,9 @@ const levels = [
       },
       {
         id:"memory_honor",
-        x:560,
+        x:670,
         label:"Memory",
-        text:"Fragment of Titus's memory: A younger Titus stands before Rome believing honor and identity are the same thing.",
+        text:"Fragment of Titus's memory: A younger Titus stands before Rome believing honor and identity are the same thing. The sword feels ceremonial, not hungry.",
         choices:[
           { label:"Take the memory fragment.", memory:"honor" }
         ]
@@ -704,9 +588,9 @@ const levels = [
     tasks:[
       {
         id:"forest_path",
-        x:260,
+        x:290,
         label:"Path",
-        text:"The forest seems calm, painted in green and gold. Safety appears possible for one last moment.",
+        text:"The forest seems calm, painted in green and gold. Wildflowers lean into the path. Safety appears possible for one last moment.",
         choices:[
           { label:"Stay on the safe path.", violence:0 },
           { label:"Explore deeper.", violence:1 },
@@ -715,7 +599,7 @@ const levels = [
       },
       {
         id:"memory_family",
-        x:650,
+        x:760,
         label:"Memory",
         text:"Fragment of Titus's memory: family warmth, pride, and duty. It looks solid, until it cracks apart.",
         choices:[
@@ -730,18 +614,18 @@ const levels = [
     title:"Silence",
     meta:"Act 2 begins. The world decays.",
     environment:"forestDark",
-    hint:"The world has changed. Complete both tasks.",
+    hint:"The forest has changed. Complete both tasks.",
     onEnter(){
       if(state.character === "Lavinia") state.silent = true;
     },
     tasks:[
       {
         id:"turning",
-        x:250,
+        x:300,
         label:"Turning",
         text:() => state.character === "Lavinia"
-          ? "You wake in a world turned brown and grey. You try to speak. Nothing comes."
-          : "News reaches Titus. What was once bright Rome now looks stained and brittle.",
+          ? "You wake in a world turned brown and grey. Blossoms have rotted. You try to speak. Nothing comes."
+          : "News reaches Titus. What was once bright Rome now looks stained and brittle. Even the forest seems wounded.",
         choices:() => state.character === "Lavinia" ? [
           { label:"[trace symbols in the dirt]", violence:1 },
           { label:"[gesture with your body]", violence:1 },
@@ -754,9 +638,9 @@ const levels = [
       },
       {
         id:"memory_grief",
-        x:630,
+        x:760,
         label:"Memory",
-        text:"Final memory fragment: Titus remembers how honor could become wounded pride, and wounded pride become violence.",
+        text:"Final memory fragment: Titus remembers how honor could become wounded pride, and wounded pride become violence. The seed was always there.",
         choices:[
           { label:"Take the memory fragment.", memory:"grief" }
         ]
@@ -772,11 +656,11 @@ const levels = [
     onEnter(){
       state.sword = "Stained";
     },
-    hint:"These last tasks become crueler no matter what you choose.",
+    hint:"These final tasks become crueler no matter what you choose.",
     tasks:[
       {
         id:"enemy",
-        x:240,
+        x:260,
         label:"Enemy",
         text:"An enemy falls within reach. Mercy only changes the texture of ruin.",
         choices:[
@@ -787,9 +671,9 @@ const levels = [
       },
       {
         id:"feast",
-        x:620,
+        x:760,
         label:"Feast",
-        text:"A table is set. Ceremony becomes another mask for violence.",
+        text:"A table is set. Ceremony becomes another mask for violence. The once-white walls are dull, cracked, and stained.",
         choices:[
           { label:"Remain calm.", violence:2 },
           { label:"Taunt them.", violence:3 },
@@ -811,9 +695,9 @@ const levels = [
     tasks:[
       {
         id:"final",
-        x:470,
+        x:530,
         label:"End",
-        text:"Bodies, grief, rage, and consequence surround you. The game offers one final choice, but tragedy has already made its own.",
+        text:"Bodies, grief, rage, and consequence surround you. The game offers one last choice, but tragedy has already made its own.",
         choices:[
           { label:"Stop.", violence:1 },
           { label:"Finish it.", violence:2 }
@@ -823,6 +707,454 @@ const levels = [
     ]
   }
 ];
+
+/* ---------- ART HELPERS ---------- */
+
+function portraitSVG(name){
+  const isTitus = name === "Titus";
+  const dark = state.act === 2;
+  if(isTitus){
+    return `
+    <svg viewBox="0 0 94 112" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="bgT" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stop-color="${dark ? '#8b786a' : '#edd9bb'}"/>
+          <stop offset="1" stop-color="${dark ? '#5e5248' : '#d9b487'}"/>
+        </linearGradient>
+      </defs>
+      <rect width="94" height="112" fill="url(#bgT)"/>
+      <rect x="0" y="84" width="94" height="28" fill="${dark ? '#51372e' : '#8e5f45'}"/>
+      <path d="M12 102 C22 78 32 66 47 66 C62 66 72 78 82 102 Z" fill="${dark ? '#6c6159' : '#bfa993'}"/>
+      <ellipse cx="47" cy="44" rx="21" ry="23" fill="#e5c6aa"/>
+      <path d="M27 40 C29 18 40 12 47 12 C58 12 69 20 68 41 C58 30 38 29 27 40 Z" fill="${dark ? '#6d645e' : '#7b6a57'}"/>
+      <rect x="36" y="34" width="6" height="2.5" rx="1.2" fill="#5f4738"/>
+      <rect x="52" y="34" width="6" height="2.5" rx="1.2" fill="#5f4738"/>
+      <circle cx="40" cy="39" r="1.8" fill="#2c211a"/>
+      <circle cx="54" cy="39" r="1.8" fill="#2c211a"/>
+      <path d="M47 40 L45 49 L49 49" fill="none" stroke="#b8846d" stroke-width="1.2"/>
+      <path d="M39 54 Q47 58 55 54" fill="none" stroke="${dark ? '#5b2420' : '#7a4537'}" stroke-width="2" stroke-linecap="round"/>
+      <path d="M23 83 L36 59 L58 59 L71 83 Z" fill="${dark ? '#5a4940' : '#c9b59e'}"/>
+      <path d="M14 96 L26 82 L37 104 Z" fill="${dark ? '#61201c' : '#9f2d23'}"/>
+    </svg>`;
+  }
+  return `
+  <svg viewBox="0 0 94 112" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="bgL" x1="0" x2="0" y1="0" y2="1">
+        <stop offset="0" stop-color="${dark ? '#857467' : '#f0dfcf'}"/>
+        <stop offset="1" stop-color="${dark ? '#5b4e47' : '#d8bfad'}"/>
+      </linearGradient>
+    </defs>
+    <rect width="94" height="112" fill="url(#bgL)"/>
+    <rect x="0" y="86" width="94" height="26" fill="${dark ? '#4e3d45' : '#a06b7d'}"/>
+    <ellipse cx="47" cy="45" rx="19" ry="23" fill="#efd2bf"/>
+    <path d="M28 38 C28 16 38 10 47 10 C58 10 68 18 67 38 C63 24 31 22 28 38 Z" fill="${dark ? '#4f403f' : '#6e554e'}"/>
+    <path d="M28 34 C23 65 29 76 36 82" fill="none" stroke="${dark ? '#4f403f' : '#6e554e'}" stroke-width="6" stroke-linecap="round"/>
+    <path d="M66 34 C71 65 65 76 58 82" fill="none" stroke="${dark ? '#4f403f' : '#6e554e'}" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="40" cy="40" r="1.8" fill="#2b221d"/>
+    <circle cx="54" cy="40" r="1.8" fill="#2b221d"/>
+    <path d="M37 34.5 Q40 33 43 34.5" fill="none" stroke="#5f4738" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M51 34.5 Q54 33 57 34.5" fill="none" stroke="#5f4738" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M47 41 L45.5 49 L49 49" fill="none" stroke="#be8f79" stroke-width="1.2"/>
+    <path d="M39 56 Q47 60 55 56" fill="none" stroke="${state.silent ? '#694547' : '#8b5565'}" stroke-width="2" stroke-linecap="round"/>
+    <path d="M24 100 C28 82 34 69 47 69 C60 69 66 82 70 100 Z" fill="${dark ? '#7b6c70' : '#ddcad2'}"/>
+  </svg>`;
+}
+
+function playerSVG(){
+  const isTitus = state.character === "Titus";
+  const dark = state.act === 2;
+  const silent = state.silent;
+  if(isTitus){
+    return `
+    <svg viewBox="0 0 110 180" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="capeGrad" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stop-color="${dark ? '#651d19' : '#a12f22'}"/>
+          <stop offset="1" stop-color="${dark ? '#3e1110' : '#6b2018'}"/>
+        </linearGradient>
+        <linearGradient id="armorGrad" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stop-color="${dark ? '#9b8f84' : '#d7c8b3'}"/>
+          <stop offset="1" stop-color="${dark ? '#6d6159' : '#aa977f'}"/>
+        </linearGradient>
+      </defs>
+      <path d="M24 160 L19 74 L44 66 L40 160 Z" fill="url(#capeGrad)" opacity="0.92"/>
+      <ellipse cx="55" cy="32" rx="16" ry="18" fill="#e9cdb7"/>
+      <path d="M39 28 C41 10 50 6 56 6 C68 6 73 15 71 31 C66 23 46 20 39 28 Z" fill="${dark ? '#6f655e' : '#7a6b5b'}"/>
+      <rect x="44" y="47" width="22" height="8" rx="4" fill="#d4b197"/>
+      <path d="M36 56 L74 56 L81 118 L29 118 Z" fill="url(#armorGrad)"/>
+      <path d="M44 56 L55 63 L66 56" fill="none" stroke="#91785b" stroke-width="3" />
+      <circle cx="55" cy="86" r="6" fill="${dark ? '#a98a5d' : '#cfa468'}"/>
+      <path d="M30 70 H80" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+      <path class="arm-left" d="M31 64 C18 82 19 105 27 118" fill="none" stroke="#ceb49d" stroke-width="10" stroke-linecap="round"/>
+      <path class="arm-right" d="M79 64 C93 79 90 102 84 116" fill="none" stroke="#ceb49d" stroke-width="10" stroke-linecap="round"/>
+      <path class="leg-left" d="M48 118 C44 140 43 153 43 172" fill="none" stroke="#745534" stroke-width="12" stroke-linecap="round"/>
+      <path class="leg-right" d="M62 118 C66 140 67 153 67 172" fill="none" stroke="#745534" stroke-width="12" stroke-linecap="round"/>
+      <rect x="84" y="68" width="7" height="64" rx="3.5" fill="${state.sword === 'Honorable' ? '#d8dde2' : state.sword === 'Stained' ? '#ad9e9e' : '#665d5a'}" transform="rotate(14 84 68)"/>
+      <rect x="82" y="122" width="12" height="6" rx="2" fill="${state.sword === 'Honorable' ? '#9b7b46' : '#5c3d29'}" transform="rotate(14 82 122)"/>
+      <circle cx="49" cy="31" r="1.8" fill="#2d221b"/>
+      <circle cx="61" cy="31" r="1.8" fill="#2d221b"/>
+      <path d="M55 32 L53.5 39 L56.5 39" fill="none" stroke="#bf8c72" stroke-width="1.2"/>
+      <path d="M48 45 Q55 48 62 45" fill="none" stroke="${dark ? '#5e2420' : '#7e4739'}" stroke-width="2" stroke-linecap="round"/>
+    </svg>`;
+  }
+
+  return `
+  <svg viewBox="0 0 110 180" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="dressGrad" x1="0" x2="0" y1="0" y2="1">
+        <stop offset="0" stop-color="${dark ? '#b8aaae' : '#ead8df'}"/>
+        <stop offset="1" stop-color="${dark ? '#85757b' : '#c9b0ba'}"/>
+      </linearGradient>
+    </defs>
+    <ellipse cx="55" cy="32" rx="16" ry="18" fill="#efd2bf"/>
+    <path d="M38 27 C39 11 47 7 56 7 C68 7 72 18 70 31 C64 23 46 20 38 27 Z" fill="${dark ? '#50413e' : '#6c554c'}"/>
+    <path d="M39 32 C34 55 39 69 46 82" fill="none" stroke="${dark ? '#50413e' : '#6c554c'}" stroke-width="7" stroke-linecap="round"/>
+    <path d="M71 32 C76 55 71 69 64 82" fill="none" stroke="${dark ? '#50413e' : '#6c554c'}" stroke-width="7" stroke-linecap="round"/>
+    <path d="M34 58 C42 47 68 47 76 58 L83 121 L27 121 Z" fill="url(#dressGrad)"/>
+    <path class="arm-left" d="M34 67 C24 85 24 106 29 119" fill="none" stroke="#d9c1ad" stroke-width="9" stroke-linecap="round" opacity="${silent ? '.28' : '1'}"/>
+    <path class="arm-right" d="M76 67 C86 85 86 106 81 119" fill="none" stroke="#d9c1ad" stroke-width="9" stroke-linecap="round" opacity="${silent ? '.28' : '1'}"/>
+    <path class="leg-left" d="M49 121 C45 143 45 156 45 172" fill="none" stroke="#7b5968" stroke-width="12" stroke-linecap="round"/>
+    <path class="leg-right" d="M61 121 C65 143 65 156 65 172" fill="none" stroke="#7b5968" stroke-width="12" stroke-linecap="round"/>
+    <circle cx="49" cy="31" r="1.8" fill="#2d221b"/>
+    <circle cx="61" cy="31" r="1.8" fill="#2d221b"/>
+    <path d="M55 32 L53.5 39 L56.5 39" fill="none" stroke="#bf8c72" stroke-width="1.2"/>
+    <path d="M48 46 Q55 49 62 46" fill="none" stroke="${silent ? '#6d5353' : '#935766'}" stroke-width="2" stroke-linecap="round"/>
+  </svg>`;
+}
+
+function templeSVG(x, y, w, h, variant, dark=false){
+  const wall = dark ? "#8c8378" : "#f5efe5";
+  const roof = dark ? "#655b51" : "#d7c29a";
+  const stroke = dark ? "#4f453d" : "#cdb58e";
+  const vine = dark ? "#5c5a45" : "#7ca25c";
+  const crack = dark ? `<path d="M${w*0.52} ${h*0.18} L${w*0.48} ${h*0.36} L${w*0.58} ${h*0.56} L${w*0.49} ${h*0.84}" stroke="#544841" stroke-width="2" fill="none"/>` : "";
+  const flowers = !dark ? `
+    <circle cx="${w*0.15}" cy="${h*0.9}" r="7" fill="#d47f96"/>
+    <circle cx="${w*0.19}" cy="${h*0.88}" r="6" fill="#f0d18a"/>
+    <circle cx="${w*0.24}" cy="${h*0.91}" r="7" fill="#c57fc5"/>
+  ` : "";
+  return `
+  <svg class="temple temple-${variant}" viewBox="0 0 ${w} ${h}" style="position:absolute;left:${x}px;bottom:${y}px;width:${w}px;height:${h}px;overflow:visible">
+    <rect x="${w*0.04}" y="${h*0.08}" width="${w*0.92}" height="${h*0.07}" fill="${roof}" stroke="${stroke}" stroke-width="3"/>
+    <polygon points="${w*0.02},${h*0.15} ${w*0.5},0 ${w*0.98},${h*0.15}" fill="${roof}" stroke="${stroke}" stroke-width="3"/>
+    <rect x="${w*0.08}" y="${h*0.16}" width="${w*0.84}" height="${h*0.78}" rx="2" fill="${wall}" stroke="${stroke}" stroke-width="3"/>
+    ${[0.16,0.34,0.52,0.70].map(fr=>`
+      <rect x="${w*fr}" y="${h*0.2}" width="${w*0.1}" height="${h*0.65}" fill="${dark ? '#9a8f83' : '#fbf6ed'}" stroke="${stroke}" stroke-width="2"/>
+      <path d="M${w*(fr+0.01)} ${h*0.27} H${w*(fr+0.09)}" stroke="rgba(0,0,0,0.07)" stroke-width="2"/>
+      <path d="M${w*(fr+0.01)} ${h*0.41} H${w*(fr+0.09)}" stroke="rgba(0,0,0,0.07)" stroke-width="2"/>
+      <path d="M${w*(fr+0.01)} ${h*0.55} H${w*(fr+0.09)}" stroke="rgba(0,0,0,0.07)" stroke-width="2"/>
+    `).join("")}
+    <rect x="${w*0.06}" y="${h*0.86}" width="${w*0.88}" height="${h*0.08}" fill="${dark ? '#776b61' : '#e7dcc7'}" stroke="${stroke}" stroke-width="2"/>
+    <path d="M${w*0.83} ${h*0.55} C${w*0.88} ${h*0.47} ${w*0.9} ${h*0.36} ${w*0.88} ${h*0.26}" stroke="${vine}" stroke-width="3" fill="none"/>
+    <circle cx="${w*0.89}" cy="${h*0.35}" r="4" fill="${vine}"/>
+    ${crack}
+    ${flowers}
+  </svg>`;
+}
+
+function treeSVG(x, y, scale=1, dark=false, flowers=false){
+  const leaf1 = dark ? "#55624a" : "#6fa75e";
+  const leaf2 = dark ? "#44523e" : "#4f8046";
+  const trunk = dark ? "#4c392d" : "#7b5236";
+  const bloom = dark ? "#6d5760" : "#e2a1ba";
+  const s = scale;
+  return `
+  <svg viewBox="0 0 160 280" style="position:absolute;left:${x}px;bottom:${y}px;width:${160*s}px;height:${280*s}px;overflow:visible">
+    <rect x="68" y="160" width="22" height="92" rx="9" fill="${trunk}"/>
+    <circle cx="82" cy="110" r="52" fill="${leaf2}"/>
+    <circle cx="52" cy="124" r="42" fill="${leaf1}"/>
+    <circle cx="111" cy="125" r="38" fill="${leaf1}"/>
+    <circle cx="86" cy="86" r="36" fill="${leaf1}"/>
+    ${flowers ? `
+      <circle cx="45" cy="126" r="6" fill="${bloom}"/>
+      <circle cx="68" cy="89" r="6" fill="${bloom}"/>
+      <circle cx="104" cy="115" r="6" fill="${bloom}"/>
+      <circle cx="122" cy="136" r="5" fill="#f0d28a"/>
+    ` : ""}
+  </svg>`;
+}
+
+function flowerPatchSVG(x, y, dark=false){
+  const grass = dark ? "#5a5b44" : "#6f944b";
+  const petal1 = dark ? "#7e6170" : "#da8eae";
+  const petal2 = dark ? "#7a6b8d" : "#c8a2e0";
+  const petal3 = dark ? "#927557" : "#f0d28c";
+  return `
+  <svg viewBox="0 0 220 90" style="position:absolute;left:${x}px;bottom:${y}px;width:220px;height:90px;overflow:visible">
+    ${[8,26,47,66,84,104,126,150,173,196].map(px=>`
+      <path d="M${px} 90 C${px+2} 66 ${px-4} 42 ${px+8} 26" stroke="${grass}" stroke-width="3" fill="none"/>
+    `).join("")}
+    <circle cx="18" cy="28" r="7" fill="${petal1}"/>
+    <circle cx="44" cy="20" r="6" fill="${petal3}"/>
+    <circle cx="68" cy="25" r="7" fill="${petal2}"/>
+    <circle cx="108" cy="18" r="7" fill="${petal1}"/>
+    <circle cx="148" cy="24" r="6" fill="${petal3}"/>
+    <circle cx="184" cy="22" r="7" fill="${petal2}"/>
+  </svg>`;
+}
+
+function ruinSVG(x, y, w, h){
+  return `
+  <svg viewBox="0 0 ${w} ${h}" style="position:absolute;left:${x}px;bottom:${y}px;width:${w}px;height:${h}px;overflow:visible">
+    <rect x="${w*0.1}" y="${h*0.2}" width="${w*0.75}" height="${h*0.65}" fill="#5d5753" stroke="#433d39" stroke-width="3"/>
+    <rect x="${w*0.05}" y="${h*0.84}" width="${w*0.86}" height="${h*0.08}" fill="#514b47"/>
+    <rect x="${w*0.18}" y="${h*0.28}" width="${w*0.1}" height="${h*0.56}" fill="#776e69" stroke="#433d39" stroke-width="2"/>
+    <rect x="${w*0.38}" y="${h*0.28}" width="${w*0.1}" height="${h*0.56}" fill="#776e69" stroke="#433d39" stroke-width="2"/>
+    <path d="M${w*0.7} ${h*0.2} L${w*0.84} 0 L${w*0.86} ${h*0.84} L${w*0.68} ${h*0.84}" fill="#6b645f" stroke="#433d39" stroke-width="3"/>
+    <path d="M${w*0.55} ${h*0.22} L${w*0.49} ${h*0.4} L${w*0.58} ${h*0.62} L${w*0.51} ${h*0.83}" stroke="#3e3834" stroke-width="3" fill="none"/>
+  </svg>`;
+}
+
+function taskIconSVG(kind){
+  if(kind === "Memory"){
+    return `<svg viewBox="0 0 70 70" xmlns="http://www.w3.org/2000/svg">
+      <rect x="16" y="14" width="38" height="44" rx="7" fill="#f7ecd9" stroke="#ae8554" stroke-width="2.5"/>
+      <path d="M23 25 H47 M23 34 H45 M23 43 H41" stroke="#ae8554" stroke-width="3" stroke-linecap="round"/>
+    </svg>`;
+  }
+  if(kind === "Feast"){
+    return `<svg viewBox="0 0 70 70" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="35" cy="42" rx="22" ry="10" fill="#f1e2cb" stroke="#986f43" stroke-width="2.5"/>
+      <path d="M18 24 H52" stroke="#986f43" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="26" cy="24" r="3" fill="#c05a54"/>
+      <circle cx="35" cy="24" r="3" fill="#d3b25e"/>
+      <circle cx="44" cy="24" r="3" fill="#8d5aac"/>
+    </svg>`;
+  }
+  if(kind === "Enemy" || kind === "Prisoner"){
+    return `<svg viewBox="0 0 70 70" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="35" cy="22" r="10" fill="#e6cab5"/>
+      <path d="M18 58 C22 38 28 31 35 31 C42 31 48 38 52 58" fill="#b49c84" stroke="#8a6f54" stroke-width="2.5"/>
+    </svg>`;
+  }
+  return `<svg viewBox="0 0 70 70" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="35" cy="35" r="18" fill="#f3e6d2" stroke="#9e764a" stroke-width="2.5"/>
+    <path d="M35 18 V52 M18 35 H52" stroke="#9e764a" stroke-width="3" stroke-linecap="round"/>
+  </svg>`;
+}
+
+function buildSceneArt(){
+  const far = document.getElementById("farLayer");
+  const mid = document.getElementById("midLayer");
+  const front = document.getElementById("frontDecor");
+  far.innerHTML = "";
+  mid.innerHTML = "";
+  front.innerHTML = "";
+
+  const env = currentLevel().environment;
+
+  if(env === "romeBright"){
+    far.innerHTML += templeSVG(70, 128, 240, 260, 1, false);
+    far.innerHTML += templeSVG(380, 128, 290, 300, 2, false);
+    far.innerHTML += templeSVG(760, 128, 230, 240, 3, false);
+    front.innerHTML += flowerPatchSVG(40, 120, false);
+    front.innerHTML += flowerPatchSVG(330, 118, false);
+    front.innerHTML += flowerPatchSVG(720, 124, false);
+    front.innerHTML += `<svg viewBox="0 0 220 180" style="position:absolute;left:560px;bottom:118px;width:220px;height:180px;">
+      <rect x="88" y="46" width="44" height="92" fill="#f3e8d9" stroke="#c9af86" stroke-width="3"/>
+      <ellipse cx="110" cy="30" rx="24" ry="24" fill="#e9ceb5"/>
+      <path d="M92 66 C96 53 103 48 110 48 C117 48 124 53 128 66 L138 140 L82 140 Z" fill="#d5c0a8"/>
+      <path d="M110 54 L110 140" stroke="#c8ad86" stroke-width="4"/>
+    </svg>`;
+  }
+
+  if(env === "forestBright"){
+    far.innerHTML += treeSVG(80, 126, 1.2, false, true);
+    far.innerHTML += treeSVG(410, 126, 1.35, false, true);
+    far.innerHTML += treeSVG(820, 126, 1.1, false, true);
+    mid.innerHTML += treeSVG(250, 126, 1.0, false, true);
+    mid.innerHTML += treeSVG(670, 126, .95, false, true);
+    front.innerHTML += flowerPatchSVG(60, 122, false);
+    front.innerHTML += flowerPatchSVG(280, 119, false);
+    front.innerHTML += flowerPatchSVG(560, 123, false);
+    front.innerHTML += flowerPatchSVG(810, 118, false);
+  }
+
+  if(env === "forestDark"){
+    far.innerHTML += treeSVG(80, 126, 1.2, true, false);
+    far.innerHTML += treeSVG(420, 126, 1.35, true, false);
+    far.innerHTML += treeSVG(840, 126, 1.1, true, false);
+    mid.innerHTML += treeSVG(240, 126, 1.0, true, false);
+    mid.innerHTML += treeSVG(660, 126, .95, true, false);
+    front.innerHTML += flowerPatchSVG(60, 122, true);
+    front.innerHTML += flowerPatchSVG(360, 119, true);
+    front.innerHTML += `<svg viewBox="0 0 210 120" style="position:absolute;left:690px;bottom:120px;width:210px;height:120px">
+      <path d="M20 90 C52 70 74 64 112 72 C146 78 168 70 195 60" stroke="#4c3f33" stroke-width="10" fill="none" stroke-linecap="round"/>
+      <path d="M108 74 L112 40" stroke="#4c3f33" stroke-width="10" stroke-linecap="round"/>
+    </svg>`;
+  }
+
+  if(env === "romeDark"){
+    far.innerHTML += templeSVG(60, 128, 250, 260, 1, true);
+    far.innerHTML += templeSVG(370, 128, 290, 300, 2, true);
+    far.innerHTML += templeSVG(780, 128, 220, 236, 3, true);
+    mid.innerHTML += `<svg viewBox="0 0 280 220" style="position:absolute;left:520px;bottom:122px;width:280px;height:220px">
+      <rect x="66" y="120" width="140" height="50" fill="#695f58"/>
+      <path d="M55 120 L136 38 L216 120" fill="#6d625b" stroke="#4d433e" stroke-width="4"/>
+      <path d="M136 38 L136 170" stroke="#4d433e" stroke-width="4"/>
+      <path d="M100 62 L92 120 M176 62 L184 120" stroke="#4d433e" stroke-width="4"/>
+    </svg>`;
+    front.innerHTML += flowerPatchSVG(90, 121, true);
+    front.innerHTML += flowerPatchSVG(730, 118, true);
+  }
+
+  if(env === "ruin"){
+    far.innerHTML += ruinSVG(120, 128, 250, 270);
+    far.innerHTML += ruinSVG(440, 128, 320, 300);
+    far.innerHTML += ruinSVG(840, 128, 170, 230);
+    front.innerHTML += `<svg viewBox="0 0 300 120" style="position:absolute;left:420px;bottom:120px;width:300px;height:120px">
+      <path d="M20 98 H110 L132 74 H176 L193 98 H284" stroke="#3f3733" stroke-width="11" stroke-linecap="round" fill="none"/>
+      <path d="M132 74 L118 46 M176 74 L188 40" stroke="#3f3733" stroke-width="8" stroke-linecap="round"/>
+    </svg>`;
+  }
+}
+
+function updateVisualTheme(){
+  const sky = document.getElementById("skyLayer");
+  const haze = document.getElementById("hazeLayer");
+  const ground = document.getElementById("ground");
+  const env = currentLevel().environment;
+
+  if(env === "romeBright"){
+    sky.style.background = "radial-gradient(circle at 78% 15%, rgba(255,244,187,0.96) 0 5%, rgba(255,236,155,0.4) 6%, transparent 12%), linear-gradient(180deg,#8fd0ff 0%, #dbeefb 35%, #f7ecd9 100%)";
+    haze.style.opacity = ".9";
+    ground.style.background = "radial-gradient(circle at 12% 28%, rgba(255,255,255,0.08) 0 10px, transparent 11px), radial-gradient(circle at 35% 66%, rgba(0,0,0,0.12) 0 7px, transparent 8px), radial-gradient(circle at 74% 44%, rgba(255,255,255,0.06) 0 9px, transparent 10px), linear-gradient(180deg,#d3b17d 0%, #9f784e 52%, #6b4b2b 100%)";
+  } else if(env === "forestBright"){
+    sky.style.background = "radial-gradient(circle at 76% 17%, rgba(255,243,184,0.9) 0 5%, rgba(255,228,140,0.34) 6%, transparent 12%), linear-gradient(180deg,#96d4ff 0%, #e4f3dd 38%, #e5d6bc 100%)";
+    haze.style.opacity = ".72";
+    ground.style.background = "linear-gradient(180deg,#b89667 0%, #886641 52%, #5d4328 100%)";
+  } else if(env === "forestDark"){
+    sky.style.background = "radial-gradient(circle at 78% 16%, rgba(210,190,140,0.2) 0 4%, rgba(180,160,120,0.08) 6%, transparent 13%), linear-gradient(180deg,#6e6a67 0%, #736b66 34%, #60544a 100%)";
+    haze.style.opacity = ".2";
+    ground.style.background = "linear-gradient(180deg,#6a5a48 0%, #554534 55%, #3f3023 100%)";
+  } else if(env === "romeDark"){
+    sky.style.background = "radial-gradient(circle at 80% 15%, rgba(180,160,130,0.12) 0 4%, rgba(100,90,80,0.05) 7%, transparent 14%), linear-gradient(180deg,#615d5b 0%, #6f6460 36%, #594f48 100%)";
+    haze.style.opacity = ".13";
+    ground.style.background = "linear-gradient(180deg,#7a634d 0%, #594533 56%, #412f24 100%)";
+  } else {
+    sky.style.background = "linear-gradient(180deg,#4e4b49 0%, #57514e 34%, #473f3a 100%)";
+    haze.style.opacity = ".08";
+    ground.style.background = "linear-gradient(180deg,#5e5044 0%, #47392e 56%, #342820 100%)";
+  }
+}
+
+/* ---------- AUDIO ---------- */
+
+let audioCtx = null;
+let masterGain = null;
+let ambientNodes = [];
+
+function initAudio(){
+  if(audioCtx) return;
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  masterGain = audioCtx.createGain();
+  masterGain.gain.value = 0.0;
+  masterGain.connect(audioCtx.destination);
+}
+
+function stopAmbient(){
+  ambientNodes.forEach(n => {
+    try{
+      n.stop && n.stop();
+    }catch(e){}
+  });
+  ambientNodes = [];
+}
+
+function startAmbient(){
+  initAudio();
+  stopAmbient();
+  if(!state.soundOn) return;
+
+  const now = audioCtx.currentTime;
+
+  const drone = audioCtx.createOscillator();
+  const droneGain = audioCtx.createGain();
+  drone.type = "sine";
+  drone.frequency.value = state.act === 1 ? 146.8 : 82.4;
+  droneGain.gain.value = state.act === 1 ? 0.015 : 0.026;
+  drone.connect(droneGain).connect(masterGain);
+  drone.start();
+
+  const second = audioCtx.createOscillator();
+  const secondGain = audioCtx.createGain();
+  second.type = "triangle";
+  second.frequency.value = state.act === 1 ? 220 : 110;
+  secondGain.gain.value = state.act === 1 ? 0.008 : 0.014;
+  second.connect(secondGain).connect(masterGain);
+  second.start();
+
+  const noiseBuffer = audioCtx.createBuffer(1, audioCtx.sampleRate * 2, audioCtx.sampleRate);
+  const data = noiseBuffer.getChannelData(0);
+  for(let i=0;i<data.length;i++) data[i] = (Math.random()*2-1) * 0.4;
+  const noise = audioCtx.createBufferSource();
+  noise.buffer = noiseBuffer;
+  noise.loop = true;
+  const hp = audioCtx.createBiquadFilter();
+  hp.type = "highpass";
+  hp.frequency.value = state.act === 1 ? 400 : 220;
+  const noiseGain = audioCtx.createGain();
+  noiseGain.gain.value = state.act === 1 ? 0.006 : 0.012;
+  noise.connect(hp).connect(noiseGain).connect(masterGain);
+  noise.start();
+
+  masterGain.gain.cancelScheduledValues(now);
+  masterGain.gain.linearRampToValueAtTime(0.12, now + 1.2);
+
+  ambientNodes = [drone, second, noise];
+}
+
+function toggleSound(){
+  state.soundOn = !state.soundOn;
+  document.getElementById("soundBtn").textContent = state.soundOn ? "Sound: On" : "Sound: Off";
+  if(!audioCtx) initAudio();
+  audioCtx.resume();
+  if(state.soundOn) startAmbient();
+  else {
+    masterGain.gain.cancelScheduledValues(audioCtx.currentTime);
+    masterGain.gain.linearRampToValueAtTime(0.0, audioCtx.currentTime + 0.3);
+  }
+}
+
+function playClickTone(){
+  if(!state.soundOn || !audioCtx) return;
+  const o = audioCtx.createOscillator();
+  const g = audioCtx.createGain();
+  o.type = "triangle";
+  o.frequency.setValueAtTime(420, audioCtx.currentTime);
+  o.frequency.exponentialRampToValueAtTime(240, audioCtx.currentTime + 0.12);
+  g.gain.setValueAtTime(0.04, audioCtx.currentTime);
+  g.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.14);
+  o.connect(g).connect(masterGain);
+  o.start();
+  o.stop(audioCtx.currentTime + 0.14);
+}
+
+let lastStepTime = 0;
+function playStep(){
+  if(!state.soundOn || !audioCtx) return;
+  const now = audioCtx.currentTime;
+  if(now - lastStepTime < 0.22) return;
+  lastStepTime = now;
+
+  const noiseBuffer = audioCtx.createBuffer(1, audioCtx.sampleRate * 0.05, audioCtx.sampleRate);
+  const data = noiseBuffer.getChannelData(0);
+  for(let i=0;i<data.length;i++) data[i] = (Math.random()*2-1) * 0.6;
+  const src = audioCtx.createBufferSource();
+  src.buffer = noiseBuffer;
+  const bp = audioCtx.createBiquadFilter();
+  bp.type = "bandpass";
+  bp.frequency.value = state.act === 1 ? 280 : 180;
+  const g = audioCtx.createGain();
+  g.gain.setValueAtTime(0.02, now);
+  g.gain.exponentialRampToValueAtTime(0.0001, now + 0.05);
+  src.connect(bp).connect(g).connect(masterGain);
+  src.start();
+  src.stop(now + 0.06);
+}
+
+/* ---------- CORE ---------- */
 
 function currentLevel(){ return levels[state.currentLevelIndex]; }
 function visibleTasks(){ return currentLevel().tasks; }
@@ -835,97 +1167,47 @@ function startGame(character){
     act:1,
     violence:0,
     sword:"Honorable",
-    playerX:80,
+    playerX:120,
     facing:1,
     movingLeft:false,
     movingRight:false,
     currentLevelIndex:0,
     memories:[],
     silent:false,
-    ending:false
+    ending:false,
+    currentDialogTask:null
   });
   document.getElementById("introOverlay").classList.add("hidden");
   document.getElementById("controls").classList.remove("hidden");
   document.getElementById("hint").classList.remove("hidden");
-  document.getElementById("dialogue").classList.remove("hidden");
-  syncPlayerAppearance();
+  syncPortrait();
   applyEnvironment();
   renderTasks();
   updateHUD();
   showLevelIntro();
+  if(state.soundOn) startAmbient();
 }
 
-function syncPlayerAppearance(){
+function syncPortrait(){
+  document.getElementById("portraitWrap").innerHTML = portraitSVG(state.character || "Titus");
+}
+
+function renderPlayer(){
   const p = document.getElementById("player");
-  p.classList.toggle("lavinia", state.character === "Lavinia");
+  p.innerHTML = playerSVG();
   p.classList.toggle("silent", !!state.silent);
-  document.getElementById("playerSword").style.display = state.character === "Titus" ? "block" : "none";
 }
 
 function applyEnvironment(){
   const lvl = currentLevel();
   state.act = lvl.act;
   if(typeof lvl.onEnter === "function") lvl.onEnter();
-
-  const bg = document.getElementById("background");
-  const ground = document.getElementById("ground");
-  const sun = document.getElementById("sun");
-  const buildings = document.querySelectorAll(".building");
-  const roofs = document.querySelectorAll(".roof");
-  const forest = document.getElementById("forestLayer");
-  const rome = document.getElementById("romeLayer");
-  const sword = document.getElementById("playerSword");
-
-  if(lvl.environment === "rome"){
-    bg.style.background = "linear-gradient(180deg,#89c8ff 0%,#f4efe1 44%,#efe5d2 100%)";
-    ground.style.background = "linear-gradient(180deg,#caa874 0%,#9a764f 55%,#745534 100%)";
-    sun.style.opacity = "1";
-    forest.style.opacity = "0";
-    rome.style.opacity = "1";
-    buildings.forEach(b => { b.style.background = "#f6efe5"; b.style.borderColor = "rgba(156,125,86,.4)"; });
-    roofs.forEach(r => r.style.background = "#d7c29a");
-  } else if(lvl.environment === "forestBright"){
-    bg.style.background = "linear-gradient(180deg,#98d1ff 0%,#edf7df 46%,#e5d5b8 100%)";
-    ground.style.background = "linear-gradient(180deg,#af8d5e 0%,#8a6840 55%,#63482a 100%)";
-    sun.style.opacity = "1";
-    forest.style.opacity = "1";
-    rome.style.opacity = ".35";
-  } else if(lvl.environment === "forestDark"){
-    bg.style.background = "linear-gradient(180deg,#706b67 0%,#736e67 38%,#66584a 100%)";
-    ground.style.background = "linear-gradient(180deg,#6a5a48 0%,#554534 55%,#3f3023 100%)";
-    sun.style.opacity = ".18";
-    forest.style.opacity = "1";
-    rome.style.opacity = ".1";
-    buildings.forEach(b => { b.style.background = "#7c746b"; b.style.borderColor = "rgba(42,34,27,.4)"; });
-    roofs.forEach(r => r.style.background = "#615a52");
-  } else if(lvl.environment === "romeDark"){
-    bg.style.background = "linear-gradient(180deg,#5f5c5a 0%,#6d625d 40%,#5d534c 100%)";
-    ground.style.background = "linear-gradient(180deg,#78634e 0%,#5c4837 55%,#433126 100%)";
-    sun.style.opacity = ".1";
-    forest.style.opacity = ".15";
-    rome.style.opacity = "1";
-    buildings.forEach(b => { b.style.background = "#8c8379"; b.style.borderColor = "rgba(58,45,36,.55)"; });
-    roofs.forEach(r => r.style.background = "#665b4f");
-  } else {
-    bg.style.background = "linear-gradient(180deg,#4b4948 0%,#55504d 38%,#453d38 100%)";
-    ground.style.background = "linear-gradient(180deg,#5c4e42 0%,#47392e 55%,#342820 100%)";
-    sun.style.opacity = ".04";
-    forest.style.opacity = ".06";
-    rome.style.opacity = "1";
-    buildings.forEach(b => { b.style.background = "#5c5652"; b.style.borderColor = "rgba(38,30,24,.65)"; });
-    roofs.forEach(r => r.style.background = "#4b433d");
-  }
-
-  if(state.sword === "Honorable"){
-    sword.style.background = "linear-gradient(180deg,#f2f2f2 0%,#d4dbe2 78%,#9b7b46 79%,#7b5a34 100%)";
-  } else if(state.sword === "Stained"){
-    sword.style.background = "linear-gradient(180deg,#c8c8c8 0%,#a9a0a0 65%,#7b2620 82%,#5b3f28 100%)";
-  } else {
-    sword.style.background = "linear-gradient(180deg,#8b8480 0%,#5e5856 65%,#4a1c18 82%,#38261d 100%)";
-  }
-
-  syncPlayerAppearance();
+  updateVisualTheme();
+  buildSceneArt();
+  renderPlayer();
+  syncPortrait();
   document.getElementById("hint").textContent = lvl.hint;
+  if(state.soundOn) startAmbient();
 }
 
 function renderTasks(){
@@ -935,9 +1217,19 @@ function renderTasks(){
     const el = document.createElement("div");
     el.className = "task" + (task.done ? " done" : "");
     el.style.left = task.x + "px";
-    el.innerHTML = '<div class="task-core">' + (task.done ? 'Done' : task.label) + '</div>';
+    el.innerHTML = `<div class="task-badge">${task.done ? "Done" : taskIconSVG(task.label)}</div>`;
     layer.appendChild(el);
   });
+}
+
+function updateHUD(){
+  const total = visibleTasks().length;
+  const done = visibleTasks().filter(t => t.done).length;
+  document.getElementById("actChip").textContent = "Act " + state.act;
+  document.getElementById("charChip").textContent = "Character " + state.character;
+  document.getElementById("violenceChip").textContent = "Violence " + state.violence;
+  document.getElementById("swordChip").textContent = "Sword " + state.sword;
+  document.getElementById("tasksChip").textContent = "Tasks " + done + "/" + total;
 }
 
 function updateMemoriesUI(){
@@ -952,24 +1244,31 @@ function updateMemoriesUI(){
 }
 
 function showDialogue(title, meta, text, choices, task){
-  window.currentDialogTask = task || null;
+  state.currentDialogTask = task || null;
   document.getElementById("dialogueTitle").textContent = title;
   document.getElementById("dialogueMeta").textContent = meta || "";
   document.getElementById("dialogueText").textContent = typeof text === "function" ? text() : text;
+
   const wrap = document.getElementById("choices");
   wrap.innerHTML = "";
   const arr = typeof choices === "function" ? choices() : choices;
+
   arr.forEach(choice => {
     const btn = document.createElement("button");
     btn.className = "choice";
     btn.textContent = choice.label;
-    btn.onclick = () => resolveChoice(task, choice);
+    btn.onclick = () => {
+      playClickTone();
+      resolveChoice(task, choice);
+    };
     wrap.appendChild(btn);
   });
+
   updateMemoriesUI();
 }
 
 function closeDialogue(){
+  state.currentDialogTask = null;
   document.getElementById("dialogueTitle").textContent = currentLevel().title;
   document.getElementById("dialogueMeta").textContent = currentLevel().meta;
   document.getElementById("dialogueText").textContent = currentLevel().hint;
@@ -979,7 +1278,7 @@ function closeDialogue(){
 
 function showLevelIntro(){
   showDialogue(currentLevel().title, currentLevel().meta, "Walk to the glowing task icons to progress.", [], null);
-  document.getElementById("choices").innerHTML = '<button class="choice" onclick="closeDialogue()">Begin</button>';
+  document.getElementById("choices").innerHTML = `<button class="choice" onclick="closeDialogue()">Begin</button>`;
 }
 
 function resolveChoice(task, choice){
@@ -989,7 +1288,9 @@ function resolveChoice(task, choice){
   if(task && !task.done) task.done = true;
 
   renderTasks();
+  renderPlayer();
   updateHUD();
+  syncPortrait();
   closeDialogue();
 
   if(task && task.final){
@@ -1002,7 +1303,7 @@ function resolveChoice(task, choice){
 function nextLevel(){
   if(state.currentLevelIndex < levels.length - 1){
     state.currentLevelIndex += 1;
-    state.playerX = 80;
+    state.playerX = 120;
     placePlayer();
     applyEnvironment();
     renderTasks();
@@ -1028,7 +1329,7 @@ function endGame(){
     : " Titus begins as a Roman general and ends as a man who has learned to call revenge by nobler names.";
 
   document.getElementById("endingText").textContent =
-    "The sky is now ugly and grey. The walls that once seemed pearl white are brown, stained, and tired. " +
+    "The sky is now ugly and grey. The walls that once seemed pearl white are brown, stained, cracked, and tired. " +
     tone + charText +
     " No matter how you moved through the game, it still ended in the same place: revenge consumed honor, violence replaced speech, and tragedy made every path collapse into ruin.";
 
@@ -1047,17 +1348,8 @@ function endGame(){
     tag.textContent = "No memory fragments found";
     memWrap.appendChild(tag);
   }
-  document.getElementById("endingOverlay").classList.remove("hidden");
-}
 
-function updateHUD(){
-  const total = visibleTasks().length;
-  const done = visibleTasks().filter(t => t.done).length;
-  document.getElementById("actChip").textContent = "Act " + state.act;
-  document.getElementById("charChip").textContent = "Character " + state.character;
-  document.getElementById("violenceChip").textContent = "Violence " + state.violence;
-  document.getElementById("swordChip").textContent = "Sword " + state.sword;
-  document.getElementById("tasksChip").textContent = "Tasks " + done + "/" + total;
+  document.getElementById("endingOverlay").classList.remove("hidden");
 }
 
 function nearestTask(){
@@ -1065,7 +1357,7 @@ function nearestTask(){
   let bestDist = Infinity;
   visibleTasks().forEach(task => {
     if(task.done) return;
-    const dist = Math.abs((task.x + 28) - (state.playerX + 32));
+    const dist = Math.abs((task.x + 44) - (state.playerX + 55));
     if(dist < bestDist){
       bestDist = dist;
       best = task;
@@ -1077,7 +1369,8 @@ function nearestTask(){
 function interact(){
   if(state.ending || !state.started) return;
   const found = nearestTask();
-  if(found.task && found.dist < 70){
+  if(found.task && found.dist < 90){
+    playClickTone();
     showDialogue(found.task.label, currentLevel().meta, found.task.text, found.task.choices, found.task);
   }
 }
@@ -1086,28 +1379,39 @@ function placePlayer(){
   const player = document.getElementById("player");
   player.style.left = state.playerX + "px";
   player.style.transform = state.facing === -1 ? "scaleX(-1)" : "scaleX(1)";
+
+  const shiftFar = (state.playerX - 120) * -0.05;
+  const shiftMid = (state.playerX - 120) * -0.09;
+  const shiftFront = (state.playerX - 120) * -0.14;
+  document.getElementById("farLayer").style.transform = `translateX(${shiftFar}px)`;
+  document.getElementById("midLayer").style.transform = `translateX(${shiftMid}px)`;
+  document.getElementById("frontDecor").style.transform = `translateX(${shiftFront}px)`;
+  document.getElementById("taskLayer").style.transform = `translateX(${shiftFront * 0.25}px)`;
 }
 
 function tick(){
   if(state.started && !state.ending){
     let moving = false;
     if(state.movingLeft && !state.movingRight){
-      state.playerX -= 4;
+      state.playerX -= 4.4;
       state.facing = -1;
       moving = true;
     }
     if(state.movingRight && !state.movingLeft){
-      state.playerX += 4;
+      state.playerX += 4.4;
       state.facing = 1;
       moving = true;
     }
-    const maxX = window.innerWidth - 80;
-    state.playerX = Math.max(10, Math.min(maxX, state.playerX));
+    const maxX = window.innerWidth - 130;
+    state.playerX = Math.max(16, Math.min(maxX, state.playerX));
     document.getElementById("player").classList.toggle("walking", moving);
+    if(moving) playStep();
     placePlayer();
   }
   requestAnimationFrame(tick);
 }
+
+/* ---------- INPUT ---------- */
 
 document.addEventListener("keydown", e => {
   if(!state.started) return;
@@ -1123,22 +1427,30 @@ document.addEventListener("keyup", e => {
 
 function bindHold(id, startFn, endFn){
   const el = document.getElementById(id);
-  ["touchstart","mousedown"].forEach(evt => el.addEventListener(evt, e => {
-    e.preventDefault();
-    startFn();
-  }));
-  ["touchend","touchcancel","mouseup","mouseleave"].forEach(evt => el.addEventListener(evt, e => {
-    e.preventDefault();
-    endFn();
-  }));
+  ["touchstart","mousedown"].forEach(evt => {
+    el.addEventListener(evt, e => {
+      e.preventDefault();
+      startFn();
+    });
+  });
+  ["touchend","touchcancel","mouseup","mouseleave"].forEach(evt => {
+    el.addEventListener(evt, e => {
+      e.preventDefault();
+      endFn();
+    });
+  });
 }
 
 bindHold("leftBtn", () => state.movingLeft = true, () => state.movingLeft = false);
 bindHold("rightBtn", () => state.movingRight = true, () => state.movingRight = false);
 document.getElementById("interactBtn").addEventListener("click", interact);
+document.getElementById("soundBtn").addEventListener("click", toggleSound);
 
 document.querySelectorAll("[data-start]").forEach(card => {
-  card.addEventListener("click", () => startGame(card.dataset.start));
+  card.addEventListener("click", () => {
+    playClickTone();
+    startGame(card.dataset.start);
+  });
 });
 
 document.getElementById("restartBtn").addEventListener("click", () => {
@@ -1146,6 +1458,10 @@ document.getElementById("restartBtn").addEventListener("click", () => {
   startGame(state.character || "Titus");
 });
 
+/* ---------- INITIAL ---------- */
+
+syncPortrait();
+renderPlayer();
 placePlayer();
 tick();
 </script>
