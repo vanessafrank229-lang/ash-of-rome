@@ -8,7 +8,7 @@
     :root{
       --bg:#efe7dc;
       --panel:#fff8ef;
-      --panel2:rgba(255,248,239,0.92);
+      --panel2:rgba(255,248,239,0.94);
       --text:#211c18;
       --muted:#6b6259;
       --line:#d8c7ac;
@@ -21,62 +21,32 @@
     }
 
     body.theme1{
-      --bg:#efe7dc;
-      --panel:#fff8ef;
-      --panel2:rgba(255,248,239,0.92);
-      --text:#211c18;
-      --muted:#6b6259;
-      --line:#d8c7ac;
-      --choice:#f7eedf;
-      --choice-hover:#eedfc7;
+      --bg:#efe7dc; --panel:#fff8ef; --panel2:rgba(255,248,239,0.94);
+      --text:#211c18; --muted:#6b6259; --line:#d8c7ac;
+      --choice:#f7eedf; --choice-hover:#eedfc7;
     }
-
     body.theme2{
-      --bg:#e4d8c7;
-      --panel:#f1e5d7;
-      --panel2:rgba(241,229,215,0.92);
-      --text:#2a241f;
-      --muted:#62584f;
-      --line:#c3b09a;
-      --choice:#e8dbc8;
-      --choice-hover:#dbc6ad;
+      --bg:#e4d8c7; --panel:#f1e5d7; --panel2:rgba(241,229,215,0.94);
+      --text:#2a241f; --muted:#62584f; --line:#c3b09a;
+      --choice:#e8dbc8; --choice-hover:#dbc6ad;
     }
-
     body.theme3{
-      --bg:#b8ab9d;
-      --panel:#cdc0b2;
-      --panel2:rgba(205,192,178,0.92);
-      --text:#28221e;
-      --muted:#514941;
-      --line:#a08d7b;
-      --choice:#c4b4a3;
-      --choice-hover:#b39d89;
+      --bg:#b8ab9d; --panel:#cdc0b2; --panel2:rgba(205,192,178,0.94);
+      --text:#28221e; --muted:#514941; --line:#a08d7b;
+      --choice:#c4b4a3; --choice-hover:#b39d89;
     }
-
     body.theme4{
-      --bg:#6d6760;
-      --panel:#847b72;
-      --panel2:rgba(132,123,114,0.92);
-      --text:#f0ebe4;
-      --muted:#ddd2c9;
-      --line:#5e5650;
-      --choice:#776d65;
-      --choice-hover:#665c55;
+      --bg:#6d6760; --panel:#847b72; --panel2:rgba(132,123,114,0.94);
+      --text:#f0ebe4; --muted:#ddd2c9; --line:#5e5650;
+      --choice:#776d65; --choice-hover:#665c55;
     }
-
     body.theme5{
-      --bg:#383635;
-      --panel:#4a4543;
-      --panel2:rgba(74,69,67,0.94);
-      --text:#f4eee8;
-      --muted:#cec4bb;
-      --line:#34302e;
-      --choice:#514947;
-      --choice-hover:#433d3a;
+      --bg:#383635; --panel:#4a4543; --panel2:rgba(74,69,67,0.96);
+      --text:#f4eee8; --muted:#cec4bb; --line:#34302e;
+      --choice:#514947; --choice-hover:#433d3a;
     }
 
     *{ box-sizing:border-box; }
-
     body{
       margin:0;
       font-family:Georgia, "Times New Roman", serif;
@@ -86,7 +56,7 @@
     }
 
     .app{
-      max-width:1280px;
+      max-width:1300px;
       margin:0 auto;
       padding:20px 16px 40px;
     }
@@ -109,8 +79,8 @@
     .sub{
       margin-top:6px;
       color:var(--muted);
-      max-width:780px;
-      line-height:1.5;
+      max-width:840px;
+      line-height:1.55;
     }
 
     .stats{
@@ -133,7 +103,7 @@
 
     .layout{
       display:grid;
-      grid-template-columns:1.4fr .9fr;
+      grid-template-columns:1.45fr .9fr;
       gap:18px;
     }
 
@@ -150,14 +120,12 @@
       backdrop-filter:blur(6px);
     }
 
-    .scene-wrap{
-      padding:16px;
-    }
+    .scene-wrap{ padding:16px; }
 
     .scene{
       position:relative;
       width:100%;
-      height:680px;
+      height:720px;
       border-radius:20px;
       overflow:hidden;
       border:1px solid var(--line);
@@ -165,11 +133,11 @@
     }
 
     @media (max-width:1000px){
-      .scene{ height:520px; }
+      .scene{ height:560px; }
     }
 
     @media (max-width:640px){
-      .scene{ height:420px; }
+      .scene{ height:430px; }
     }
 
     .world{
@@ -188,8 +156,8 @@
       position:absolute;
       top:0;
       left:0;
+      width:2800px;
       height:100%;
-      width:2200px;
       transform:translateX(0);
       will-change:transform;
     }
@@ -202,25 +170,22 @@
 
     .sky.bright{
       background:
-        radial-gradient(circle at 18% 18%, rgba(255,255,255,.4) 0 8%, transparent 9%),
-        linear-gradient(180deg,#88ccff 0%,#dff2ff 40%,#f4e5cf 100%);
+        radial-gradient(circle at 18% 18%, rgba(255,255,255,.45) 0 8%, transparent 9%),
+        linear-gradient(180deg,#86cbff 0%,#dff3ff 38%,#f3e7d4 100%);
     }
-
     .sky.warm{
       background:
-        radial-gradient(circle at 18% 18%, rgba(255,248,210,.32) 0 8%, transparent 9%),
-        linear-gradient(180deg,#d2b988 0%,#ead7bb 42%,#d4c4af 100%);
+        radial-gradient(circle at 18% 18%, rgba(255,246,210,.35) 0 8%, transparent 9%),
+        linear-gradient(180deg,#d2b886 0%,#ead7ba 40%,#d4c4ae 100%);
     }
-
     .sky.dirty{
       background:
-        radial-gradient(circle at 20% 16%, rgba(185,176,163,.18) 0 7%, transparent 9%),
+        radial-gradient(circle at 20% 16%, rgba(186,177,164,.18) 0 7%, transparent 9%),
         linear-gradient(180deg,#8a8377 0%,#9a9181 38%,#756d67 100%);
     }
-
     .sky.ash{
       background:
-        radial-gradient(circle at 20% 16%, rgba(110,108,106,.15) 0 7%, transparent 8%),
+        radial-gradient(circle at 20% 16%, rgba(110,108,106,.14) 0 7%, transparent 8%),
         linear-gradient(180deg,#4b4a49 0%,#5a5653 36%,#3b3938 100%);
     }
 
@@ -228,541 +193,74 @@
       position:absolute;
       top:38px;
       left:58px;
-      width:90px;
-      height:90px;
+      width:92px;
+      height:92px;
       border-radius:50%;
-      box-shadow:0 0 40px rgba(255,255,255,.25);
-      pointer-events:none;
       z-index:2;
+      box-shadow:0 0 40px rgba(255,255,255,.25);
     }
-
     .sun.sunny{
       background:radial-gradient(circle at 35% 35%, #fffbe6 0%, #ffe191 40%, #efba4d 80%, rgba(239,186,77,.1) 100%);
     }
-
     .sun.fade{
       background:radial-gradient(circle at 35% 35%, #ece1bf 0%, #c19c67 42%, #8b6f53 80%, rgba(139,111,83,.12) 100%);
       opacity:.8;
     }
-
     .sun.hidden{
       background:radial-gradient(circle at 35% 35%, #8e857a 0%, #625c57 48%, #4a4744 80%, rgba(74,71,68,.1) 100%);
       opacity:.35;
       filter:blur(1px);
     }
 
-    .ground{
-      position:absolute;
-      left:0; right:0; bottom:0;
-      height:150px;
-    }
-
-    .ground.green{ background:linear-gradient(180deg,#a5c36e 0%,#78934b 68%,#627339 100%); }
-    .ground.brown{ background:linear-gradient(180deg,#7a6e5c 0%,#5a5145 68%,#453d35 100%); }
-
-    .rome-wall{
-      position:absolute;
-      left:0;
-      right:0;
-      bottom:150px;
-      height:220px;
-    }
-
-    .rome-wall.bright{ background:linear-gradient(180deg,#fffaf1 0%,#f5ead8 56%,#e0cfb4 100%); }
-    .rome-wall.warm{ background:linear-gradient(180deg,#efe0cb 0%,#d7c2a2 56%,#b39173 100%); }
-    .rome-wall.dirty{ background:linear-gradient(180deg,#b8aa9c 0%,#8f7f6d 56%,#675849 100%); }
-    .rome-wall.ash{ background:linear-gradient(180deg,#7b756f 0%,#595550 56%,#3f3d3a 100%); }
-
-    .arch-block{
-      position:absolute;
-      bottom:150px;
-      width:260px;
-      height:260px;
-      border-radius:26px 26px 0 0;
-      overflow:hidden;
-    }
-
-    .arch-block .col{
-      position:absolute;
-      bottom:0;
-      width:42px;
-      border-radius:12px 12px 0 0;
-      height:220px;
-    }
-
-    .arch-block.bright .col{ background:linear-gradient(180deg,#fffdf8 0%,#f3ece2 70%,#d8c6aa 100%); }
-    .arch-block.warm .col{ background:linear-gradient(180deg,#efe6d9 0%,#d9ccb9 70%,#b99f7e 100%); }
-    .arch-block.dirty .col{ background:linear-gradient(180deg,#b9afa2 0%,#968977 70%,#706255 100%); }
-    .arch-block.ash .col{ background:linear-gradient(180deg,#7f7871 0%,#5c5752 70%,#413d3a 100%); }
-
-    .arch-block .roof{
-      position:absolute;
-      left:0; right:0; top:0;
-      height:46px;
-      border-radius:14px 14px 0 0;
-    }
-
-    .arch-block.bright .roof{ background:#f2e7d4; }
-    .arch-block.warm .roof{ background:#d8c2a2; }
-    .arch-block.dirty .roof{ background:#8f7f6d; }
-    .arch-block.ash .roof{ background:#58544f; }
-
-    .tree{
-      position:absolute;
-      bottom:150px;
-      width:28px;
-      border-radius:10px 10px 0 0;
-      background:linear-gradient(180deg,#6f4a2b 0%,#4f341e 100%);
-    }
-
-    .tree.dark{
-      background:linear-gradient(180deg,#463428 0%,#31241c 100%);
-    }
-
-    .crown{
-      position:absolute;
-      border-radius:50%;
-      background:radial-gradient(circle at 35% 35%, #8bd16d 0%, #5f9e43 68%, #497534 100%);
-    }
-
-    .crown.dark{
-      background:radial-gradient(circle at 35% 35%, #5e6d55 0%, #3f4a3d 68%, #2f372d 100%);
-    }
-
-    .feast-wall{
-      position:absolute;
-      left:0; right:0; top:0; bottom:150px;
-      background:linear-gradient(180deg,#6a5950 0%,#50423b 48%,#413733 100%);
-    }
-
-    .table{
-      position:absolute;
-      left:160px;
-      right:160px;
-      bottom:90px;
-      height:110px;
-      border-radius:18px 18px 0 0;
-      background:linear-gradient(180deg,#5f4336 0%,#3b2a23 100%);
-    }
-
-    .candle{
-      position:absolute;
-      width:16px;
-      bottom:198px;
-      background:#e4d8c1;
-      border-radius:4px 4px 0 0;
-    }
-
-    .flame{
-      position:absolute;
-      width:18px; height:26px;
-      top:-22px; left:-1px;
-      border-radius:50%;
-      background:radial-gradient(circle at 50% 30%, #fff8da 0%, #ffc96f 45%, rgba(255,184,66,.12) 100%);
-      box-shadow:0 0 18px rgba(255,195,92,.55);
-    }
-
-    .crack{
-      position:absolute;
-      width:2px;
-      background:#453d39;
-      opacity:.42;
-      transform-origin:top center;
-    }
-
-    .blood-layer{
+    .blood-layer, .task-layer{
       position:absolute;
       inset:0;
       pointer-events:none;
-      z-index:6;
-    }
-
-    .blood{
-      position:absolute;
-      border-radius:50%;
-      background:radial-gradient(circle at 35% 35%, rgba(150,45,45,.95) 0%, rgba(102,25,25,.92) 60%, rgba(60,10,10,.8) 100%);
-      opacity:.92;
-    }
-
-    .blood.smear{
-      border-radius:999px;
-      background:linear-gradient(90deg, rgba(86,15,15,.9) 0%, rgba(122,30,30,.76) 55%, rgba(66,12,12,.35) 100%);
-    }
-
-    .blood.drip{
-      border-radius:0 0 8px 8px;
-      background:linear-gradient(180deg, rgba(120,22,22,.92) 0%, rgba(67,10,10,.95) 100%);
-    }
-
-    .task-layer{
-      position:absolute;
-      inset:0;
-      z-index:12;
-      pointer-events:none;
+      z-index:8;
     }
 
     .task{
       position:absolute;
-      border:2px dashed rgba(255,255,255,.48);
+      border:2px dashed rgba(255,255,255,.52);
       background:rgba(255,255,255,.08);
-      border-radius:14px;
+      border-radius:16px;
       display:flex;
       align-items:center;
       justify-content:center;
-      font-size:.82rem;
+      font-size:.84rem;
       color:white;
       text-align:center;
       padding:6px;
-      backdrop-filter:blur(2px);
+      backdrop-filter:blur(3px);
+      box-shadow:0 0 18px rgba(255,240,180,.12);
     }
 
     .task.done{
       border-style:solid;
-      border-color:rgba(168,255,168,.65);
+      border-color:rgba(168,255,168,.7);
       background:rgba(120,180,120,.15);
     }
 
     .player{
       position:absolute;
-      width:120px;
-      height:170px;
+      width:180px;
+      height:250px;
       left:160px;
-      top:330px;
+      top:300px;
       z-index:20;
       transform-origin:center bottom;
       transition:filter .2s ease;
+      will-change:transform,left,top;
     }
-
-    .player.face-left{
-      transform:scaleX(-1);
+    .player.face-left{ transform:scaleX(-1); }
+    .player.rolling{ transform:rotate(18deg) scale(.92); }
+    .player.face-left.rolling{ transform:scaleX(-1) rotate(18deg) scale(.92); }
+    .player svg{
+      width:100%;
+      height:100%;
+      overflow:visible;
+      filter:drop-shadow(0 12px 18px rgba(0,0,0,.28));
     }
-
-    .player.rolling{
-      transform:rotate(18deg) scale(.9);
-    }
-
-    .player.face-left.rolling{
-      transform:scaleX(-1) rotate(18deg) scale(.9);
-    }
-
-    .player .body{
-      position:absolute;
-      inset:0;
-    }
-
-    .player .head{
-      position:absolute;
-      top:10px;
-      left:44px;
-      width:40px;
-      height:46px;
-      border-radius:22px 22px 20px 18px;
-      z-index:4;
-    }
-
-    .player.titus .head{
-      background:linear-gradient(180deg,#f1cfaf 0%,#ddb28d 100%);
-    }
-
-    .player.lavinia .head{
-      background:linear-gradient(180deg,#f3d7c1 0%,#e1b79b 100%);
-    }
-
-    .player .nose{
-      position:absolute;
-      right:-2px;
-      top:18px;
-      width:8px;
-      height:10px;
-      background:rgba(171,110,79,.55);
-      clip-path:polygon(0 0,100% 50%,0 100%);
-    }
-
-    .player .eye{
-      position:absolute;
-      right:10px;
-      top:16px;
-      width:6px;
-      height:6px;
-      border-radius:50%;
-      background:#2d1f1a;
-    }
-
-    .player .brow{
-      position:absolute;
-      right:8px;
-      top:10px;
-      width:12px;
-      height:3px;
-      background:#5d463a;
-      border-radius:999px;
-    }
-
-    .player .mouth{
-      position:absolute;
-      right:10px;
-      bottom:10px;
-      z-index:5;
-    }
-
-    .player.titus.smile .mouth{
-      width:14px; height:8px;
-      border-bottom:3px solid #7c4337;
-      border-radius:0 0 18px 18px;
-    }
-
-    .player.titus.neutral .mouth{
-      width:14px; height:2px;
-      background:#6e4036;
-      border-radius:999px;
-    }
-
-    .player.titus.grim .mouth{
-      width:14px; height:7px;
-      border-top:3px solid #603730;
-      border-radius:18px 18px 0 0;
-      bottom:14px;
-    }
-
-    .player.lavinia .mouth{
-      width:12px;
-      height:2px;
-      background:#8b4c45;
-      border-radius:999px;
-    }
-
-    .player.lavinia.silent .mouth{
-      width:18px;
-      height:7px;
-      background:linear-gradient(180deg,#6a4038 0%,#4d2f2c 100%);
-      border-radius:999px;
-      box-shadow:0 0 0 1px rgba(0,0,0,.18);
-    }
-
-    .player.lavinia.silent .mouth::before,
-    .player.lavinia.silent .mouth::after{
-      content:"";
-      position:absolute;
-      top:-1px;
-      bottom:-1px;
-      width:1px;
-      background:#251717;
-      opacity:.65;
-    }
-
-    .player.lavinia.silent .mouth::before{ left:5px; }
-    .player.lavinia.silent .mouth::after{ right:5px; }
-
-    .player .hair{
-      position:absolute;
-      z-index:3;
-    }
-
-    .player.titus .hair{
-      left:36px;
-      top:2px;
-      width:44px;
-      height:28px;
-      background:#66686f;
-      border-radius:18px 20px 10px 14px;
-    }
-
-    .player.lavinia .hair{
-      left:28px;
-      top:0;
-      width:54px;
-      height:62px;
-      background:#6d442d;
-      border-radius:24px 28px 18px 24px;
-    }
-
-    .player .torso{
-      position:absolute;
-      left:34px;
-      top:42px;
-      width:46px;
-      height:74px;
-      border-radius:20px 16px 14px 16px;
-      z-index:2;
-    }
-
-    .player.titus .torso{
-      background:linear-gradient(180deg,#c9ced7 0%,#aab2bf 56%,#7d8694 100%);
-      border:2px solid #c39a4a;
-    }
-
-    .player.titus.dark .torso{
-      background:linear-gradient(180deg,#8e8d96 0%,#6d6e78 56%,#4b4f56 100%);
-      border-color:#6a4b35;
-    }
-
-    .player.lavinia .torso{
-      background:linear-gradient(180deg,#f1dbc7 0%,#d7b89a 55%,#b89074 100%);
-      border:2px solid #d0a86f;
-    }
-
-    .player.lavinia.silent .torso{
-      background:linear-gradient(180deg,#b89f90 0%,#8b7465 55%,#645248 100%);
-      border-color:#6e5443;
-    }
-
-    .arm{
-      position:absolute;
-      width:12px;
-      border-radius:8px;
-      z-index:1;
-    }
-
-    .player .arm.front{
-      right:34px;
-      top:56px;
-      height:48px;
-      transform:rotate(10deg);
-    }
-
-    .player .arm.back{
-      left:30px;
-      top:56px;
-      height:44px;
-      transform:rotate(-14deg);
-      opacity:.94;
-    }
-
-    .player.titus .arm{
-      background:linear-gradient(180deg,#d9dee4 0%,#9ba5b2 100%);
-      border:1px solid #c39a4a;
-    }
-
-    .player.titus.dark .arm{
-      background:linear-gradient(180deg,#8a8a94 0%,#646873 100%);
-      border-color:#6a4b35;
-    }
-
-    .player.lavinia .arm{
-      background:linear-gradient(180deg,#f0d4bf 0%,#d9b297 100%);
-      border:1px solid #d0a86f;
-    }
-
-    .player.lavinia.silent .arm{
-      background:linear-gradient(180deg,#b8a090 0%,#896f62 100%);
-      border-color:#6e5443;
-      height:28px !important;
-      opacity:.78;
-    }
-
-    .arm .hand{
-      position:absolute;
-      width:12px;
-      height:12px;
-      border-radius:50%;
-      bottom:-5px;
-      left:50%;
-      transform:translateX(-50%);
-      background:#ddb18d;
-    }
-
-    .player.lavinia .arm .hand{ background:#e4baa0; }
-    .player.lavinia.silent .arm .hand{ display:none; }
-    .player.lavinia.silent .arm::after{
-      content:"";
-      position:absolute;
-      bottom:-3px;
-      left:50%;
-      transform:translateX(-50%);
-      width:8px;
-      height:6px;
-      border-radius:999px;
-      background:linear-gradient(180deg,#633b36 0%,#442927 100%);
-    }
-
-    .leg{
-      position:absolute;
-      width:13px;
-      height:46px;
-      bottom:8px;
-      border-radius:9px;
-      z-index:1;
-    }
-
-    .leg.back{ left:44px; }
-    .leg.front{ right:38px; }
-
-    .player.titus .leg{ background:#6c7280; }
-    .player.titus.dark .leg{ background:#4d5158; }
-    .player.lavinia .leg{ background:#9f755e; }
-    .player.lavinia.silent .leg{ background:#6d584d; }
-
-    .player .foot{
-      position:absolute;
-      bottom:-4px;
-      right:-2px;
-      width:16px;
-      height:8px;
-      border-radius:10px 14px 10px 10px;
-      background:#332d2a;
-    }
-
-    .player.jumping .leg.front{
-      transform:rotate(-18deg);
-    }
-
-    .player.jumping .leg.back{
-      transform:rotate(18deg);
-    }
-
-    .player.rolling .leg,
-    .player.rolling .arm{
-      opacity:.65;
-    }
-
-    .sword{
-      position:absolute;
-      right:22px;
-      top:58px;
-      width:10px;
-      height:72px;
-      z-index:0;
-    }
-
-    .blade{
-      position:absolute;
-      left:50%;
-      transform:translateX(-50%);
-      width:4px;
-      height:54px;
-      border-radius:6px;
-      background:linear-gradient(180deg,#f7fbff 0%,#d6dbe2 46%,#9aa1ab 100%);
-    }
-
-    .hilt{
-      position:absolute;
-      bottom:12px;
-      left:50%;
-      transform:translateX(-50%);
-      width:18px;
-      height:4px;
-      border-radius:999px;
-      background:#c39a4a;
-    }
-
-    .grip{
-      position:absolute;
-      bottom:0;
-      left:50%;
-      transform:translateX(-50%);
-      width:6px;
-      height:14px;
-      border-radius:6px;
-      background:#7d5640;
-    }
-
-    .sword.stained .blade{
-      background:linear-gradient(180deg,#d9d9db 0%,#a99f99 30%,#786968 68%,#534447 100%);
-      box-shadow:inset 0 -20px 10px rgba(92,37,35,.28);
-    }
-
-    .sword.stained .hilt{ background:#85593d; }
-    .sword.stained .grip{ background:#573d2f; }
 
     .scene-overlay{
       position:absolute;
@@ -772,24 +270,12 @@
       z-index:25;
     }
 
-    .dialogue{
-      padding:20px;
-    }
-
-    .scene-title{
-      margin:0 0 8px 0;
-      font-size:1.5rem;
-    }
-
-    .scene-meta{
-      margin:0 0 14px;
-      color:var(--muted);
-      line-height:1.5;
-    }
-
+    .dialogue{ padding:20px; }
+    .scene-title{ margin:0 0 8px 0; font-size:1.52rem; }
+    .scene-meta{ margin:0 0 14px; color:var(--muted); line-height:1.5; }
     .story{
       min-height:180px;
-      line-height:1.8;
+      line-height:1.84;
       white-space:pre-line;
       margin-bottom:16px;
       font-size:1.02rem;
@@ -813,7 +299,6 @@
       font:inherit;
       transition:background .18s ease, transform .12s ease;
     }
-
     .choice:hover{
       background:var(--choice-hover);
       transform:translateY(-1px);
@@ -836,19 +321,10 @@
       font:inherit;
       color:var(--text);
     }
-
     .char-btn:hover{ background:var(--choice-hover); }
 
-    .char-btn h3{
-      margin:0 0 8px;
-      font-size:1.2rem;
-    }
-
-    .char-btn p{
-      margin:0;
-      color:var(--muted);
-      line-height:1.6;
-    }
+    .char-btn h3{ margin:0 0 8px; font-size:1.2rem; }
+    .char-btn p{ margin:0; color:var(--muted); line-height:1.6; }
 
     .controls{
       display:flex;
@@ -866,7 +342,6 @@
       cursor:pointer;
       font:inherit;
     }
-
     .small-btn:hover{ background:var(--choice); }
 
     .note{
@@ -915,6 +390,26 @@
       letter-spacing:.08em;
       font-style:italic;
     }
+
+    .drip-anim{
+      animation: drip 1.8s infinite ease-in;
+      transform-origin: top center;
+    }
+
+    @keyframes drip {
+      0%{ transform: scaleY(.25); opacity:.55; }
+      45%{ transform: scaleY(1); opacity:1; }
+      100%{ transform: scaleY(1.18); opacity:.2; }
+    }
+
+    .pulse-blood{
+      animation: pulseblood 2.2s infinite ease-in-out;
+    }
+
+    @keyframes pulseblood{
+      0%,100%{ opacity:.72; }
+      50%{ opacity:1; }
+    }
   </style>
 </head>
 <body class="theme1">
@@ -922,7 +417,7 @@
     <div class="top">
       <div>
         <h1>Ash of Rome</h1>
-        <div class="sub">A browser-based interactive tragedy inspired by Titus Andronicus. Move left and right, jump, roll, enter task zones, and watch the world decay from order into blood and revenge.</div>
+        <div class="sub">A browser-based interactive tragedy inspired by Titus Andronicus. Move left and right, jump, roll, enter task zones, and watch the world decay from ordered brightness into blood and ruin.</div>
       </div>
       <div class="stats">
         <div class="pill" id="actStat">Act —</div>
@@ -940,12 +435,12 @@
             <div class="world">
               <div class="layer sky bright" id="sky"></div>
               <div class="sun sunny" id="sun"></div>
-              <div class="camera" id="camera">
+              <div class="camera">
                 <div class="world-inner" id="worldInner">
-                  <div class="layer" id="worldLayer"></div>
+                  <svg class="layer" id="worldSvg" viewBox="0 0 2800 720" preserveAspectRatio="none"></svg>
                   <div class="blood-layer" id="bloodLayer"></div>
                   <div class="task-layer" id="taskLayer"></div>
-                  <div class="player titus smile" id="player"></div>
+                  <div class="player" id="player"></div>
                 </div>
               </div>
               <div class="scene-overlay"></div>
@@ -976,12 +471,12 @@
       y: 0,
       vx: 0,
       vy: 0,
-      worldWidth: 2200,
+      worldWidth: 2800,
       sceneWidth: 0,
       sceneHeight: 0,
-      groundY: 510,
-      playerW: 120,
-      playerH: 170,
+      groundY: 500,
+      playerW: 180,
+      playerH: 250,
       facing: "right",
       onGround: true,
       rolling: false,
@@ -989,8 +484,6 @@
       currentTasks: [],
       keys: {},
       movementEnabled: false,
-      activeObjective: "",
-      interactHint: "A/D or arrows = move. W/Up/Space = jump. Shift/K = roll. Walk into task zones.",
       _lastNode: null
     };
 
@@ -1023,7 +516,7 @@
       document.getElementById("swordStat").textContent = "Sword " + state.sword;
     }
 
-    function titusFaceClass(){
+    function titusExpression(){
       if (state.act === 0) return "smile";
       if (state.act === 1 && state.violence <= 2) return "smile";
       if (state.act === 1) return "neutral";
@@ -1031,253 +524,358 @@
       return "grim";
     }
 
-    function renderPlayer(){
-      const player = document.getElementById("player");
-      const dark = state.act === 2 ? "dark" : "";
-      const swordClass = state.sword === "Honorable" ? "" : "stained";
-      const facingClass = state.facing === "left" ? "face-left" : "";
-      const rollClass = state.rolling ? "rolling" : "";
-      const jumpClass = !state.onGround ? "jumping" : "";
+    function titusSVG(expression, darkArmor, stainedSword){
+      const mouth = expression === "smile"
+        ? `<path d="M118 74 Q128 82 140 78" stroke="#7b4337" stroke-width="3.5" fill="none" stroke-linecap="round"/>`
+        : expression === "neutral"
+          ? `<line x1="118" y1="78" x2="138" y2="78" stroke="#6e4036" stroke-width="3.4" stroke-linecap="round"/>`
+          : `<path d="M118 81 Q128 73 140 77" stroke="#603730" stroke-width="3.5" fill="none" stroke-linecap="round"/>`;
 
-      if (state.character === "Lavinia") {
-        const silent = state.laviniaSilent ? "silent" : "";
-        player.className = `player lavinia ${silent} ${facingClass} ${rollClass} ${jumpClass}`;
-        player.innerHTML = `
-          <div class="body">
-            <div class="hair"></div>
-            <div class="head">
-              <div class="brow"></div>
-              <div class="eye"></div>
-              <div class="nose"></div>
-              <div class="mouth"></div>
-            </div>
-            <div class="torso"></div>
-            <div class="arm back"><div class="hand"></div></div>
-            <div class="arm front"><div class="hand"></div></div>
-            <div class="leg back"><div class="foot"></div></div>
-            <div class="leg front"><div class="foot"></div></div>
-          </div>
-        `;
-      } else {
-        player.className = `player titus ${dark} ${titusFaceClass()} ${facingClass} ${rollClass} ${jumpClass}`;
-        player.innerHTML = `
-          <div class="body">
-            <div class="hair"></div>
-            <div class="head">
-              <div class="brow"></div>
-              <div class="eye"></div>
-              <div class="nose"></div>
-              <div class="mouth"></div>
-            </div>
-            <div class="torso"></div>
-            <div class="arm back"><div class="hand"></div></div>
-            <div class="arm front"><div class="hand"></div></div>
-            <div class="leg back"><div class="foot"></div></div>
-            <div class="leg front"><div class="foot"></div></div>
-            <div class="sword ${swordClass}">
-              <div class="blade"></div>
-              <div class="hilt"></div>
-              <div class="grip"></div>
-            </div>
-          </div>
-        `;
-      }
+      const brow = expression === "grim"
+        ? `<line x1="118" y1="50" x2="132" y2="47" stroke="#5d463a" stroke-width="3" stroke-linecap="round"/>`
+        : `<line x1="118" y1="49" x2="132" y2="49" stroke="#5d463a" stroke-width="2.6" stroke-linecap="round"/>`;
 
-      player.style.left = state.x + "px";
-      player.style.top = state.y + "px";
+      const armorTop = darkArmor ? "#8e8d96" : "#c9ced7";
+      const armorMid = darkArmor ? "#6d6e78" : "#aab2bf";
+      const armorBot = darkArmor ? "#4b4f56" : "#7d8694";
+      const trim = darkArmor ? "#6a4b35" : "#c39a4a";
+      const swordBlade = stainedSword ? "#786968" : "#dbe0e7";
+      const swordEdge = stainedSword ? "#534447" : "#9aa1ab";
+
+      return `
+      <svg viewBox="0 0 180 250" aria-hidden="true">
+        <defs>
+          <linearGradient id="skinT" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stop-color="#f1cfaf"/>
+            <stop offset="100%" stop-color="#ddb28d"/>
+          </linearGradient>
+          <linearGradient id="armorT" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stop-color="${armorTop}"/>
+            <stop offset="55%" stop-color="${armorMid}"/>
+            <stop offset="100%" stop-color="${armorBot}"/>
+          </linearGradient>
+          <linearGradient id="clothT" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stop-color="${armorMid}"/>
+            <stop offset="100%" stop-color="${armorBot}"/>
+          </linearGradient>
+          <linearGradient id="swordT" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stop-color="#f7fbff"/>
+            <stop offset="45%" stop-color="${swordBlade}"/>
+            <stop offset="100%" stop-color="${swordEdge}"/>
+          </linearGradient>
+        </defs>
+
+        <g>
+          <path d="M74 28 Q90 6 123 12 Q141 16 152 33 L146 47 Q125 31 95 34 Q79 35 69 42 Z" fill="#6a6b72"/>
+          <path d="M67 38 Q58 47 58 68 Q58 94 89 106 Q126 120 153 98 Q168 86 168 64 Q168 46 155 36 Q137 23 113 23 Q84 23 67 38 Z" fill="url(#skinT)"/>
+          <path d="M157 67 Q169 72 166 80 Q164 85 156 86 Z" fill="url(#skinT)"/>
+          <ellipse cx="144" cy="66" rx="4.2" ry="4.6" fill="#2b1e19"/>
+          <path d="M157 71 L168 77 L156 84 Z" fill="rgba(171,110,79,.58)"/>
+          ${brow}
+          <circle cx="127" cy="67" r="2.2" fill="#2b1e19" opacity=".74"/>
+          ${mouth}
+
+          <path d="M66 116 Q83 106 92 104 Q118 97 145 106 Q157 111 167 123 L161 154 Q127 138 96 142 Q81 144 68 154 Z" fill="url(#armorT)" stroke="${trim}" stroke-width="3"/>
+          <path d="M79 114 L106 198 L97 199 L68 129 Z" fill="${trim}" opacity=".22"/>
+          <path d="M113 104 L122 198 L114 199 L103 106 Z" fill="${trim}" opacity=".18"/>
+          <path d="M145 112 L135 199 L143 199 L157 125 Z" fill="${trim}" opacity=".2"/>
+
+          <path d="M67 126 Q50 138 42 168 Q38 186 47 203 L60 199 Q54 177 65 151 Z" fill="url(#clothT)" stroke="${trim}" stroke-width="2"/>
+          <path d="M160 132 Q172 142 178 165 Q183 184 175 202 L162 199 Q167 179 160 151 Z" fill="url(#clothT)" stroke="${trim}" stroke-width="2"/>
+
+          <path d="M42 201 Q51 199 57 205 Q60 211 56 217 Q48 221 40 215 Z" fill="url(#skinT)"/>
+          <path d="M40 211 l5 1 l0 7 l-5 -1z" fill="#ddb28d"/>
+          <path d="M45 211 l4 1 l0 7 l-4 -1z" fill="#ddb28d"/>
+          <path d="M49 211 l4 1 l0 7 l-4 -1z" fill="#ddb28d"/>
+          <path d="M53 211 l3 1 l0 7 l-3 -1z" fill="#ddb28d"/>
+
+          <path d="M170 198 Q180 199 183 205 Q184 212 178 216 Q169 219 163 213 Z" fill="url(#skinT)"/>
+          <path d="M162 210 l5 1 l0 7 l-5 -1z" fill="#ddb28d"/>
+          <path d="M167 210 l4 1 l0 7 l-4 -1z" fill="#ddb28d"/>
+          <path d="M171 210 l4 1 l0 7 l-4 -1z" fill="#ddb28d"/>
+          <path d="M175 210 l3 1 l0 7 l-3 -1z" fill="#ddb28d"/>
+
+          <path d="M77 153 Q108 162 155 151 L161 217 Q120 228 69 218 Z" fill="url(#armorT)" stroke="${trim}" stroke-width="2.8"/>
+          <path d="M68 216 Q116 229 162 216 L164 228 Q118 242 66 228 Z" fill="${trim}"/>
+          <path d="M85 221 Q98 238 97 250 L78 250 Q78 236 70 221 Z" fill="${darkArmor ? "#50545c" : "#676f7e"}"/>
+          <path d="M86 247 Q96 246 103 250 L75 250 Q81 247 86 247 Z" fill="#2f2a28"/>
+          <path d="M128 221 Q142 238 143 250 L124 250 Q123 236 115 221 Z" fill="${darkArmor ? "#616772" : "#78808d"}"/>
+          <path d="M129 247 Q139 246 147 250 L118 250 Q124 247 129 247 Z" fill="#2f2a28"/>
+
+          <g transform="translate(150,124)">
+            <path d="M26 0 L31 0 L31 78 L26 78 Z" fill="url(#swordT)"/>
+            ${stainedSword ? `<path d="M28 18 C29 32 31 41 34 61" stroke="rgba(110,25,25,.82)" stroke-width="4.5" stroke-linecap="round"/>` : ``}
+            <rect x="20" y="77" width="18" height="5" rx="2" fill="${stainedSword ? "#85593d" : "#c39a4a"}"/>
+            <rect x="25" y="82" width="8" height="18" rx="4" fill="${stainedSword ? "#573d2f" : "#7d5640"}"/>
+          </g>
+        </g>
+      </svg>`;
     }
 
-    function renderSkyAndWorld(type, mood){
-      const sky = document.getElementById("sky");
-      const sun = document.getElementById("sun");
-      const world = document.getElementById("worldLayer");
+    function laviniaSVG(silent){
+      const mouth = silent
+        ? `
+          <rect x="116" y="76" width="20" height="8" rx="4" fill="url(#sealedM)"/>
+          <line x1="121" y1="75" x2="121" y2="85" stroke="#231515" stroke-width="1"/>
+          <line x1="130" y1="75" x2="130" y2="85" stroke="#231515" stroke-width="1"/>
+        `
+        : `<line x1="118" y1="79" x2="133" y2="79" stroke="#8b4c45" stroke-width="3.2" stroke-linecap="round"/>`;
 
-      sky.className = "layer sky " + mood;
-      if (mood === "bright") sun.className = "sun sunny";
-      else if (mood === "warm") sun.className = "sun fade";
-      else sun.className = "sun hidden";
+      const leftHand = silent ? `` : `
+        <path d="M39 210 Q47 207 53 213 Q56 219 51 224 Q43 227 36 221 Z" fill="url(#skinL)"/>
+        <path d="M37 220 l4 1 l0 6 l-4 -1z" fill="#e4baa0"/>
+        <path d="M41 220 l4 1 l0 6 l-4 -1z" fill="#e4baa0"/>
+        <path d="M45 220 l4 1 l0 6 l-4 -1z" fill="#e4baa0"/>
+        <path d="M49 220 l3 1 l0 6 l-3 -1z" fill="#e4baa0"/>`;
+      const rightHand = silent ? `` : `
+        <path d="M167 205 Q176 204 181 210 Q183 217 177 221 Q169 224 163 218 Z" fill="url(#skinL)"/>
+        <path d="M162 217 l4 1 l0 6 l-4 -1z" fill="#e4baa0"/>
+        <path d="M166 217 l4 1 l0 6 l-4 -1z" fill="#e4baa0"/>
+        <path d="M170 217 l4 1 l0 6 l-4 -1z" fill="#e4baa0"/>
+        <path d="M174 217 l3 1 l0 6 l-3 -1z" fill="#e4baa0"/>`;
 
-      world.innerHTML = "";
+      const woundL = silent ? `<ellipse cx="47" cy="218" rx="7" ry="5.5" fill="url(#woundL)"/>` : ``;
+      const woundR = silent ? `<ellipse cx="170" cy="215" rx="7" ry="5.5" fill="url(#woundL)"/>` : ``;
 
-      if (type === "rome") {
-        const wallMood = mood === "bright" ? "bright" : mood === "warm" ? "warm" : mood === "dirty" ? "dirty" : "ash";
-        world.innerHTML = `
-          <div class="rome-wall ${wallMood}"></div>
-          <div class="arch-block ${wallMood}" style="left:110px;">
-            <div class="roof"></div>
-            <div class="col" style="left:24px;"></div>
-            <div class="col" style="left:108px;"></div>
-            <div class="col" style="left:192px;"></div>
-          </div>
-          <div class="arch-block ${wallMood}" style="left:520px;height:300px;width:300px;">
-            <div class="roof"></div>
-            <div class="col" style="left:32px;height:248px;"></div>
-            <div class="col" style="left:128px;height:248px;"></div>
-            <div class="col" style="left:224px;height:248px;"></div>
-          </div>
-          <div class="arch-block ${wallMood}" style="left:980px;width:280px;">
-            <div class="roof"></div>
-            <div class="col" style="left:28px;"></div>
-            <div class="col" style="left:118px;"></div>
-            <div class="col" style="left:208px;"></div>
-          </div>
-          <div class="arch-block ${wallMood}" style="left:1420px;width:320px;height:320px;">
-            <div class="roof"></div>
-            <div class="col" style="left:34px;height:262px;"></div>
-            <div class="col" style="left:138px;height:262px;"></div>
-            <div class="col" style="left:242px;height:262px;"></div>
-          </div>
-          ${mood !== "bright" ? `
-            <div class="crack" style="height:110px;left:625px;top:250px;transform:rotate(24deg);"></div>
-            <div class="crack" style="height:86px;left:1080px;top:290px;transform:rotate(-18deg);"></div>
-            <div class="crack" style="height:92px;left:1580px;top:230px;transform:rotate(13deg);"></div>
-          ` : ``}
-          <div class="ground ${mood === "bright" ? "green" : "brown"}"></div>
-        `;
+      return `
+      <svg viewBox="0 0 180 250" aria-hidden="true">
+        <defs>
+          <linearGradient id="skinL" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stop-color="#f3d7c1"/>
+            <stop offset="100%" stop-color="#e1b79b"/>
+          </linearGradient>
+          <linearGradient id="dressL" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stop-color="${silent ? "#b89f90" : "#f1dbc7"}"/>
+            <stop offset="55%" stop-color="${silent ? "#8b7465" : "#d7b89a"}"/>
+            <stop offset="100%" stop-color="${silent ? "#645248" : "#b89074"}"/>
+          </linearGradient>
+          <linearGradient id="sealedM" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stop-color="#6a4038"/>
+            <stop offset="100%" stop-color="#4d2f2c"/>
+          </linearGradient>
+          <linearGradient id="woundL" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stop-color="#6b2a27"/>
+            <stop offset="100%" stop-color="#432120"/>
+          </linearGradient>
+        </defs>
+
+        <g>
+          <path d="M70 18 Q92 -4 128 7 Q148 13 158 31 Q143 31 129 40 Q103 52 75 50 Q67 34 70 18 Z" fill="#74462e"/>
+          <path d="M61 35 Q52 46 52 68 Q52 96 84 108 Q123 123 153 101 Q168 90 169 66 Q169 48 156 36 Q139 24 114 24 Q84 24 61 35 Z" fill="url(#skinL)"/>
+          <path d="M157 67 Q167 71 166 79 Q165 84 156 85 Z" fill="url(#skinL)"/>
+          <ellipse cx="144" cy="67" rx="4" ry="4.4" fill="#2b1e19"/>
+          <line x1="118" y1="49" x2="132" y2="48" stroke="#5d463a" stroke-width="2.7" stroke-linecap="round"/>
+          <path d="M157 72 L167 77 L156 82 Z" fill="rgba(171,110,79,.58)"/>
+          ${mouth}
+
+          <path d="M66 116 Q86 106 95 104 Q121 99 147 106 Q159 111 169 123 L163 154 Q127 140 96 144 Q79 145 68 154 Z" fill="url(#dressL)" stroke="${silent ? "#6e5443" : "#d0a86f"}" stroke-width="2.6"/>
+          <path d="M78 114 L107 199 L98 200 L67 129 Z" fill="rgba(130,88,58,.18)"/>
+          <path d="M116 104 L124 199 L117 200 L107 107 Z" fill="rgba(130,88,58,.16)"/>
+          <path d="M148 112 L138 199 L146 199 L160 126 Z" fill="rgba(130,88,58,.18)"/>
+
+          <path d="M65 126 Q49 138 41 170 Q38 187 46 207 L59 202 Q54 179 64 151 Z" fill="url(#dressL)" stroke="${silent ? "#6e5443" : "#d0a86f"}" stroke-width="1.8"/>
+          <path d="M161 132 Q174 143 179 169 Q183 186 176 205 L163 201 Q168 180 161 151 Z" fill="url(#dressL)" stroke="${silent ? "#6e5443" : "#d0a86f"}" stroke-width="1.8"/>
+
+          ${leftHand}
+          ${rightHand}
+          ${woundL}
+          ${woundR}
+
+          <path d="M77 153 Q108 163 157 152 L163 221 Q120 232 69 222 Z" fill="url(#dressL)" stroke="${silent ? "#6e5443" : "#d0a86f"}" stroke-width="2.5"/>
+          <path d="M68 220 Q117 233 164 220 L166 232 Q119 246 66 232 Z" fill="${silent ? "#6e5443" : "#c59365"}"/>
+          <path d="M88 224 Q101 239 100 250 L82 250 Q81 239 74 224 Z" fill="${silent ? "#6d584d" : "#9f755e"}"/>
+          <path d="M89 247 Q98 246 104 250 L78 250 Q84 247 89 247 Z" fill="#2f2a28"/>
+          <path d="M130 224 Q145 239 146 250 L128 250 Q126 239 119 224 Z" fill="${silent ? "#6d584d" : "#9f755e"}"/>
+          <path d="M131 247 Q140 246 147 250 L120 250 Q126 247 131 247 Z" fill="#2f2a28"/>
+        </g>
+      </svg>`;
+    }
+
+    function characterSVG(){
+      if (state.character === "Lavinia") return laviniaSVG(state.laviniaSilent);
+      return titusSVG(titusExpression(), state.act === 2, state.sword !== "Honorable");
+    }
+
+    function forestFlowers(){
+      let out = "";
+      const positions = [
+        [150,606],[235,592],[320,610],[460,598],[610,608],[760,592],[920,606],[1080,594],[1260,610],[1410,598],[1570,608],[1730,594],[1890,606],[2060,592],[2240,608],[2420,596],[2600,610]
+      ];
+      positions.forEach((p, i) => {
+        const c1 = i % 4 === 0 ? "#ffcfdf" : i % 4 === 1 ? "#f7ec8a" : i % 4 === 2 ? "#d9d4ff" : "#ffd6ad";
+        const c2 = i % 4 === 0 ? "#ff89b1" : i % 4 === 1 ? "#d3a822" : i % 4 === 2 ? "#8f79ff" : "#e29342";
+        out += `
+          <g transform="translate(${p[0]},${p[1]})">
+            <line x1="0" y1="0" x2="0" y2="18" stroke="#47743a" stroke-width="2"/>
+            <circle cx="-5" cy="0" r="4.3" fill="${c1}"/>
+            <circle cx="5" cy="0" r="4.3" fill="${c1}"/>
+            <circle cx="0" cy="-5" r="4.3" fill="${c1}"/>
+            <circle cx="0" cy="5" r="4.3" fill="${c1}"/>
+            <circle cx="0" cy="0" r="2.7" fill="${c2}"/>
+          </g>`;
+      });
+      return out;
+    }
+
+    function renderWorldSVG(type, mood){
+      const svg = document.getElementById("worldSvg");
+      const wallTop = mood === "bright" ? "#fffaf1" : mood === "warm" ? "#efe0cb" : mood === "dirty" ? "#b8aa9c" : "#7b756f";
+      const wallBot = mood === "bright" ? "#e0cfb4" : mood === "warm" ? "#b39173" : mood === "dirty" ? "#675849" : "#3f3d3a";
+      const colTop = mood === "bright" ? "#fffdf8" : mood === "warm" ? "#efe6d9" : mood === "dirty" ? "#b9afa2" : "#7f7871";
+      const colBot = mood === "bright" ? "#d8c6aa" : mood === "warm" ? "#b99f7e" : mood === "dirty" ? "#706255" : "#413d3a";
+      const groundTop = type === "forest" && mood === "bright" ? "#a5c36e" : "#7a6e5c";
+      const groundBot = type === "forest" && mood === "bright" ? "#627339" : "#453d35";
+
+      let content = `
+        <defs>
+          <linearGradient id="groundGrad" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stop-color="${groundTop}"/>
+            <stop offset="100%" stop-color="${groundBot}"/>
+          </linearGradient>
+          <linearGradient id="wallGrad" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stop-color="${wallTop}"/>
+            <stop offset="100%" stop-color="${wallBot}"/>
+          </linearGradient>
+          <linearGradient id="columnGrad" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stop-color="${colTop}"/>
+            <stop offset="100%" stop-color="${colBot}"/>
+          </linearGradient>
+          <linearGradient id="treeTrunk" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stop-color="${type === "forest" && mood !== "bright" ? "#463428" : "#6f4a2b"}"/>
+            <stop offset="100%" stop-color="${type === "forest" && mood !== "bright" ? "#31241c" : "#4f341e"}"/>
+          </linearGradient>
+        </defs>
+      `;
+
+      if (type === "rome" || type === "ash" || type === "ruins") {
+        const wallY = type === "ash" ? 390 : 330;
+        const wallH = type === "ash" ? 170 : 220;
+        content += `<rect x="0" y="${wallY}" width="2800" height="${wallH}" fill="url(#wallGrad)"/>`;
+
+        const blocks = type === "ash"
+          ? [[120,420,220,130],[760,430,210,120],[1460,435,190,110],[2150,438,170,105]]
+          : type === "ruins"
+            ? [[100,350,230,170],[620,330,280,190],[1200,310,310,210],[1750,355,240,165],[2230,338,220,180]]
+            : [[110,300,260,230],[540,270,320,260],[1010,295,290,235],[1490,250,360,280],[2070,305,260,220]];
+
+        blocks.forEach(([x,y,w,h]) => {
+          content += `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="22" fill="url(#wallGrad)"/>`;
+          content += `<rect x="${x}" y="${y}" width="${w}" height="40" rx="10" fill="${wallTop}"/>`;
+          const cols = 3;
+          for (let i=0;i<cols;i++){
+            const cx = x + 24 + i * ((w-80)/2);
+            content += `<rect x="${cx}" y="${y+38}" width="42" height="${h-38}" rx="10" fill="url(#columnGrad)"/>`;
+          }
+        });
+
+        if (type !== "rome") {
+          content += `
+            <path d="M255 385 L280 470" stroke="#453d39" stroke-width="3"/>
+            <path d="M710 380 L670 460" stroke="#453d39" stroke-width="3"/>
+            <path d="M1310 330 L1340 430" stroke="#453d39" stroke-width="3"/>
+            <path d="M1840 420 L1805 510" stroke="#453d39" stroke-width="3"/>
+            <path d="M2290 360 L2330 455" stroke="#453d39" stroke-width="3"/>
+          `;
+        }
       }
 
       if (type === "forest") {
-        const dark = mood !== "bright";
-        world.innerHTML = `
-          <div class="tree ${dark ? "dark" : ""}" style="left:160px;height:230px;"></div>
-          <div class="crown ${dark ? "dark" : ""}" style="left:98px;bottom:380px;width:130px;height:130px;"></div>
+        const trees = [
+          [180,360,26,140,120,120],
+          [520,300,30,200,170,150],
+          [940,330,28,170,150,140],
+          [1350,280,32,220,180,150],
+          [1820,310,30,190,170,145],
+          [2250,335,28,165,150,135]
+        ];
 
-          <div class="tree ${dark ? "dark" : ""}" style="left:430px;height:300px;"></div>
-          <div class="crown ${dark ? "dark" : ""}" style="left:350px;bottom:420px;width:170px;height:150px;"></div>
+        trees.forEach(([x,y,w,h,cw,ch]) => {
+          const main = mood === "bright" ? "#5f9e43" : "#3f4a3d";
+          const left = mood === "bright" ? "#74bb56" : "#4b5847";
+          const right = mood === "bright" ? "#4e8c37" : "#364033";
+          content += `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="10" fill="url(#treeTrunk)"/>`;
+          content += `<ellipse cx="${x + w/2}" cy="${y - 24}" rx="${cw/2}" ry="${ch/2}" fill="${main}"/>`;
+          content += `<ellipse cx="${x + w/2 - 35}" cy="${y + 10}" rx="${cw/2.6}" ry="${ch/3}" fill="${left}"/>`;
+          content += `<ellipse cx="${x + w/2 + 35}" cy="${y + 8}" rx="${cw/2.6}" ry="${ch/3}" fill="${right}"/>`;
+        });
 
-          <div class="tree ${dark ? "dark" : ""}" style="left:820px;height:255px;"></div>
-          <div class="crown ${dark ? "dark" : ""}" style="left:735px;bottom:395px;width:160px;height:140px;"></div>
-
-          <div class="tree ${dark ? "dark" : ""}" style="left:1220px;height:320px;"></div>
-          <div class="crown ${dark ? "dark" : ""}" style="left:1130px;bottom:440px;width:175px;height:150px;"></div>
-
-          <div class="tree ${dark ? "dark" : ""}" style="left:1710px;height:290px;"></div>
-          <div class="crown ${dark ? "dark" : ""}" style="left:1630px;bottom:410px;width:168px;height:145px;"></div>
-
-          <div class="ground ${dark ? "brown" : "green"}"></div>
-        `;
-      }
-
-      if (type === "ruins") {
-        world.innerHTML = `
-          <div class="rome-wall ash"></div>
-          <div class="arch-block ash" style="left:100px;height:220px;width:230px;">
-            <div class="roof"></div>
-            <div class="col" style="left:24px;height:170px;"></div>
-            <div class="col" style="left:96px;height:170px;"></div>
-            <div class="col" style="left:168px;height:170px;"></div>
-          </div>
-          <div class="arch-block ash" style="left:600px;height:250px;width:260px;">
-            <div class="roof"></div>
-            <div class="col" style="left:22px;height:196px;"></div>
-            <div class="col" style="left:106px;height:196px;"></div>
-            <div class="col" style="left:190px;height:196px;"></div>
-          </div>
-          <div class="arch-block ash" style="left:1140px;height:280px;width:300px;">
-            <div class="roof"></div>
-            <div class="col" style="left:28px;height:226px;"></div>
-            <div class="col" style="left:126px;height:226px;"></div>
-            <div class="col" style="left:224px;height:226px;"></div>
-          </div>
-          <div class="arch-block ash" style="left:1640px;height:210px;width:240px;">
-            <div class="roof"></div>
-            <div class="col" style="left:26px;height:158px;"></div>
-            <div class="col" style="left:98px;height:158px;"></div>
-            <div class="col" style="left:170px;height:158px;"></div>
-          </div>
-          <div class="crack" style="height:110px;left:255px;top:275px;transform:rotate(24deg);"></div>
-          <div class="crack" style="height:86px;left:710px;top:305px;transform:rotate(-18deg);"></div>
-          <div class="crack" style="height:92px;left:1310px;top:250px;transform:rotate(13deg);"></div>
-          <div class="crack" style="height:94px;left:1730px;top:330px;transform:rotate(-20deg);"></div>
-          <div class="ground brown"></div>
-        `;
+        content += forestFlowers();
       }
 
       if (type === "feast") {
-        world.innerHTML = `
-          <div class="feast-wall"></div>
-          <div class="table"></div>
-          <div class="candle" style="left:380px;"><div class="flame"></div></div>
-          <div class="candle" style="left:760px;"><div class="flame"></div></div>
-          <div class="candle" style="left:1380px;"><div class="flame"></div></div>
-          <div class="candle" style="left:1760px;"><div class="flame"></div></div>
-          <div class="ground brown"></div>
+        content += `
+          <rect x="0" y="0" width="2800" height="550" fill="#56483f"/>
+          <rect x="180" y="470" width="2440" height="120" rx="16" fill="#3b2a23"/>
+          <rect x="330" y="430" width="2140" height="90" rx="16" fill="#5f4336"/>
         `;
+        [420,980,1540,2100,2470].forEach(x => {
+          content += `
+            <rect x="${x}" y="372" width="16" height="58" rx="3" fill="#e4d8c1"/>
+            <ellipse cx="${x+8}" cy="360" rx="12" ry="16" fill="#ffc96f" opacity=".8"/>
+          `;
+        });
       }
 
-      if (type === "ash") {
-        world.innerHTML = `
-          <div class="rome-wall ash"></div>
-          <div class="arch-block ash" style="left:100px;height:180px;width:220px;">
-            <div class="roof"></div>
-            <div class="col" style="left:18px;height:128px;"></div>
-            <div class="col" style="left:88px;height:128px;"></div>
-            <div class="col" style="left:158px;height:128px;"></div>
-          </div>
-          <div class="arch-block ash" style="left:760px;height:160px;width:210px;">
-            <div class="roof"></div>
-            <div class="col" style="left:18px;height:112px;"></div>
-            <div class="col" style="left:84px;height:112px;"></div>
-            <div class="col" style="left:150px;height:112px;"></div>
-          </div>
-          <div class="arch-block ash" style="left:1460px;height:150px;width:190px;">
-            <div class="roof"></div>
-            <div class="col" style="left:18px;height:100px;"></div>
-            <div class="col" style="left:74px;height:100px;"></div>
-            <div class="col" style="left:130px;height:100px;"></div>
-          </div>
-          <div class="ground brown"></div>
-        `;
-      }
+      content += `
+        <rect x="0" y="550" width="2800" height="170" fill="url(#groundGrad)"/>
+        <g opacity=".35">
+          ${Array.from({length:100}).map((_, i) => {
+            const x = i * 28;
+            const h = 12 + (i % 6) * 3;
+            return `<path d="M${x} 550 Q${x+3} ${550-h} ${x+6} 550" stroke="${mood === "bright" ? "#4e7b3b" : "#51483f"}" stroke-width="2" fill="none"/>`;
+          }).join("")}
+        </g>
+      `;
+
+      svg.innerHTML = content;
     }
 
     function renderBlood(){
       const blood = document.getElementById("bloodLayer");
       blood.innerHTML = "";
-
       if (state.act < 2) return;
 
-      let html = "";
+      let html = ``;
 
       if (state.violence >= 4) {
         html += `
-          <div class="blood smear" style="left:280px;top:455px;width:110px;height:24px;transform:rotate(-8deg);"></div>
-          <div class="blood" style="left:320px;top:472px;width:24px;height:18px;"></div>
-          <div class="blood drip" style="left:330px;top:484px;width:8px;height:52px;"></div>
+          <div class="blood smear pulse-blood" style="left:280px;top:455px;width:120px;height:26px;transform:rotate(-8deg);border-radius:999px;background:linear-gradient(90deg, rgba(86,15,15,.9) 0%, rgba(122,30,30,.76) 55%, rgba(66,12,12,.35) 100%);"></div>
+          <div class="blood" style="left:326px;top:472px;width:24px;height:18px;"></div>
+          <div class="blood drip drip-anim" style="left:336px;top:484px;width:8px;height:58px;background:linear-gradient(180deg, rgba(120,22,22,.92) 0%, rgba(67,10,10,.95) 100%);"></div>
         `;
       }
 
       if (state.violence >= 7) {
         html += `
-          <div class="blood smear" style="left:980px;top:360px;width:120px;height:30px;transform:rotate(12deg);"></div>
-          <div class="blood" style="left:1040px;top:392px;width:28px;height:24px;"></div>
-          <div class="blood drip" style="left:1047px;top:406px;width:10px;height:68px;"></div>
-          <div class="blood" style="left:1280px;top:536px;width:60px;height:22px;"></div>
+          <div class="blood smear pulse-blood" style="left:980px;top:360px;width:150px;height:32px;transform:rotate(12deg);border-radius:999px;background:linear-gradient(90deg, rgba(86,15,15,.9) 0%, rgba(122,30,30,.76) 55%, rgba(66,12,12,.35) 100%);"></div>
+          <div class="blood" style="left:1050px;top:392px;width:30px;height:24px;"></div>
+          <div class="blood drip drip-anim" style="left:1058px;top:404px;width:10px;height:74px;background:linear-gradient(180deg, rgba(120,22,22,.92) 0%, rgba(67,10,10,.95) 100%);"></div>
+          <div class="blood" style="left:1290px;top:540px;width:74px;height:24px;"></div>
+          <div class="blood drip drip-anim" style="left:1312px;top:553px;width:8px;height:34px;background:linear-gradient(180deg, rgba(120,22,22,.92) 0%, rgba(67,10,10,.95) 100%);"></div>
         `;
       }
 
       if (state.violence >= 10) {
         html += `
-          <div class="blood smear" style="left:1580px;top:250px;width:150px;height:36px;transform:rotate(-16deg);"></div>
-          <div class="blood" style="left:1640px;top:286px;width:34px;height:30px;"></div>
-          <div class="blood drip" style="left:1650px;top:304px;width:12px;height:90px;"></div>
-          <div class="blood smear" style="left:170px;top:540px;width:180px;height:34px;transform:rotate(6deg);"></div>
-          <div class="blood" style="left:1940px;top:540px;width:90px;height:30px;"></div>
+          <div class="blood smear pulse-blood" style="left:1630px;top:250px;width:200px;height:42px;transform:rotate(-16deg);border-radius:999px;background:linear-gradient(90deg, rgba(86,15,15,.9) 0%, rgba(122,30,30,.76) 55%, rgba(66,12,12,.35) 100%);"></div>
+          <div class="blood" style="left:1710px;top:292px;width:38px;height:30px;"></div>
+          <div class="blood drip drip-anim" style="left:1724px;top:306px;width:12px;height:94px;background:linear-gradient(180deg, rgba(120,22,22,.92) 0%, rgba(67,10,10,.95) 100%);"></div>
+          <div class="blood smear pulse-blood" style="left:190px;top:548px;width:220px;height:36px;transform:rotate(6deg);border-radius:999px;background:linear-gradient(90deg, rgba(86,15,15,.9) 0%, rgba(122,30,30,.76) 55%, rgba(66,12,12,.35) 100%);"></div>
+          <div class="blood" style="left:2340px;top:540px;width:96px;height:30px;"></div>
+          <div class="blood drip drip-anim" style="left:2370px;top:554px;width:10px;height:38px;background:linear-gradient(180deg, rgba(120,22,22,.92) 0%, rgba(67,10,10,.95) 100%);"></div>
         `;
       }
 
       if (state.character === "Lavinia" && state.laviniaSilent) {
         html += `
-          <div class="blood smear" style="left:${state.x + 48}px;top:${state.y + 30}px;width:18px;height:6px;transform:rotate(2deg);"></div>
-          <div class="blood" style="left:${state.x + 20}px;top:${state.y + 83}px;width:10px;height:10px;"></div>
-          <div class="blood" style="left:${state.x + 78}px;top:${state.y + 77}px;width:10px;height:10px;"></div>
+          <div class="blood smear" style="left:${state.x + 70}px;top:${state.y + 64}px;width:18px;height:6px;transform:rotate(2deg);border-radius:999px;background:linear-gradient(90deg, rgba(86,15,15,.9) 0%, rgba(122,30,30,.76) 55%, rgba(66,12,12,.35) 100%);"></div>
+          <div class="blood" style="left:${state.x + 34}px;top:${state.y + 146}px;width:12px;height:10px;"></div>
+          <div class="blood" style="left:${state.x + 118}px;top:${state.y + 140}px;width:12px;height:10px;"></div>
         `;
       }
 
       if (state.character === "Titus" && state.sword !== "Honorable") {
-        html += `
-          <div class="blood smear" style="left:${state.x + 92}px;top:${state.y + 78}px;width:9px;height:30px;transform:rotate(8deg);"></div>
-        `;
+        html += `<div class="blood smear" style="left:${state.x + 130}px;top:${state.y + 116}px;width:10px;height:34px;transform:rotate(8deg);border-radius:999px;background:linear-gradient(90deg, rgba(86,15,15,.9) 0%, rgba(122,30,30,.76) 55%, rgba(66,12,12,.35) 100%);"></div>`;
       }
 
       blood.innerHTML = html;
@@ -1297,6 +895,17 @@
       if (state.act === 1) return "warm";
       if (state.act === 2 && state.violence <= 4) return "dirty";
       return "ash";
+    }
+
+    function setSky(){
+      const sky = document.getElementById("sky");
+      const sun = document.getElementById("sun");
+      const mood = sceneMood();
+
+      sky.className = "layer sky " + mood;
+      if (mood === "bright") sun.className = "sun sunny";
+      else if (mood === "warm") sun.className = "sun fade";
+      else sun.className = "sun hidden";
     }
 
     function setTasks(tasks){
@@ -1322,18 +931,8 @@
       `).join("");
     }
 
-    function setObjective(text, hint){
-      state.activeObjective = text || "";
-      if (hint) state.interactHint = hint;
-    }
-
     function playerRect(){
-      return {
-        x: state.x + 18,
-        y: state.y + 10,
-        w: 84,
-        h: 150
-      };
+      return { x: state.x + 34, y: state.y + 18, w: 110, h: 220 };
     }
 
     function intersects(a,b){
@@ -1405,12 +1004,11 @@
       state.y = 0;
       state.vx = 0;
       state.vy = 0;
-      state.onGround = true;
       state.facing = "right";
+      state.onGround = true;
+      state.rolling = false;
       state.currentTasks = [];
       state.movementEnabled = false;
-      state.activeObjective = "";
-      state.interactHint = "A/D or arrows = move. W/Up/Space = jump. Shift/K = roll. Walk into task zones.";
       state._lastNode = null;
       render();
     }
@@ -1429,7 +1027,7 @@
       intro: {
         render: () => `
           <h2 class="scene-title">Choose your path into the tragedy</h2>
-          <p class="scene-meta">This version is side-scrolling. Walk left and right, jump, roll, and enter task zones to progress.</p>
+          <p class="scene-meta">This version is more detailed visually. Walk, jump, roll, and enter task zones to progress.</p>
           <div class="story">Rome still glows beneath a bright sky. Marble walls remain pearl white. Order still appears possible.
 
 Choose Titus or Lavinia. Then move through the world, enter highlighted task zones, collect memory fragments, and watch everything decay.
@@ -1439,11 +1037,11 @@ No matter what path you choose, the ending remains tragic.</div>
           <div class="char-grid">
             <button class="char-btn" data-character="Titus">
               <h3>Titus</h3>
-              <p>Begin as an honored Roman general. He starts composed and almost warm, then gradually loses his smile as revenge takes over.</p>
+              <p>He begins honorable, controlled, and still faintly warm. As the game progresses, his face hardens and his smile disappears.</p>
             </button>
             <button class="char-btn" data-character="Lavinia">
               <h3>Lavinia</h3>
-              <p>Begin with voice and bodily wholeness. Later, her silence becomes visible: mouth sealed, hands gone.</p>
+              <p>She begins whole, graceful, and expressive. In Act 2, the game makes her loss visible through her mouth and hands.</p>
             </button>
           </div>
           <div class="objective">Controls: A/D or arrows = move, W/Up/Space = jump, Shift/K = roll.</div>
@@ -1454,22 +1052,17 @@ No matter what path you choose, the ending remains tragic.</div>
         render: () => `
           <h2 class="scene-title">Act 1 — Return to Rome</h2>
           <p class="scene-meta">Move Titus through the bright city and complete the ceremonial tasks.</p>
-          <div class="story">You are Titus. Rome receives you in sunlight and applause. Virtus hangs at your side like an oath.
-
-Walk into the task zones in the scene to continue.</div>
+          <div class="story">You are Titus. Rome receives you in sunlight and applause. Virtus hangs at your side like an oath.</div>
           <div class="objective">Objective: Visit the crowd, the altar, and the throne dais.</div>
-          <div class="hint">${state.interactHint}</div>
+          <div class="hint">A/D or arrows = move, jump with W/Up/Space, roll with Shift/K.</div>
         `,
         onEnter(){
           state.act = 1;
-          state.x = 120;
-          state.vx = 0;
-          state.vy = 0;
-          setObjective("Visit the crowd, the altar, and the throne dais.", "Walk into each highlighted zone.");
+          state.x = 120; state.vx = 0; state.vy = 0;
           const tasks = [
-            { x:160, y:420, w:130, h:100, label:"Crowd", onComplete(){ state.log.push("The crowd calls Titus noble."); } },
-            { x:860, y:390, w:150, h:110, label:"Altar", onComplete(){ state.log.push("A prisoner begs for mercy before the altar."); } },
-            { x:1680, y:320, w:170, h:130, label:"Dais", onComplete(){ state.log.push("Power waits behind ritual."); } }
+            { x:170, y:425, w:140, h:100, label:"Crowd", onComplete(){ state.log.push("The crowd calls Titus noble."); } },
+            { x:950, y:395, w:150, h:110, label:"Altar", onComplete(){ state.log.push("A prisoner begs for mercy before the altar."); } },
+            { x:1880, y:310, w:180, h:135, label:"Dais", onComplete(){ state.log.push("Power waits behind ritual."); } }
           ];
           tasks.onAllDone = () => { state.node = "titus_choice1"; render(); };
           setTasks(tasks);
@@ -1493,14 +1086,14 @@ Walk into the task zones in the scene to continue.</div>
           <p class="scene-meta">Still bright. Still ordered. Less innocent.</p>
           <div class="story">Move through the political space. The city still looks clean, but ambition is already staining it.</div>
           <div class="objective">Objective: Reach the Senate steps, the laurel arch, and the tribunal platform.</div>
-          <div class="hint">${state.interactHint}</div>
+          <div class="hint">Walk into the glowing boxes.</div>
         `,
         onEnter(){
           state.x = 120;
           const tasks = [
-            { x:240, y:310, w:140, h:110, label:"Senate Steps", onComplete(){ state.log.push("Law speaks first."); } },
-            { x:990, y:240, w:150, h:120, label:"Laurel Arch", onComplete(){ state.log.push("Honor is displayed like decoration."); } },
-            { x:1760, y:300, w:170, h:120, label:"Tribunal", onComplete(){ state.log.push("Power waits behind the language of justice."); } }
+            { x:260, y:320, w:150, h:110, label:"Senate Steps", onComplete(){ state.log.push("Law speaks first."); } },
+            { x:1120, y:240, w:170, h:130, label:"Laurel Arch", onComplete(){ state.log.push("Honor is displayed like decoration."); } },
+            { x:1990, y:305, w:180, h:130, label:"Tribunal", onComplete(){ state.log.push("Power waits behind the language of justice."); } }
           ];
           tasks.onAllDone = () => { state.node = "titus_choice2"; render(); };
           setTasks(tasks);
@@ -1524,12 +1117,11 @@ Walk into the task zones in the scene to continue.</div>
           <p class="scene-meta">Collect Titus's past.</p>
           <div class="story">A younger Titus stands before Rome believing honor and identity are the same thing. Virtus rests at his side unstained, ceremonial, almost holy.</div>
           <div class="objective">Objective: Collect the memory fragment.</div>
-          <div class="hint">${state.interactHint}</div>
         `,
         onEnter(){
           state.x = 120;
           const tasks = [
-            { x:1220, y:300, w:150, h:140, label:"Memory", onComplete(){ addMemory("honor"); state.log.push("Memory fragment collected: Honor in Rome."); } }
+            { x:1450, y:305, w:170, h:140, label:"Memory", onComplete(){ addMemory("honor"); state.log.push("Memory fragment collected: Honor in Rome."); } }
           ];
           tasks.onAllDone = () => { state.node = "turning_point"; render(); };
           setTasks(tasks);
@@ -1542,15 +1134,15 @@ Walk into the task zones in the scene to continue.</div>
           <p class="scene-meta">Move Lavinia through the palace and court.</p>
           <div class="story">You are Lavinia. The city is still beautiful enough to trust. Your voice still belongs to you.</div>
           <div class="objective">Objective: Visit the court hall, the family wing, and the terrace.</div>
-          <div class="hint">${state.interactHint}</div>
+          <div class="hint">Walk into the glowing boxes.</div>
         `,
         onEnter(){
           state.act = 1;
           state.x = 120;
           const tasks = [
-            { x:220, y:320, w:150, h:110, label:"Court Hall", onComplete(){ state.log.push("The court smiles and measures."); } },
-            { x:980, y:420, w:170, h:100, label:"Family Wing", onComplete(){ state.log.push("Family pride still feels protective."); } },
-            { x:1730, y:220, w:170, h:130, label:"Terrace", onComplete(){ state.log.push("The world still looks open from a height."); } }
+            { x:250, y:330, w:150, h:115, label:"Court Hall", onComplete(){ state.log.push("The court smiles and measures."); } },
+            { x:1150, y:430, w:180, h:100, label:"Family Wing", onComplete(){ state.log.push("Family pride still feels protective."); } },
+            { x:2050, y:220, w:180, h:130, label:"Terrace", onComplete(){ state.log.push("The world still looks open from a height."); } }
           ];
           tasks.onAllDone = () => { state.node = "lavinia_choice1"; render(); };
           setTasks(tasks);
@@ -1574,14 +1166,14 @@ Walk into the task zones in the scene to continue.</div>
           <p class="scene-meta">The last place that still resembles peace.</p>
           <div class="story">The hunt begins beneath soft sunlight. The forest seems almost painted: green, gold, and harmless.</div>
           <div class="objective">Objective: Explore the path, the grove, and the clearing.</div>
-          <div class="hint">${state.interactHint}</div>
+          <div class="hint">Walk into the glowing boxes.</div>
         `,
         onEnter(){
           state.x = 120;
           const tasks = [
-            { x:180, y:410, w:130, h:100, label:"Path", onComplete(){ state.log.push("The path narrows."); } },
-            { x:1020, y:320, w:150, h:120, label:"Grove", onComplete(){ state.log.push("Beauty begins to feel theatrical."); } },
-            { x:1750, y:420, w:170, h:100, label:"Clearing", onComplete(){ state.log.push("The silence deepens."); } }
+            { x:200, y:425, w:140, h:100, label:"Path", onComplete(){ state.log.push("The path narrows."); } },
+            { x:1180, y:330, w:170, h:120, label:"Grove", onComplete(){ state.log.push("Beauty begins to feel theatrical."); } },
+            { x:2140, y:430, w:180, h:100, label:"Clearing", onComplete(){ state.log.push("The silence deepens."); } }
           ];
           tasks.onAllDone = () => { state.node = "memory_family"; render(); };
           setTasks(tasks);
@@ -1594,12 +1186,11 @@ Walk into the task zones in the scene to continue.</div>
           <p class="scene-meta">Collect Titus's past.</p>
           <div class="story">There is warmth in the household. Family pride appears solid, almost architectural, like something made of stone.</div>
           <div class="objective">Objective: Collect the memory fragment.</div>
-          <div class="hint">${state.interactHint}</div>
         `,
         onEnter(){
           state.x = 120;
           const tasks = [
-            { x:1320, y:300, w:150, h:140, label:"Memory", onComplete(){ addMemory("family"); state.log.push("Memory fragment collected: Family Pride."); } }
+            { x:1520, y:315, w:180, h:140, label:"Memory", onComplete(){ addMemory("family"); state.log.push("Memory fragment collected: Family Pride."); } }
           ];
           tasks.onAllDone = () => { state.node = "turning_point"; render(); };
           setTasks(tasks);
@@ -1625,16 +1216,16 @@ Walk into the task zones in the scene to continue.</div>
             ? `You wake in a changed world. Brown and grey replace ivory and gold. You try to speak. Nothing comes. Your hands are gone.`
             : `Rome no longer looks clean. The walls seem yellowed, cracked, and tired. News reaches Titus and changes the texture of the world.`}</div>
           <div class="objective">Objective: Cross the ruined city and reach the central ruin.</div>
-          <div class="hint">${state.interactHint}</div>
+          <div class="hint">Walk into the glowing boxes.</div>
         `,
         onEnter(){
           state.act = 2;
           if (state.character === "Lavinia") state.laviniaSilent = true;
           state.x = 120;
           const tasks = [
-            { x:300, y:420, w:150, h:100, label:"Ruin 1", onComplete(){ state.log.push("The old order looks brittle."); } },
-            { x:1100, y:320, w:160, h:120, label:"Ruin 2", onComplete(){ state.log.push("Language fails under pain."); } },
-            { x:1780, y:260, w:170, h:130, label:"Central Ruin", onComplete(){ state.log.push("Act 2 fully takes hold."); } }
+            { x:360, y:430, w:160, h:100, label:"Ruin 1", onComplete(){ state.log.push("The old order looks brittle."); } },
+            { x:1280, y:320, w:180, h:120, label:"Ruin 2", onComplete(){ state.log.push("Language fails under pain."); } },
+            { x:2140, y:250, w:190, h:140, label:"Central Ruin", onComplete(){ state.log.push("Act 2 fully takes hold."); } }
           ];
           tasks.onAllDone = () => { state.node = "act2_choice1"; render(); };
           setTasks(tasks);
@@ -1669,12 +1260,11 @@ Walk into the task zones in the scene to continue.</div>
           <p class="scene-meta">Understanding does not save anyone.</p>
           <div class="story">Titus remembers not only duty, but wounded pride. The seed of revenge was always there. Grief merely watered it.</div>
           <div class="objective">Objective: Collect the final memory fragment.</div>
-          <div class="hint">${state.interactHint}</div>
         `,
         onEnter(){
           state.x = 120;
           const tasks = [
-            { x:1260, y:300, w:150, h:140, label:"Memory", onComplete(){ addMemory("grief"); state.log.push("Memory fragment collected: The Seed of Grief."); } }
+            { x:1520, y:315, w:180, h:140, label:"Memory", onComplete(){ addMemory("grief"); state.log.push("Memory fragment collected: The Seed of Grief."); } }
           ];
           tasks.onAllDone = () => { state.node = "blood_tasks"; render(); };
           setTasks(tasks);
@@ -1687,14 +1277,13 @@ Walk into the task zones in the scene to continue.</div>
           <p class="scene-meta">Now the world becomes uglier, more stained, and more animal.</p>
           <div class="story">Move through the late-stage violence spaces. Blood now marks the environment. Every task pushes the story deeper into revenge.</div>
           <div class="objective">Objective: Reach the prisoner chamber, the weapon stand, and the vengeance hall.</div>
-          <div class="hint">${state.interactHint}</div>
         `,
         onEnter(){
           state.x = 120;
           const tasks = [
-            { x:260, y:400, w:150, h:110, label:"Prisoner Chamber", onComplete(){ state.violence += 2; state.log.push("An enemy is within reach."); } },
-            { x:1080, y:300, w:160, h:120, label:"Weapon Stand", onComplete(){ state.sword = "Stained"; state.log.push("Virtus darkens and no longer looks honorable."); } },
-            { x:1800, y:260, w:170, h:130, label:"Vengeance Hall", onComplete(){ state.violence += 2; state.log.push("Cruelty becomes easier to choose."); } }
+            { x:300, y:410, w:170, h:110, label:"Prisoner Chamber", onComplete(){ state.violence += 2; state.log.push("An enemy is within reach."); } },
+            { x:1320, y:305, w:180, h:125, label:"Weapon Stand", onComplete(){ state.sword = "Stained"; state.log.push("Virtus darkens and no longer looks honorable."); } },
+            { x:2170, y:255, w:200, h:145, label:"Vengeance Hall", onComplete(){ state.violence += 2; state.log.push("Cruelty becomes easier to choose."); } }
           ];
           tasks.onAllDone = () => { state.node = "blood_choice"; render(); };
           setTasks(tasks);
@@ -1718,14 +1307,13 @@ Walk into the task zones in the scene to continue.</div>
           <p class="scene-meta">Ceremony becomes one more mask for violence.</p>
           <div class="story">Walk through the feast hall and prepare the final stage of the tragedy.</div>
           <div class="objective">Objective: Reach the table, the candles, and the host position.</div>
-          <div class="hint">${state.interactHint}</div>
         `,
         onEnter(){
           state.x = 120;
           const tasks = [
-            { x:380, y:360, w:160, h:110, label:"Table", onComplete(){ state.log.push("Violence is dressed as ritual."); } },
-            { x:1080, y:220, w:160, h:120, label:"Candles", onComplete(){ state.log.push("Calm lighting makes the horror colder."); } },
-            { x:1830, y:300, w:170, h:120, label:"Host Position", onComplete(){ state.log.push("The last performance is ready."); } }
+            { x:430, y:360, w:180, h:115, label:"Table", onComplete(){ state.log.push("Violence is dressed as ritual."); } },
+            { x:1290, y:230, w:180, h:130, label:"Candles", onComplete(){ state.log.push("Calm lighting makes the horror colder."); } },
+            { x:2180, y:300, w:200, h:130, label:"Host Position", onComplete(){ state.log.push("The last performance is ready."); } }
           ];
           tasks.onAllDone = () => { state.node = "feast_choice"; render(); };
           setTasks(tasks);
@@ -1819,9 +1407,9 @@ No matter what you chose, revenge consumed honor, violence replaced speech, and 
       const scene = document.getElementById("scene");
       state.sceneWidth = scene.clientWidth;
       state.sceneHeight = scene.clientHeight;
-      state.groundY = state.sceneHeight - 150 - state.playerH + 10;
-      const worldInner = document.getElementById("worldInner");
-      worldInner.style.width = state.worldWidth + "px";
+      state.groundY = state.sceneHeight - 170 - state.playerH + 10;
+      document.getElementById("worldInner").style.width = state.worldWidth + "px";
+      document.getElementById("worldSvg").setAttribute("viewBox", `0 0 ${state.worldWidth} ${state.sceneHeight}`);
     }
 
     function updateCamera(){
@@ -1832,9 +1420,44 @@ No matter what you chose, revenge consumed honor, violence replaced speech, and 
       worldInner.style.transform = `translateX(${-camX}px)`;
     }
 
+    function renderPlayer(){
+      const player = document.getElementById("player");
+      player.innerHTML = characterSVG();
+      player.className = `player ${state.facing === "left" ? "face-left" : ""} ${state.rolling ? "rolling" : ""}`;
+      player.style.left = state.x + "px";
+      player.style.top = state.y + "px";
+    }
+
+    function sceneType(){
+      if (["forest_explore","memory_family","turning_point"].includes(state.node)) return "forest";
+      if (["act2_silence","memory_grief","blood_tasks"].includes(state.node)) return "ruins";
+      if (["feast_tasks"].includes(state.node)) return "feast";
+      if (state.node === "ending") return "ash";
+      return "rome";
+    }
+
+    function sceneMood(){
+      if (state.act === 0) return "bright";
+      if (state.act === 1 && state.violence < 3) return "bright";
+      if (state.act === 1) return "warm";
+      if (state.act === 2 && state.violence <= 4) return "dirty";
+      return "ash";
+    }
+
+    function setSky(){
+      const sky = document.getElementById("sky");
+      const sun = document.getElementById("sun");
+      const mood = sceneMood();
+      sky.className = "layer sky " + mood;
+      if (mood === "bright") sun.className = "sun sunny";
+      else if (mood === "warm") sun.className = "sun fade";
+      else sun.className = "sun hidden";
+    }
+
     function renderScene(){
       updateSceneMetrics();
-      renderSkyAndWorld(sceneType(), sceneMood());
+      setSky();
+      renderWorldSVG(sceneType(), sceneMood());
       renderPlayer();
       renderTasks();
       renderBlood();
@@ -1905,9 +1528,7 @@ No matter what you chose, revenge consumed honor, violence replaced speech, and 
       if (state.rolling) {
         state.rollTimer -= 1;
         state.vx *= 0.96;
-        if (state.rollTimer <= 0) {
-          state.rolling = false;
-        }
+        if (state.rollTimer <= 0) state.rolling = false;
       }
 
       state.vy += 0.6;
@@ -1931,7 +1552,6 @@ No matter what you chose, revenge consumed honor, violence replaced speech, and 
         player.style.top = state.y + "px";
         player.classList.toggle("face-left", state.facing === "left");
         player.classList.toggle("rolling", state.rolling);
-        player.classList.toggle("jumping", !state.onGround);
       }
 
       renderBlood();
@@ -1946,9 +1566,7 @@ No matter what you chose, revenge consumed honor, violence replaced speech, and 
 
     window.addEventListener("keydown", e => {
       state.keys[e.key] = true;
-      if (e.key === "Shift" || e.key === "k" || e.key === "K") {
-        startRoll();
-      }
+      if (e.key === "Shift" || e.key === "k" || e.key === "K") startRoll();
     });
 
     window.addEventListener("keyup", e => {
