@@ -3,866 +3,1573 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ash of Rome</title>
-  <style>
-    :root{
-      --bg:#f6efe4;
-      --sky1:#8ec5ff;
-      --sky2:#f6efe4;
-      --panel:#fff9f0;
-      --text:#1f1a17;
-      --muted:#6c655d;
-      --accent:#b08a47;
-      --border:#d8cab4;
-      --choice:#f8efdf;
-      --choiceHover:#efe0c6;
-      --shadow:rgba(0,0,0,0.10);
-    }
-
-    body.stage-1{
-      --bg:#f6efe4;
-      --sky1:#8ec5ff;
-      --sky2:#f6efe4;
-      --panel:#fff9f0;
-      --text:#1f1a17;
-      --muted:#6c655d;
-      --accent:#b08a47;
-      --border:#d8cab4;
-      --choice:#f8efdf;
-      --choiceHover:#efe0c6;
-      --shadow:rgba(0,0,0,0.10);
-    }
-
-    body.stage-2{
-      --bg:#e7dbc9;
-      --sky1:#c9b38b;
-      --sky2:#e7dbc9;
-      --panel:#efe2d0;
-      --text:#2a231d;
-      --muted:#64594f;
-      --accent:#8a6948;
-      --border:#c1ae97;
-      --choice:#e7d8c5;
-      --choiceHover:#d8c2a7;
-      --shadow:rgba(0,0,0,0.15);
-    }
-
-    body.stage-3{
-      --bg:#b8aa9a;
-      --sky1:#9d8975;
-      --sky2:#b8aa9a;
-      --panel:#cbbcab;
-      --text:#25201b;
-      --muted:#50473f;
-      --accent:#6d5440;
-      --border:#a28f7d;
-      --choice:#c2b19f;
-      --choiceHover:#b19a86;
-      --shadow:rgba(0,0,0,0.22);
-    }
-
-    body.stage-4{
-      --bg:#706760;
-      --sky1:#5f5751;
-      --sky2:#706760;
-      --panel:#82776d;
-      --text:#f1ebe3;
-      --muted:#ddd1c7;
-      --accent:#673730;
-      --border:#5a524c;
-      --choice:#766b63;
-      --choiceHover:#655b54;
-      --shadow:rgba(0,0,0,0.30);
-    }
-
-    body.stage-5{
-      --bg:#3c3836;
-      --sky1:#303032;
-      --sky2:#3c3836;
-      --panel:#4b4542;
-      --text:#f4efe8;
-      --muted:#cec4bb;
-      --accent:#552823;
-      --border:#342f2d;
-      --choice:#514947;
-      --choiceHover:#423d3a;
-      --shadow:rgba(0,0,0,0.45);
-    }
-
-    *{ box-sizing:border-box; }
-
-    body{
-      margin:0;
-      font-family: Georgia, "Times New Roman", serif;
-      color:var(--text);
-      background:linear-gradient(180deg, var(--sky1) 0%, var(--sky2) 42%, var(--bg) 100%);
-      min-height:100vh;
-      transition:background 0.8s ease, color 0.5s ease;
-    }
-
-    .container{
-      max-width:980px;
-      margin:0 auto;
-      padding:24px 16px 56px;
-    }
-
-    .header{
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-start;
-      gap:16px;
-      flex-wrap:wrap;
-      margin-bottom:18px;
-    }
-
-    h1{
-      margin:0;
-      font-size:clamp(2rem, 4vw, 3rem);
-      letter-spacing:0.02em;
-    }
-
-    .sub{
-      margin-top:6px;
-      color:var(--muted);
-      line-height:1.5;
-    }
-
-    .stats{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-    }
-
-    .pill{
-      background:var(--panel);
-      border:1px solid var(--border);
-      border-radius:999px;
-      padding:8px 12px;
-      box-shadow:0 8px 24px var(--shadow);
-      color:var(--muted);
-      font-size:0.92rem;
-    }
-
-    .card{
-      background:var(--panel);
-      border:1px solid var(--border);
-      border-radius:24px;
-      box-shadow:0 16px 44px var(--shadow);
-      padding:22px;
-    }
-
-    .visual-stage{
-      width:100%;
-      height:360px;
-      position:relative;
-      overflow:hidden;
-      border-radius:18px;
-      margin-bottom:18px;
-      border:1px solid var(--border);
-      background:#d9d1c6;
-      box-shadow:0 10px 24px rgba(0,0,0,0.12) inset;
-    }
-
-    #bgVisual{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-      filter:saturate(0.98) contrast(1.02);
-    }
-
-    .scene-overlay{
-      position:absolute;
-      inset:0;
-      background:linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.02) 45%, rgba(0,0,0,0.28) 100%);
-      pointer-events:none;
-    }
-
-    #charVisual{
-      position:absolute;
-      bottom:0;
-      right:24px;
-      height:96%;
-      max-width:40%;
-      object-fit:contain;
-      filter:drop-shadow(0 8px 18px rgba(0,0,0,0.35));
-      display:none;
-    }
-
-    .scene-title{
-      margin:0 0 8px 0;
-      font-size:1.55rem;
-    }
-
-    .scene-meta{
-      margin:0 0 16px 0;
-      color:var(--muted);
-      line-height:1.5;
-    }
-
-    .story{
-      min-height:210px;
-      white-space:pre-line;
-      line-height:1.82;
-      font-size:1.06rem;
-      margin-bottom:18px;
-    }
-
-    .choices{
-      display:grid;
-      gap:12px;
-      margin-top:14px;
-    }
-
-    button{
-      font:inherit;
-    }
-
-    .choice{
-      width:100%;
-      text-align:left;
-      border:1px solid var(--border);
-      background:var(--choice);
-      color:var(--text);
-      border-radius:16px;
-      padding:14px 16px;
-      cursor:pointer;
-      transition:background 0.18s ease, transform 0.12s ease, border-color 0.18s ease;
-    }
-
-    .choice:hover{
-      background:var(--choiceHover);
-      transform:translateY(-1px);
-    }
-
-    .character-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit, minmax(240px,1fr));
-      gap:14px;
-      margin-top:16px;
-    }
-
-    .character-card{
-      border:1px solid var(--border);
-      background:var(--choice);
-      border-radius:18px;
-      padding:16px;
-      cursor:pointer;
-      text-align:left;
-      transition:background 0.18s ease, transform 0.12s ease;
-    }
-
-    .character-card:hover{
-      background:var(--choiceHover);
-      transform:translateY(-2px);
-    }
-
-    .character-card h3{
-      margin:0 0 8px 0;
-      font-size:1.2rem;
-    }
-
-    .character-card p{
-      margin:0;
-      color:var(--muted);
-      line-height:1.6;
-    }
-
-    .footer-row{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top:18px;
-    }
-
-    .small-btn{
-      border:1px solid var(--border);
-      background:transparent;
-      color:var(--text);
-      border-radius:12px;
-      padding:10px 12px;
-      cursor:pointer;
-    }
-
-    .small-btn:hover{
-      background:var(--choice);
-    }
-
-    .note{
-      margin-top:16px;
-      padding-top:14px;
-      border-top:1px solid var(--border);
-      color:var(--muted);
-      line-height:1.6;
-      font-size:0.95rem;
-    }
-
-    .memory-list{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin-top:12px;
-    }
-
-    .memory{
-      border:1px solid var(--border);
-      border-radius:999px;
-      padding:6px 10px;
-      background:rgba(255,255,255,0.08);
-      font-size:0.9rem;
-    }
-
-    .symbol{
-      letter-spacing:0.08em;
-      font-style:italic;
-    }
-
-    .broken .choice{
-      border-style:dashed;
-    }
-
-    .silent .choice{
-      font-style:italic;
-    }
-
-    @media (max-width:640px){
-      .card{ padding:18px; }
-      .visual-stage{ height:250px; }
-      #charVisual{
-        right:10px;
-        max-width:52%;
-      }
-      .story{ min-height:250px; }
-    }
-  </style>
+  <title>Titus Andronicus: The Beast Within</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body class="stage-1">
-  <div class="container">
-    <div class="header">
-      <div>
-        <h1>Ash of Rome</h1>
-        <div class="sub">A visual interactive tragedy inspired by Titus Andronicus. Act 1 is bright and ordered. Act 2 decays into revenge, silence, and inevitability.</div>
+<body>
+  <div id="game-shell" class="phase-1">
+    <div id="hud">
+      <div class="hud-left">
+        <div class="logo">Titus Andronicus: The Beast Within</div>
+        <div id="act-indicator">Act I — Honour in Sunlight</div>
       </div>
-      <div class="stats">
-        <div class="pill" id="actStat">Act —</div>
-        <div class="pill" id="charStat">Character —</div>
-        <div class="pill" id="violenceStat">Violence 0</div>
-        <div class="pill" id="memoryStat">Memories 0/3</div>
-        <div class="pill" id="swordStat">Sword Honorable</div>
+      <div class="hud-right">
+        <div id="role-indicator">Role: Unchosen</div>
+        <div id="memory-indicator">Memory Fragments: 0 / 3</div>
       </div>
     </div>
 
-    <div class="card" id="card">
-      <div class="visual-stage">
-        <img id="bgVisual" src="" alt="Scene background">
-        <div class="scene-overlay"></div>
-        <img id="charVisual" src="" alt="Character">
+    <div id="world-view">
+      <div id="world">
+        <div id="sky-gradient"></div>
+        <div id="sun-moon"></div>
+        <div id="backdrop"></div>
+        <div id="scenery"></div>
+        <div id="ground"></div>
+        <div id="interactables"></div>
+        <div id="player" class="front titus neutral">
+          <div class="shadow"></div>
+          <div class="sprite-body">
+            <div class="head">
+              <div class="hair"></div>
+              <div class="face">
+                <div class="eye left"></div>
+                <div class="eye right"></div>
+                <div class="mouth"></div>
+              </div>
+            </div>
+            <div class="torso"></div>
+            <div class="arm left"></div>
+            <div class="arm right"></div>
+            <div class="hand left"></div>
+            <div class="hand right"></div>
+            <div class="leg left"></div>
+            <div class="leg right"></div>
+            <div class="sword"></div>
+          </div>
+        </div>
       </div>
-      <div id="game"></div>
     </div>
+
+    <div id="controls-hint">Move: A / D or ← / → · Jump: W / ↑ / Space · Roll: Shift / R · Interact at markers</div>
+
+    <div id="dialogue-overlay" class="visible">
+      <div id="dialogue-box" class="light">
+        <div id="speaker">Chorus</div>
+        <div id="dialogue-text"></div>
+        <div id="portrait-row">
+          <div id="portrait-left" class="portrait titus-portrait active"></div>
+          <div id="portrait-right" class="portrait lavinia-portrait"></div>
+        </div>
+        <div id="choices"></div>
+      </div>
+    </div>
+
+    <div id="fade-layer"></div>
   </div>
 
-  <script>
-    const state = {
-      node: "intro",
-      act: 0,
-      character: null,
-      violence: 0,
-      memories: [],
-      sword: "Honorable",
-      log: [],
-      laviniaSilent: false
-    };
-
-    const memoryNames = {
-      honor: "Honor in Rome",
-      family: "Family Pride",
-      grief: "The Seed of Grief"
-    };
-
-    function addMemory(key){
-      if(!state.memories.includes(key)){
-        state.memories.push(key);
-      }
-    }
-
-    function updateTheme(){
-      let level = 1;
-
-      if (state.act === 1) {
-        if (state.violence >= 3) level = 2;
-      }
-
-      if (state.act === 2) {
-        if (state.violence <= 4) level = 3;
-        else if (state.violence <= 8) level = 4;
-        else level = 5;
-      }
-
-      document.body.className = "stage-" + level;
-
-      const card = document.getElementById("card");
-      card.classList.toggle("broken", state.act === 2);
-      card.classList.toggle("silent", state.laviniaSilent);
-    }
-
-    function updateStats(){
-      document.getElementById("actStat").textContent = "Act " + (state.act || "—");
-      document.getElementById("charStat").textContent = "Character " + (state.character || "—");
-      document.getElementById("violenceStat").textContent = "Violence " + state.violence;
-      document.getElementById("memoryStat").textContent = "Memories " + state.memories.length + "/3";
-      document.getElementById("swordStat").textContent = "Sword " + state.sword;
-    }
-
-    function chooseCharacter(character){
-      state.character = character;
-      state.node = character === "Titus" ? "titus1" : "lavinia1";
-      state.log.push("Character selected: " + character);
-      render();
-    }
-
-    function choose(index){
-      const node = nodes[state.node];
-      const choices = typeof node.choices === "function" ? node.choices() : node.choices;
-      const selected = choices[index];
-
-      if(selected.violence) state.violence += selected.violence;
-      if(selected.memory) addMemory(selected.memory);
-      if(selected.sword) state.sword = selected.sword;
-      if(selected.silent === true) state.laviniaSilent = true;
-      if(selected.note) state.log.push(selected.note);
-
-      state.node = selected.next;
-      render();
-    }
-
-    function restart(){
-      state.node = "intro";
-      state.act = 0;
-      state.character = null;
-      state.violence = 0;
-      state.memories = [];
-      state.sword = "Honorable";
-      state.log = [];
-      state.laviniaSilent = false;
-      render();
-    }
-
-    function getEndingTone(){
-      if(state.violence <= 6){
-        return "You tried to hold onto dignity. The game let you phrase violence as restraint, justice, or sorrow. It still ended in blood.";
-      } else if(state.violence <= 10){
-        return "You moved through the story by degrees, each decision a little harsher than the last. The descent felt reasonable while it was happening. That is part of the horror.";
-      } else {
-        return "You embraced revenge openly. By the end, honor had rotted into appetite. The people on screen no longer resemble civilized Romans as much as wounded creatures acting on instinct.";
-      }
-    }
-
-    function setVisuals(bg, char){
-      const bgVisual = document.getElementById("bgVisual");
-      const charVisual = document.getElementById("charVisual");
-      bgVisual.src = bg || "";
-      charVisual.src = char || "";
-      charVisual.style.display = char ? "block" : "none";
-    }
-
-    function currentVisual(){
-      const brightRome = "https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=1400&q=80";
-      const forestBright = "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1400&q=80";
-      const forestDark = "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1400&q=80";
-      const ruinsDark = "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1400&q=80";
-      const hallDark = "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1400&q=80";
-      const ashEnding = "https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=1400&q=80";
-
-      const titusBright = "https://via.placeholder.com/420x700/e2d7c5/222222?text=Titus";
-      const titusMid = "https://via.placeholder.com/420x700/c8b59f/222222?text=Titus";
-      const titusDark = "https://via.placeholder.com/420x700/6e6158/f5f0eb?text=Dark+Titus";
-      const titusCorrupt = "https://via.placeholder.com/420x700/4e4440/f5f0eb?text=Corrupted+Titus";
-      const laviniaBright = "https://via.placeholder.com/420x700/f1e4dc/222222?text=Lavinia";
-      const laviniaSilent = "https://via.placeholder.com/420x700/8a7f77/f5f0eb?text=Silent+Lavinia";
-      const memoryTitus = "https://via.placeholder.com/420x700/e0d7c8/222222?text=Young+Titus";
-
-      switch(state.node){
-        case "intro":
-          return { bg: brightRome, char: "" };
-        case "titus1":
-        case "titus2":
-          return { bg: brightRome, char: titusBright };
-        case "titus3":
-          return { bg: brightRome, char: titusMid };
-        case "lavinia1":
-          return { bg: brightRome, char: laviniaBright };
-        case "lavinia2":
-          return { bg: forestBright, char: laviniaBright };
-        case "memoryHonor":
-        case "memoryFamily":
-          return { bg: brightRome, char: memoryTitus };
-        case "turningPoint":
-          return { bg: forestDark, char: state.character === "Lavinia" ? laviniaBright : titusMid };
-        case "act2silence":
-          return { bg: ruinsDark, char: state.character === "Lavinia" ? laviniaSilent : titusDark };
-        case "act2breaking":
-        case "memoryGrief":
-          return { bg: ruinsDark, char: titusDark };
-        case "bloodDemandsBlood":
-          return { bg: ruinsDark, char: titusCorrupt };
-        case "feast":
-        case "finalChoice":
-          return { bg: hallDark, char: titusCorrupt };
-        case "ending":
-          return { bg: ashEnding, char: "" };
-        default:
-          return { bg: brightRome, char: "" };
-      }
-    }
-
-    const nodes = {
-      intro: {
-        render: () => `
-          <h2 class="scene-title">Choose your path into the tragedy</h2>
-          <p class="scene-meta">Act 1 represents the better state. Act 2 represents the worse. The player is offered choices, but the ending remains fixed by design.</p>
-          <div class="story">Rome still glows beneath a bright sky. Marble walls remain pearl white. Order still appears possible.
-
-You may begin as Titus, a Roman general who looks honorable and rational before revenge consumes him.
-
-Or you may begin as Lavinia, who starts with voice, presence, and freedom before the story reduces her to silence.
-
-No matter what path you choose, the tragedy closes in the same place.</div>
-
-          <div class="character-grid">
-            <button class="character-card" data-character="Titus">
-              <h3>Titus</h3>
-              <p>Begin as a respected general. Your decisions sound measured at first, but gradually become more violent. Your sword begins as a sign of honor and ends as a shameful instrument.</p>
-            </button>
-
-            <button class="character-card" data-character="Lavinia">
-              <h3>Lavinia</h3>
-              <p>Begin with full voice and expression. As the game darkens, your ability to speak and act is taken away. The player feels helplessness instead of control.</p>
-            </button>
-          </div>
-        `
-      },
-
-      titus1: {
-        act: 1,
-        title: "Level 1 — Return to Rome",
-        meta: "Act 1. The better state. Ceremony, sunlight, and public honor.",
-        text: `The city receives you in warmth and applause. Pearl-white marble catches the light. Gold glints across armor, banners, and temple stone. At your side hangs Virtus, a sword polished so brightly it resembles a promise.
-
-A captured enemy kneels before you and begs for mercy. The crowd watches, eager to see what form Roman strength will take.`,
-        choices: [
-          { label: "Spare him. Rome shows strength through mercy.", next: "titus2", violence: 1, note: "He is removed from sight and executed anyway in the name of order." },
-          { label: "Execute him. Rome must be feared.", next: "titus2", violence: 2, note: "The crowd praises the execution as disciplined necessity." },
-          { label: "Let the gods decide his fate.", next: "titus2", violence: 1, note: "Priests take over. Ritual only changes the style of the death." }
-        ]
-      },
-
-      titus2: {
-        act: 1,
-        title: "Level 2 — The Throne Decision",
-        meta: "Politics still pretends to be reason.",
-        text: `Rome turns from victory to succession. Nobles speak of law. Soldiers speak of force. Everyone calls their own wish justice.
-
-You are asked where your support lies. The sky is still bright, but the brightness has begun to look theatrical, as if the city is performing order instead of possessing it.`,
-        choices: [
-          { label: "Choose the rightful heir. Order must prevail.", next: "titus3", violence: 1, note: "Your choice deepens division under the language of law." },
-          { label: "Choose the stronger leader. Rome needs power.", next: "titus3", violence: 2, note: "Practicality hardens into threat almost at once." },
-          { label: "Refuse to choose. Let fate unfold.", next: "titus3", violence: 1, note: "Refusal still feeds the same conflict." }
-        ]
-      },
-
-      titus3: {
-        act: 1,
-        title: "Level 3 — Seeds of Revenge",
-        meta: "The player still believes morality can interrupt the fall.",
-        text: `A wrong done to your family becomes impossible to ignore. Public insult, wounded pride, and old grievance begin weaving themselves together.
-
-Virtus still gleams, but now it feels less ceremonial in your hand. Less oath than tool.`,
-        choices: [
-          { label: "Forgive them. This ends here.", next: "memoryHonor", violence: 1, note: "Mercy is interpreted as weakness. The wound remains open." },
-          { label: "Punish them fairly.", next: "memoryHonor", violence: 2, note: "Fairness satisfies no one. Resentment sharpens." },
-          { label: "Make them suffer.", next: "memoryHonor", violence: 3, note: "Revenge becomes visible, and therefore easier to continue." }
-        ]
-      },
-
-      lavinia1: {
-        act: 1,
-        title: "Level 1 — Bright Rome",
-        meta: "Act 1. The better state. Voice, grace, and daylight.",
-        text: `You are Lavinia. The city is still beautiful enough to trust. Light pours over the palace halls, and the marble seems too clean for anything monstrous to happen within it.
-
-Your voice still belongs to you. Your body still obeys you. The world still appears answerable to language.`,
-        choices: [
-          { label: "Speak gently with the court.", next: "lavinia2", violence: 0, note: "Gentleness earns approval, but also attention." },
-          { label: "Speak boldly for your family.", next: "lavinia2", violence: 1, note: "Confidence gives you presence, but it also makes you visible." },
-          { label: "Remain careful and observant.", next: "lavinia2", violence: 0, note: "Silence delays conflict, but never removes it." }
-        ]
-      },
-
-      lavinia2: {
-        act: 1,
-        title: "Level 2 — The Forest Invitation",
-        meta: "The last place that still resembles peace.",
-        text: `The hunt begins beneath soft sunlight. The forest seems almost painted: green, gold, and harmless. It is the kind of scene that belongs to a story before it knows it is tragic.
-
-Still, something in the air feels slightly wrong. Not enough to name. Enough to feel.`,
-        choices: [
-          { label: "Stay on the safe path.", next: "memoryFamily", violence: 0, note: "The path narrows. Safety proves decorative." },
-          { label: "Explore deeper into the forest.", next: "memoryFamily", violence: 1, note: "Curiosity changes the route, not the result." },
-          { label: "Call out for company.", next: "memoryFamily", violence: 0, note: "Your voice echoes back with no protection attached." }
-        ]
-      },
-
-      memoryHonor: {
-        act: 1,
-        title: "Side Quest — Memory Fragment",
-        meta: "Collecting fragments of Titus's past.",
-        text: `You find a fragment of Titus's memory:
-
-A younger Titus stands before Rome believing honor and identity are the same thing. Virtus rests at his side unstained, ceremonial, almost holy. He still believes violence can remain noble if it serves duty.
-
-The memory fades too quickly to trust.`,
-        choices: [
-          { label: "Take the fragment and continue.", next: "turningPoint", memory: "honor", note: "You keep the memory, but it changes nothing." }
-        ]
-      },
-
-      memoryFamily: {
-        act: 1,
-        title: "Side Quest — Memory Fragment",
-        meta: "Collecting fragments of Titus's past.",
-        text: `You uncover a fragment of Titus's memory:
-
-There is warmth in the household. Family pride appears solid, almost architectural, like something made of stone. The memory suggests a world in which loyalty still means protection.
-
-Then it cracks apart.`,
-        choices: [
-          { label: "Take the fragment and walk on.", next: "turningPoint", memory: "family", note: "The forest feels darker after the memory ends." }
-        ]
-      },
-
-      turningPoint: {
-        act: 1,
-        title: "Turning Point — The Forest Closes",
-        meta: "The line between Act 1 and Act 2.",
-        text: `The sunlight thins. Colors lose their warmth. A branch snaps somewhere behind you.
-
-For one last moment, the game pretends that caution, confidence, or speed might save you. Then it reveals what tragedy always reveals: the path was narrowing long before you saw it.`,
-        choices: [
-          { label: "Who is there?", next: "act2silence", violence: 1, note: "No answer comes that language can meet." },
-          { label: "Show yourself.", next: "act2silence", violence: 1, note: "The world responds with force, not clarity." },
-          { label: "Run.", next: "act2silence", violence: 1, note: "Movement becomes useless. Escape is denied." }
-        ]
-      },
-
-      act2silence: {
-        act: 2,
-        title: "Level 4 — Silence",
-        meta: "Act 2. The worse state. Speech collapses. Beauty decays.",
-        text: () => {
-          if(state.character === "Lavinia"){
-            return `You wake in a changed world. The sky has gone dirty. The light is no longer warm but sickly. Brown and grey have replaced ivory and gold.
-
-You try to speak.
-
-Nothing comes.
-
-You try to reach forward.
-
-The absence of your hands becomes the center of the scene.
-
-The game has taken from you the powers it gave you at the start.`;
-          } else {
-            return `Rome no longer looks clean. The walls seem yellowed, cracked, and tired. News reaches Titus and changes the texture of the entire world.
-
-What was once political injury becomes personal ruin. Somewhere nearby, Lavinia struggles to communicate through grief that language can no longer carry.
-
-Even now, the game still offers choices.`;
-          }
-        },
-        choices: () => {
-          if(state.character === "Lavinia"){
-            return [
-              { label: "[trace symbols in the dirt]", next: "act2breaking", violence: 1, silent: true, note: "They only partly understand what you try to say." },
-              { label: "[gesture with your body]", next: "act2breaking", violence: 1, silent: true, note: "They see pain, but not its full meaning." },
-              { label: "[stand in stillness]", next: "act2breaking", violence: 0, silent: true, note: "Silence communicates suffering, not explanation." }
-            ];
-          } else {
-            return [
-              { label: "Ask what happened.", next: "act2breaking", violence: 1, note: "The question is calm. The answer cannot be." },
-              { label: "Demand names.", next: "act2breaking", violence: 2, note: "You leap from grief toward revenge." },
-              { label: "Swear revenge at once.", next: "act2breaking", violence: 3, note: "The oath arrives before reason does." }
-            ];
-          }
-        }
-      },
-
-      act2breaking: {
-        act: 2,
-        title: "Level 5 — The Breaking of Titus",
-        meta: "Honor remains visible on the outside, but revenge now governs the inside.",
-        text: `Virtus no longer looks ceremonial. A dark stain clings to the blade. No matter how it is cleaned, something remains. What began as a symbol of Roman honor now feels heavy, ugly, and shameful.
-
-Titus still appears composed to others. But his decisions no longer come from order. They come from injury.`,
-        choices: [
-          { label: "We will seek justice.", next: "memoryGrief", violence: 2, sword: "Stained", note: "Justice now sounds like revenge wearing formal language." },
-          { label: "We will make them pay.", next: "memoryGrief", violence: 3, sword: "Stained", note: "Balance gives way to retaliation." },
-          { label: "They will suffer as we did.", next: "memoryGrief", violence: 4, sword: "Stained", note: "Pain becomes the measure of meaning." }
-        ]
-      },
-
-      memoryGrief: {
-        act: 2,
-        title: "Side Quest — Final Memory Fragment",
-        meta: "Understanding the tragedy does not stop it.",
-        text: `The final fragment opens:
-
-Titus remembers not only duty, but wounded pride. He remembers how quickly honor could become self-righteousness, and how easily self-righteousness could become violence. The seed of revenge was always there. Grief merely watered it.
-
-The memory does not redeem him. It only explains him.`,
-        choices: [
-          { label: "Take the fragment and continue.", next: "bloodDemandsBlood", memory: "grief", note: "You now understand more, and can prevent nothing." }
-        ]
-      },
-
-      bloodDemandsBlood: {
-        act: 2,
-        title: "Level 6 — Blood Demands Blood",
-        meta: "There is no nonviolent option now. Only degrees of brutality.",
-        text: `An enemy falls within reach. In another kind of story, this might be the moment where mercy breaks the cycle.
-
-In this story, mercy only changes the texture of the same ruin.
-
-The room smells of iron, damp stone, and exhaustion.`,
-        choices: [
-          { label: "End it quickly.", next: "feast", violence: 2, sword: "Corrupted", note: "Efficiency does not cleanse cruelty." },
-          { label: "Force a confession.", next: "feast", violence: 3, sword: "Corrupted", note: "Pain is made to imitate truth." },
-          { label: "Make them suffer.", next: "feast", violence: 4, sword: "Corrupted", note: "Cruelty no longer needs an excuse." }
-        ]
-      },
-
-      feast: {
-        act: 2,
-        title: "Level 7 — The Feast",
-        meta: "Ceremony becomes one more mask for violence.",
-        text: `A table is set. Candles shiver. The room pretends to be civilized, but the illusion has become grotesque. The walls are no longer pearl white. They have turned stained and dull, as if the building itself has absorbed the corruption around it.
-
-This is revenge at its ugliest: not open force alone, but force dressed in ritual and politeness.`,
-        choices: [
-          { label: "Remain calm.", next: "finalChoice", violence: 2, note: "Cold control makes the horror sharper." },
-          { label: "Taunt them.", next: "finalChoice", violence: 3, note: "Words become blades before the blade is drawn." },
-          { label: "Reveal the truth slowly.", next: "finalChoice", violence: 4, note: "Delay becomes a form of cruelty." }
-        ]
-      },
-
-      finalChoice: {
-        act: 2,
-        title: "Level 8 — No Choice Left",
-        meta: "The final illusion of agency.",
-        text: `Bodies, grief, rage, and consequence surround you. The tragedy is nearly complete.
-
-The game offers one final decision, not because it can save anyone, but because tragedy loves to imitate freedom even as it destroys it.
-
-Virtus now feels nothing like honor. It feels like history reduced to a weapon.`,
-        choices: [
-          { label: "Stop.", next: "ending", violence: 1, note: "You hesitate. The violence continues anyway." },
-          { label: "Finish it.", next: "ending", violence: 2, note: "You move without the comfort of illusion." }
-        ]
-      },
-
-      ending: {
-        act: 2,
-        render: () => `
-          <h2 class="scene-title">Ending — Ash</h2>
-          <p class="scene-meta">All paths end in tragedy. What changes is only the tone of the descent.</p>
-
-          <div class="story">The sky has turned grey and ugly. The brightness of Act 1 is gone. Pearl white walls have become brown, dull, and stained. Rome no longer looks like civilization at peace with itself. It looks like the ruins of people who called their violence justice until they could no longer tell the difference.
-
-${getEndingTone()}
-
-${state.character === "Lavinia"
-? "Lavinia's path makes the loss of agency painfully literal. She begins with voice and ends in forced silence. The player experiences helplessness instead of heroism."
-: "Titus's path makes corruption gradual. He begins as an honorable Roman general and ends as a man who has taught himself to call revenge by nobler names."}
-
-${state.memories.length === 3
-? "You collected all three memory fragments. Together they reveal that the tragedy was not a sudden break, but a slow exposure of what was already present beneath the surface."
-: "You did not collect every memory fragment. Even so, the ending remains unchanged. The story withholds detail, but not fate."}
-
-No matter what choices you made, the story ends the same way: revenge consumes honor, violence replaces speech, and human beings descend toward the animal logic of hurt, retaliation, and ruin.</div>
-
-          <div class="memory-list">
-            ${state.memories.length
-              ? state.memories.map(m => `<div class="memory">${memoryNames[m]}</div>`).join("")
-              : `<div class="memory">No memory fragments collected</div>`
-            }
-          </div>
-
-          <div class="footer-row">
-            <button class="small-btn" id="restartBtn">Play again</button>
-          </div>
-
-          <div class="note">Final violence score: ${state.violence}. Final sword state: ${state.sword}. The ending is fixed by design.</div>
-        `
-      }
-    };
-
-    function render(){
-      const game = document.getElementById("game");
-      const node = nodes[state.node];
-
-      if(node.act) state.act = node.act;
-
-      if(node.render){
-        game.innerHTML = node.render();
-      } else {
-        const text = typeof node.text === "function" ? node.text() : node.text;
-        const choices = typeof node.choices === "function" ? node.choices() : node.choices;
-
-        game.innerHTML = `
-          <h2 class="scene-title">${node.title}</h2>
-          <p class="scene-meta">${node.meta}</p>
-          <div class="story">${text}</div>
-          <div class="choices">
-            ${choices.map((choice, index) => `
-              <button class="choice" data-index="${index}">
-                ${state.laviniaSilent && state.character === "Lavinia" && state.act === 2
-                  ? `<span class="symbol">${choice.label}</span>`
-                  : choice.label}
-              </button>
-            `).join("")}
-          </div>
-          <div class="note">${state.log.length ? state.log[state.log.length - 1] : "Choose a path."}</div>
-        `;
-      }
-
-      const visual = currentVisual();
-      setVisuals(visual.bg, visual.char);
-
-      updateStats();
-      updateTheme();
-      bindEvents();
-    }
-
-    function bindEvents(){
-      document.querySelectorAll("[data-character]").forEach(btn => {
-        btn.addEventListener("click", () => {
-          chooseCharacter(btn.getAttribute("data-character"));
-        });
-      });
-
-      document.querySelectorAll(".choice").forEach(btn => {
-        btn.addEventListener("click", () => {
-          choose(Number(btn.getAttribute("data-index")));
-        });
-      });
-
-      const restartBtn = document.getElementById("restartBtn");
-      if(restartBtn){
-        restartBtn.addEventListener("click", restart);
-      }
-    }
-
-    render();
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
+:root {
+  --sky-top: #9fd8ff;
+  --sky-bottom: #fff3d2;
+  --sun: #ffd768;
+  --ground-top: #9fcb78;
+  --ground-bottom: #6d8d50;
+  --stone: #f6f1ec;
+  --panel: rgba(255,255,255,0.86);
+  --panel-border: rgba(112, 96, 89, 0.35);
+  --text: #271f1c;
+  --accent: #b3734d;
+  --choice-1: #ffffff;
+  --choice-2: #f4e5d6;
+  --choice-3: #d7c1a4;
+  --choice-text: #2b201b;
+  --danger: #6c1f1f;
+  --ui-shadow: 0 14px 40px rgba(0,0,0,0.18);
+  --world-width: 2200px;
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: Georgia, "Times New Roman", serif;
+  background: #0f0d0c;
+}
+
+#game-shell {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  color: var(--text);
+  background: linear-gradient(var(--sky-top), var(--sky-bottom));
+}
+
+#hud {
+  position: absolute;
+  inset: 0 0 auto 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 14px 18px;
+  z-index: 30;
+  pointer-events: none;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: .02em;
+  text-shadow: 0 2px 8px rgba(255,255,255,0.25);
+}
+#act-indicator, #role-indicator, #memory-indicator {
+  margin-top: 6px;
+  font-size: 15px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.4);
+  backdrop-filter: blur(4px);
+  display: inline-block;
+}
+.hud-right { text-align: right; }
+
+#world-view {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+#world {
+  position: absolute;
+  width: var(--world-width);
+  height: 100%;
+  left: 0;
+  top: 0;
+}
+
+#sky-gradient, #backdrop, #scenery, #ground, #interactables, #sun-moon {
+  position: absolute;
+  inset: 0;
+}
+#sky-gradient {
+  background: linear-gradient(to bottom, var(--sky-top) 0%, var(--sky-bottom) 60%, #d7c0a8 100%);
+}
+#sun-moon {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fff7d2, var(--sun));
+  box-shadow: 0 0 60px rgba(255, 217, 122, 0.55);
+  left: 120px;
+  top: 80px;
+}
+#backdrop::before, #backdrop::after {
+  content: "";
+  position: absolute;
+  bottom: 210px;
+  width: 480px;
+  border-radius: 40% 40% 0 0;
+  background: rgba(255,255,255,0.3);
+  filter: blur(4px);
+}
+#backdrop::before { left: 100px; height: 220px; }
+#backdrop::after { right: 150px; height: 160px; }
+
+#scenery .pillar, #scenery .tree, #scenery .house, #scenery .altar, #scenery .ruin {
+  position: absolute;
+  bottom: 170px;
+}
+.pillar {
+  width: 60px; height: 240px;
+  background: linear-gradient(to bottom, #ffffff, var(--stone));
+  border: 3px solid rgba(117,100,92,0.15);
+  border-bottom-width: 10px;
+  border-radius: 10px;
+}
+.pillar::before {
+  content: "";
+  position: absolute;
+  left: -10px; top: -24px;
+  width: 80px; height: 26px;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #ffffff, #ece2d8);
+}
+.tree {
+  width: 44px; height: 180px;
+  background: #70523d;
+  border-radius: 12px;
+}
+.tree::before {
+  content: "";
+  position: absolute;
+  left: -58px; top: -100px;
+  width: 160px; height: 120px;
+  background: radial-gradient(circle at 50% 55%, #98d26d 0%, #6aa14b 60%, rgba(0,0,0,0) 68%);
+}
+.house {
+  width: 260px; height: 200px;
+  background: linear-gradient(to bottom, #fffdf9, #ece4db);
+  border: 4px solid rgba(110,93,84,0.18);
+  border-radius: 16px 16px 6px 6px;
+}
+.house::before {
+  content: "";
+  position: absolute;
+  left: -20px; top: -90px;
+  width: 300px; height: 100px;
+  clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+  background: #d9a88b;
+}
+.house::after {
+  content: "";
+  position: absolute;
+  left: 102px; bottom: 0;
+  width: 56px; height: 100px;
+  background: #8d6248;
+  border-radius: 12px 12px 0 0;
+}
+.altar {
+  width: 180px; height: 130px;
+  background: linear-gradient(to bottom, #f7f2ee, #d9ccc0);
+  border-radius: 14px;
+  border: 4px solid rgba(98,83,77,0.2);
+}
+.ruin {
+  width: 220px; height: 220px;
+  background: linear-gradient(to bottom, #d9d0c8, #9a8f86);
+  border: 5px solid rgba(65,54,49,0.28);
+  border-radius: 16px 16px 4px 4px;
+  overflow: hidden;
+}
+.ruin::before,
+.ruin::after {
+  content: "";
+  position: absolute;
+  background: rgba(50,40,35,0.25);
+}
+.ruin::before { left: 22px; top: 40px; width: 34px; height: 100px; }
+.ruin::after { right: 28px; top: 18px; width: 80px; height: 40px; }
+
+#ground {
+  top: auto;
+  height: 180px;
+  bottom: 0;
+  background:
+    linear-gradient(to bottom, rgba(255,255,255,0.15), transparent 30%),
+    linear-gradient(to bottom, var(--ground-top), var(--ground-bottom));
+  border-top: 6px solid rgba(255,255,255,0.2);
+}
+#ground::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 12% 30%, rgba(255,255,255,0.1) 0 3px, transparent 4px),
+    radial-gradient(circle at 55% 60%, rgba(0,0,0,0.08) 0 2px, transparent 4px),
+    radial-gradient(circle at 82% 20%, rgba(0,0,0,0.08) 0 3px, transparent 5px);
+  background-size: 170px 90px;
+}
+
+#player {
+  position: absolute;
+  bottom: 145px;
+  left: 220px;
+  width: 86px;
+  height: 168px;
+  z-index: 12;
+  transition: filter .4s ease;
+}
+.shadow {
+  position: absolute;
+  bottom: -2px; left: 12px;
+  width: 60px; height: 14px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.25);
+  filter: blur(2px);
+}
+.sprite-body { position: absolute; inset: 0; }
+.head {
+  position: absolute; left: 22px; top: 0;
+  width: 42px; height: 44px;
+}
+.face {
+  position: absolute; inset: 6px 4px 0 4px;
+  background: #f0cfba;
+  border-radius: 48% 48% 42% 42%;
+  border: 2px solid rgba(80,49,33,0.25);
+}
+.hair {
+  position: absolute; top: 0; left: 2px;
+  width: 38px; height: 18px;
+  background: #6b4d31;
+  border-radius: 50% 50% 10px 10px;
+}
+.eye {
+  position: absolute;
+  top: 12px; width: 6px; height: 6px;
+  background: #241919; border-radius: 50%;
+}
+.eye.left { left: 10px; }
+.eye.right { right: 10px; }
+.mouth {
+  position: absolute;
+  left: 11px; bottom: 8px;
+  width: 14px; height: 8px;
+  border-bottom: 3px solid #7d3b3b;
+  border-radius: 0 0 10px 10px;
+}
+.torso {
+  position: absolute;
+  left: 24px; top: 38px;
+  width: 38px; height: 54px;
+  background: linear-gradient(to bottom, #d8e0ea, #9ca8b5);
+  border-radius: 10px;
+  border: 2px solid rgba(47,58,73,0.25);
+}
+.arm, .leg, .hand {
+  position: absolute;
+  border-radius: 10px;
+}
+.arm { width: 14px; height: 46px; background: #c8b0a0; top: 44px; }
+.arm.left { left: 12px; }
+.arm.right { right: 12px; }
+.hand { width: 12px; height: 12px; background: #f0cfba; top: 86px; }
+.hand.left { left: 13px; }
+.hand.right { right: 13px; }
+.leg { width: 15px; height: 58px; background: #6d5f68; top: 88px; }
+.leg.left { left: 26px; }
+.leg.right { right: 26px; }
+.sword {
+  position: absolute;
+  left: 64px; top: 40px;
+  width: 10px; height: 90px;
+  background: linear-gradient(to bottom, #f5f5f5, #b2c4d0 50%, #867268);
+  border-radius: 8px;
+  transform: rotate(10deg);
+  box-shadow: 0 0 8px rgba(255,255,255,0.35);
+}
+.sword::before {
+  content: "";
+  position: absolute; left: -10px; top: 12px;
+  width: 30px; height: 7px;
+  border-radius: 8px;
+  background: #b78f49;
+}
+
+#player.front .arm.left { left: 10px; }
+#player.front .arm.right { right: 10px; }
+#player.side .head { left: 24px; }
+#player.side .face {
+  border-radius: 54% 44% 40% 52%;
+}
+#player.side.left .sprite-body { transform: scaleX(-1); transform-origin: center; }
+#player.roll .sprite-body {
+  transform: rotate(75deg) translateY(24px);
+  transform-origin: center bottom;
+}
+#player.roll.left .sprite-body { transform: scaleX(-1) rotate(75deg) translateY(24px); }
+#player.jump { filter: brightness(1.08); }
+
+#player.lavinia .hair { background: #5b342f; }
+#player.lavinia .torso { background: linear-gradient(to bottom, #f2d8df, #b68796); }
+#player.lavinia .leg { background: #7f6072; }
+#player.lavinia .sword { display: none; }
+#player.lavinia .mouth { border-bottom-color: #7a4d58; }
+#player.lavinia .arm, #player.lavinia .hand { background: #f0cfba; }
+#player.lavinia .head::after {
+  content: "";
+  position: absolute; left: 5px; top: 1px;
+  width: 30px; height: 24px;
+  border-radius: 50% 50% 40% 40%;
+  border: 2px solid rgba(80,49,33,0.12);
+}
+
+#player.silent .mouth {
+  width: 20px;
+  left: 8px;
+  height: 14px;
+  border-bottom: none;
+  background: #dcb0b0;
+  border-radius: 8px;
+}
+#player.maimed .mouth {
+  width: 20px;
+  left: 8px;
+  height: 20px;
+  background: #9e5454;
+  border-radius: 0 0 12px 12px;
+  box-shadow: inset 0 0 0 4px rgba(50,0,0,0.2);
+}
+#player.maimed .hand { display: none; }
+#player.maimed .arm.left,
+#player.maimed .arm.right {
+  height: 38px;
+  top: 50px;
+  border-radius: 10px 10px 20px 20px;
+}
+#player.titus.frown-1 .mouth { width: 12px; left: 12px; border-bottom-width: 2px; }
+#player.titus.frown-2 .mouth {
+  width: 14px; left: 11px; bottom: 12px; height: 6px;
+  border-bottom: none; border-top: 3px solid #6f3030; border-radius: 10px 10px 0 0;
+}
+#player.titus.frown-3 .mouth {
+  width: 18px; left: 8px; bottom: 10px; height: 6px;
+  border-bottom: none; border-top: 4px solid #4f2020; border-radius: 10px 10px 0 0;
+}
+#player.titus.frown-3 .sword {
+  filter: saturate(0.6) brightness(0.8);
+  box-shadow: none;
+}
+#player.titus.frown-3 .torso {
+  background: linear-gradient(to bottom, #b1a8a1, #726a64);
+}
+
+.marker {
+  position: absolute;
+  bottom: 175px;
+  width: 56px; height: 98px;
+  display: flex; align-items: flex-end; justify-content: center;
+}
+.marker::before {
+  content: "";
+  position: absolute;
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.75);
+  box-shadow: 0 0 24px rgba(255,255,255,0.8);
+  animation: pulse 1.6s infinite ease-in-out;
+}
+.marker::after {
+  content: attr(data-label);
+  position: absolute;
+  bottom: 48px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(38,29,24,0.72);
+  color: #fff7ef;
+  font-size: 13px;
+  white-space: nowrap;
+  letter-spacing: .03em;
+}
+.marker.memory::before { background: rgba(255,233,166,0.8); }
+.marker.story::before { background: rgba(229,244,255,0.8); }
+.marker.end::before { background: rgba(160,68,68,0.9); }
+@keyframes pulse {
+  0%,100% { transform: translateY(0) scale(1); opacity: .9; }
+  50% { transform: translateY(-8px) scale(1.08); opacity: 1; }
+}
+
+#controls-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 14px;
+  transform: translateX(-50%);
+  z-index: 24;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(19,15,13,0.55);
+  color: #fff3eb;
+  font-size: 14px;
+  backdrop-filter: blur(4px);
+}
+
+#dialogue-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .3s ease;
+  z-index: 40;
+}
+#dialogue-overlay.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+#dialogue-box {
+  width: min(980px, calc(100vw - 40px));
+  min-height: 230px;
+  margin-bottom: 44px;
+  border-radius: 24px;
+  padding: 18px 20px 20px;
+  background: var(--panel);
+  border: 2px solid var(--panel-border);
+  box-shadow: var(--ui-shadow);
+}
+#dialogue-box.light {
+  background: rgba(255,255,255,0.88);
+}
+#speaker {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #624634;
+}
+#dialogue-text {
+  white-space: pre-line;
+  line-height: 1.5;
+  font-size: 18px;
+  min-height: 92px;
+}
+#portrait-row {
+  display: flex;
+  gap: 16px;
+  margin: 16px 0 14px;
+}
+.portrait {
+  width: 104px;
+  height: 104px;
+  border-radius: 16px;
+  border: 2px solid rgba(95,76,66,0.28);
+  background: linear-gradient(to bottom, rgba(255,255,255,0.75), rgba(224,213,203,0.85));
+  position: relative;
+  overflow: hidden;
+  opacity: .55;
+  transform: scale(.98);
+  transition: all .25s ease;
+}
+.portrait.active {
+  opacity: 1;
+  transform: scale(1.03);
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.35);
+}
+.titus-portrait::before,
+.lavinia-portrait::before {
+  content: "";
+  position: absolute;
+  left: 28px; top: 18px;
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: #efccb3;
+  border: 2px solid rgba(71,46,31,0.2);
+}
+.titus-portrait::after {
+  content: "";
+  position: absolute;
+  left: 24px; bottom: 14px;
+  width: 56px; height: 34px;
+  border-radius: 14px;
+  background: linear-gradient(to bottom, #cdd6e1, #8f98a5);
+}
+.lavinia-portrait::after {
+  content: "";
+  position: absolute;
+  left: 24px; bottom: 14px;
+  width: 56px; height: 34px;
+  border-radius: 14px;
+  background: linear-gradient(to bottom, #efcfda, #b27f92);
+}
+.lavinia-portrait.silent::before {
+  box-shadow: inset 0 -10px 0 #d7a8a8;
+}
+.lavinia-portrait.maimed::before {
+  box-shadow: inset 0 -14px 0 #965252;
+}
+
+#choices {
+  display: grid;
+  gap: 10px;
+}
+.choice-btn {
+  border: none;
+  border-radius: 18px;
+  padding: 14px 16px;
+  font-size: 16px;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: transform .15s ease, filter .2s ease, background .25s ease;
+  color: var(--choice-text);
+}
+.choice-btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.03);
+}
+.choice-btn.mild { background: var(--choice-1); }
+.choice-btn.hard { background: var(--choice-2); }
+.choice-btn.brutal { background: var(--choice-3); color: #2a1414; }
+.illusion-label {
+  display: inline-block;
+  margin-right: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(51,31,23,0.12);
+  font-size: 12px;
+  letter-spacing: .04em;
+}
+
+#fade-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at center, transparent 30%, rgba(32,20,17,0.08) 100%);
+  transition: background .6s ease;
+  z-index: 20;
+}
+
+.phase-2 {
+  --sky-top: #867774;
+  --sky-bottom: #5a5452;
+  --sun: #8a6d59;
+  --ground-top: #7f6f55;
+  --ground-bottom: #574d44;
+  --stone: #bfb3aa;
+  --panel: rgba(65,53,49,0.88);
+  --panel-border: rgba(191,172,161,0.18);
+  --text: #f1e7df;
+  --choice-1: #a69586;
+  --choice-2: #8a7566;
+  --choice-3: #6f5750;
+  --choice-text: #fff4eb;
+}
+.phase-2 #dialogue-box { color: #fff3ea; }
+.phase-2 #speaker { color: #f0c9b6; }
+.phase-2 #backdrop::before,
+.phase-2 #backdrop::after {
+  background: rgba(72,62,58,0.4);
+}
+.phase-2 .tree::before {
+  background: radial-gradient(circle at 50% 55%, #756754 0%, #5a5046 60%, rgba(0,0,0,0) 68%);
+}
+.phase-2 #fade-layer {
+  background: radial-gradient(circle at center, rgba(0,0,0,0.02) 20%, rgba(30,17,14,0.34) 100%);
+}
+
+body.ending #fade-layer {
+  background: radial-gradient(circle at center, rgba(0,0,0,0.12) 10%, rgba(16,8,8,0.78) 100%);
+}
+const gameShell = document.getElementById('game-shell');
+const worldView = document.getElementById('world-view');
+const world = document.getElementById('world');
+const scenery = document.getElementById('scenery');
+const interactables = document.getElementById('interactables');
+const playerEl = document.getElementById('player');
+const dialogueOverlay = document.getElementById('dialogue-overlay');
+const dialogueBox = document.getElementById('dialogue-box');
+const speakerEl = document.getElementById('speaker');
+const textEl = document.getElementById('dialogue-text');
+const choicesEl = document.getElementById('choices');
+const actIndicator = document.getElementById('act-indicator');
+const roleIndicator = document.getElementById('role-indicator');
+const memoryIndicator = document.getElementById('memory-indicator');
+const portraitLeft = document.getElementById('portrait-left');
+const portraitRight = document.getElementById('portrait-right');
+
+const WORLD_WIDTH = 2200;
+const GROUND_Y = 145;
+const keys = {};
+
+const state = {
+  role: null,
+  levelIndex: 0,
+  memoryCount: 0,
+  memorySeen: {},
+  violence: 0,
+  honour: 3,
+  lockMovement: true,
+  currentScene: null,
+  sceneIndex: 0,
+  sceneStep: 0,
+  usedMarkers: {},
+  player: {
+    x: 220,
+    y: 0,
+    vy: 0,
+    width: 86,
+    speed: 4.1,
+    facing: 'right',
+    jumping: false,
+    rolling: false,
+    rollTimer: 0,
+  }
+};
+
+const levels = [
+  {
+    act: 1,
+    title: 'Level 1 — White Gates of Rome',
+    subtitle: 'Pearl walls, a warm sky, and the first lie of order.',
+    phase: 1,
+    scenery: [
+      { type: 'pillar', x: 220 },
+      { type: 'pillar', x: 300 },
+      { type: 'pillar', x: 380 },
+      { type: 'house', x: 560 },
+      { type: 'tree', x: 1180 },
+      { type: 'tree', x: 1260 },
+      { type: 'altar', x: 1560 }
+    ],
+    markers: [
+      { id: 'intro1', type: 'story', x: 420, label: 'Senate', scene: 'intro1' },
+      { id: 'memory1', type: 'memory', x: 980, label: 'Memory', scene: 'memory1' },
+      { id: 'choice1', type: 'story', x: 1600, label: 'Oath', scene: 'choice1' },
+      { id: 'next1', type: 'end', x: 2030, label: 'Act I', scene: 'transition1' }
+    ]
+  },
+  {
+    act: 1,
+    title: 'Level 2 — Garden of Promises',
+    subtitle: 'The flowers remain bright, but the roots have begun to rot.',
+    phase: 1,
+    scenery: [
+      { type: 'house', x: 180 },
+      { type: 'tree', x: 740 },
+      { type: 'tree', x: 820 },
+      { type: 'tree', x: 900 },
+      { type: 'pillar', x: 1430 },
+      { type: 'altar', x: 1700 }
+    ],
+    markers: [
+      { id: 'intro2', type: 'story', x: 360, label: 'Garden', scene: 'intro2' },
+      { id: 'choice2', type: 'story', x: 1100, label: 'Petition', scene: 'choice2' },
+      { id: 'memory2', type: 'memory', x: 1460, label: 'Memory', scene: 'memory2' },
+      { id: 'next2', type: 'end', x: 2010, label: 'Act II', scene: 'transition2' }
+    ]
+  },
+  {
+    act: 2,
+    title: 'Level 3 — Forest of Violation',
+    subtitle: 'Brown trunks, grey air, and a silence that devours language.',
+    phase: 2,
+    scenery: [
+      { type: 'tree', x: 220 },
+      { type: 'tree', x: 390 },
+      { type: 'tree', x: 620 },
+      { type: 'ruin', x: 1120 },
+      { type: 'tree', x: 1620 }
+    ],
+    markers: [
+      { id: 'intro3', type: 'story', x: 330, label: 'Forest', scene: 'intro3' },
+      { id: 'choice3', type: 'story', x: 1040, label: 'Wound', scene: 'choice3' },
+      { id: 'memory3', type: 'memory', x: 1460, label: 'Memory', scene: 'memory3' },
+      { id: 'next3', type: 'end', x: 2010, label: 'Fall', scene: 'transition3' }
+    ]
+  },
+  {
+    act: 2,
+    title: 'Level 4 — House of Feast',
+    subtitle: 'The house still stands, but it has learned the shape of the grave.',
+    phase: 2,
+    scenery: [
+      { type: 'house', x: 360 },
+      { type: 'ruin', x: 1040 },
+      { type: 'pillar', x: 1520 },
+      { type: 'altar', x: 1820 }
+    ],
+    markers: [
+      { id: 'intro4', type: 'story', x: 420, label: 'Kitchen', scene: 'intro4' },
+      { id: 'choice4', type: 'story', x: 1210, label: 'Feast', scene: 'choice4' },
+      { id: 'next4', type: 'end', x: 2010, label: 'Blood', scene: 'transition4' }
+    ]
+  },
+  {
+    act: 2,
+    title: 'Level 5 — Throne of Ash',
+    subtitle: 'Every path narrows into the same ruined mouth.',
+    phase: 2,
+    scenery: [
+      { type: 'pillar', x: 220 },
+      { type: 'ruin', x: 580 },
+      { type: 'pillar', x: 1420 },
+      { type: 'altar', x: 1740 }
+    ],
+    markers: [
+      { id: 'intro5', type: 'story', x: 350, label: 'Throne', scene: 'intro5' },
+      { id: 'choice5', type: 'story', x: 1180, label: 'Judgment', scene: 'choice5' },
+      { id: 'ending', type: 'end', x: 2010, label: 'End', scene: 'ending' }
+    ]
+  }
+];
+
+const scenes = {
+  opening: {
+    steps: [
+      {
+        speaker: 'Chorus',
+        portrait: 'none',
+        text: `A bright Roman sky. Pearl-white walls. A city that calls itself civil.
+Yet under the marble lives appetite, pride, and the wish to answer wound with wound.`
+      },
+      {
+        speaker: 'Chorus',
+        portrait: 'none',
+        text: `Choose a body through which to enter the tragedy.
+You may walk, leap, and roll through each level, but the world has already sharpened its knife.`,
+        choices: [
+          {
+            text: 'Play as Titus — an honourable Roman general whose reason decays into revenge.',
+            tone: 'mild',
+            effect: () => selectRole('titus')
+          },
+          {
+            text: 'Play as Lavinia — bright, eloquent, and then brutalised into forced silence.',
+            tone: 'mild',
+            effect: () => selectRole('lavinia')
+          }
+        ]
+      }
+    ]
+  },
+  intro1: {
+    steps: [
+      {
+        speaker: 'Titus',
+        portrait: 'titus',
+        text: `Rome receives me with sunlight on steel.
+Let my sword remain a servant of order, not hunger.`
+      },
+      {
+        speaker: 'Marcus',
+        portrait: 'titus',
+        text: `Brother, the city praises you because you have taught your violence to march in straight lines.`
+      },
+      {
+        speaker: 'Chorus',
+        portrait: 'none',
+        text: `Act I begins in brightness.
+The first cruelty will still speak the language of duty.`
+      }
+    ]
+  },
+  memory1: {
+    steps: [
+      {
+        speaker: 'Memory Fragment',
+        portrait: 'titus',
+        text: `Fragment I: Titus remembers teaching his children that Roman hands should build before they strike.
+The memory glows warm, then trembles, as if ashamed to remain.`
+      },
+      {
+        speaker: 'System',
+        portrait: 'none',
+        text: `You gather a fragment of Titus's memory.
+These fragments do not save anyone. They only let you watch the fall with clearer eyes.`,
+        choices: [{ text: 'Carry the fragment onward.', tone: 'mild', effect: () => collectMemory('memory1') }]
+      }
+    ]
+  },
+  choice1: {
+    steps: [
+      {
+        speaker: 'Chorus',
+        portrait: 'none',
+        text: `A captive kneels. Rome watches.
+The game offers choice, as tragedy always does, by naming necessity with different verbs.`
+      },
+      {
+        speaker: 'Decision',
+        portrait: 'none',
+        text: `How will you answer the demand for blood?`,
+        choices: [
+          {
+            text: 'Refuse the spectacle and speak of mercy.',
+            tone: 'mild',
+            tag: 'Mercy',
+            effect: () => funnelChoice({ violence: 1, honour: -0.2, next: 'transition1', summary: 'You speak of mercy, but the ritual proceeds under another name.' })
+          },
+          {
+            text: 'Permit a lawful sacrifice to preserve Roman order.',
+            tone: 'hard',
+            tag: 'Duty',
+            effect: () => funnelChoice({ violence: 2, honour: -0.5, next: 'transition1', summary: 'You choose law as the mask of vengeance, and the blade is blessed.' })
+          },
+          {
+            text: 'Demand blood openly so grief may feel answered.',
+            tone: 'brutal',
+            tag: 'Blood',
+            effect: () => funnelChoice({ violence: 3, honour: -1, next: 'transition1', summary: 'You give grief its red theatre. Rome pretends not to enjoy it.' })
+          }
+        ]
+      }
+    ]
+  },
+  transition1: {
+    steps: [
+      {
+        speaker: 'Chorus',
+        portrait: 'none',
+        text: `The sunny walls remain pearl-white, but something has entered the stone.
+Your first decision differed in costume, not in destination.`
+      },
+      {
+        speaker: 'System',
+        portrait: 'none',
+        text: `Walk to the far side and continue.
+Act I still smiles, but less than before.`,
+        choices: [{ text: 'Enter the Garden of Promises.', tone: 'mild', effect: () => nextLevel() }]
+      }
+    ]
+  },
+  intro2: {
+    steps: [
+      {
+        speaker: () => state.role === 'lavinia' ? 'Lavinia' : 'Titus',
+        portrait: () => state.role,
+        text: () => state.role === 'lavinia'
+          ? `The garden is so bright it feels impossible that harm could bloom here.
+Words still come easily to me. My hands still answer my thoughts.`
+          : `This garden was planted for peace, yet every branch resembles a spear from the corner of the eye.`
+      },
+      {
+        speaker: 'Chorus',
+        portrait: 'none',
+        text: `The colours remain warm.
+That is what makes the coming ugliness obscene.`
+      }
+    ]
+  },
+  choice2: {
+    steps: [
+      {
+        speaker: 'Decision',
+        portrait: 'none',
+        text: `A plea is brought before power.
+How do you answer injustice when law itself is already leaning toward cruelty?`,
+        choices: [
+          {
+            text: 'Appeal calmly to reason and process.',
+            tone: 'mild',
+            tag: 'Reason',
+            effect: () => funnelChoice({ violence: 1, honour: -0.3, next: 'transition2', summary: 'You appeal to reason. The court hears only the rhythm of its own appetite.' })
+          },
+          {
+            text: 'Threaten force unless fairness is restored.',
+            tone: 'hard',
+            tag: 'Threat',
+            effect: () => funnelChoice({ violence: 2, honour: -0.6, next: 'transition2', summary: 'You threaten force. Justice stiffens into pride and becomes more dangerous.' })
+          },
+          {
+            text: 'Strike first and force the world to answer you.',
+            tone: 'brutal',
+            tag: 'Strike',
+            effect: () => funnelChoice({ violence: 3, honour: -1.2, next: 'transition2', summary: 'You choose force openly. The world answers, but only with a larger wound.' })
+          }
+        ]
+      }
+    ]
+  },
+  memory2: {
+    steps: [
+      {
+        speaker: 'Memory Fragment',
+        portrait: 'titus',
+        text: `Fragment II: Titus remembers laughter at a family table before grief made every chair look temporary.
+The memory lingers on the smile he will not keep.`
+      },
+      {
+        speaker: 'System',
+        portrait: 'none',
+        text: `A second fragment is gathered.
+You are not repairing the past. You are inventorying what revenge consumes.`,
+        choices: [{ text: 'Take the memory.', tone: 'mild', effect: () => collectMemory('memory2') }]
+      }
+    ]
+  },
+  transition2: {
+    steps: [
+      {
+        speaker: 'Chorus',
+        portrait: 'none',
+        text: `Act I ends.
+Brightness has not prevented brutality; it has merely lit it cleanly.`
+      },
+      {
+        speaker: 'System',
+        portrait: 'none',
+        text: `Enter Act II.
+The palette darkens. The body pays for what the story has chosen.`,
+        choices: [{ text: 'Walk into the forest.', tone: 'hard', effect: () => nextLevel() }]
+      }
+    ]
+  },
+  intro3: {
+    steps: [
+      {
+        speaker: 'Chorus',
+        portrait: 'none',
+        text: `Act II begins in the Forest of Violation.
+Brown bark. Grey air. Language torn from the mouth of the world.`
+      },
+      {
+        speaker: () => state.role === 'lavinia' ? 'Lavinia' : 'Titus',
+        portrait: () => state.role,
+        text: () => state.role === 'lavinia'
+          ? `The trees are no longer witnesses. They are teeth.`
+          : `I feel the forest watching for weakness, as if grief itself had learned to hide behind trunks.`
+      }
+    ]
+  },
+  choice3: {
+    steps: [
+      {
+        speaker: 'Decision',
+        portrait: 'none',
+        text: () => state.role === 'lavinia'
+          ? `The world closes around Lavinia. The game offers choices that differ in posture, not result.`
+          : `News of violation reaches Titus. His next thought may still wear the mask of restraint, but it has already learned the taste of revenge.`,
+        choices: [
+          {
+            text: () => state.role === 'lavinia'
+              ? 'Try to flee and call for help.'
+              : 'Seek lawful punishment through Rome.',
+            tone: 'mild',
+            tag: 'Restraint',
+            effect: () => brutalShift({
+              violence: 2,
+              honour: -0.7,
+              next: 'transition3',
+              laviniaStage: 'silent',
+              titusStage: 'frown-1',
+              summary: state.role === 'lavinia'
+                ? 'You run, but the forest is written against you. Your voice is reduced to a wound.'
+                : 'You seek lawful redress, but law is slower than pain and less honest about blood.'
+            })
+          },
+          {
+            text: () => state.role === 'lavinia'
+              ? 'Hide among the ruins and resist.'
+              : 'Swear private revenge on those responsible.',
+            tone: 'hard',
+            tag: 'Oath',
+            effect: () => brutalShift({
+              violence: 3,
+              honour: -1.1,
+              next: 'transition3',
+              laviniaStage: 'maimed',
+              titusStage: 'frown-2',
+              summary: state.role === 'lavinia'
+                ? 'You resist. The punishment grows more monstrous, as if cruelty resents resistance.'
+                : 'You swear revenge. Honour begins to look decorative, a costume left in an empty room.'
+            })
+          },
+          {
+            text: () => state.role === 'lavinia'
+              ? 'Confront them and refuse to beg.'
+              : 'Answer atrocity with promised atrocity.',
+            tone: 'brutal',
+            tag: 'Retaliation',
+            effect: () => brutalShift({
+              violence: 4,
+              honour: -1.5,
+              next: 'transition3',
+              laviniaStage: 'maimed',
+              titusStage: 'frown-3',
+              summary: state.role === 'lavinia'
+                ? 'You refuse humiliation, but tragedy is not moved by courage. It mutilates what it cannot bend.'
+                : 'You choose atrocity as argument. The sword now feels less like honour than appetite dressed in metal.'
+            })
+          }
+        ]
+      }
+    ]
+  },
+  memory3: {
+    steps: [
+      {
+        speaker: 'Memory Fragment',
+        portrait: 'titus',
+        text: `Fragment III: Titus remembers a clear morning in which Lavinia spoke and everyone listened without fear.
+The fragment shakes in your hand like something alive and dying at once.`
+      },
+      {
+        speaker: 'System',
+        portrait: 'none',
+        text: `You gather the final fragment.
+Memory does not unlock a better ending. It only sharpens the tragedy.`,
+        choices: [{ text: 'Keep the last fragment.', tone: 'mild', effect: () => collectMemory('memory3') }]
+      }
+    ]
+  },
+  transition3: {
+    steps: [
+      {
+        speaker: 'Chorus',
+        portrait: 'none',
+        text: `The body has changed. The colours have changed.
+What remains unchanged is the direction: downward, inward, toward blood.`
+      },
+      {
+        speaker: 'System',
+        portrait: 'none',
+        text: `Proceed to the House of Feast.`,
+        choices: [{ text: 'Enter the house.', tone: 'hard', effect: () => nextLevel() }]
+      }
+    ]
+  },
+  intro4: {
+    steps: [
+      {
+        speaker: 'Chorus',
+        portrait: 'none',
+        text: `Here the home becomes a mechanism for revenge.
+Domestic space rots into theatre, kitchen, altar, and grave.`
+      },
+      {
+        speaker: 'Titus',
+        portrait: 'titus',
+        text: `If reason cannot govern pain, then pain will write its own law with my hand.`
+      }
+    ]
+  },
+  choice4: {
+    steps: [
+      {
+        speaker: 'Decision',
+        portrait: 'none',
+        text: `How will the feast be prepared?`,
+        choices: [
+          {
+            text: 'Mask revenge in ceremony and civility.',
+            tone: 'mild',
+            tag: 'Ceremony',
+            effect: () => funnelChoice({ violence: 2, honour: -0.8, next: 'transition4', summary: 'You arrange violence beneath etiquette. The silverware does not make it cleaner.' })
+          },
+          {
+            text: 'Let the guilty taste hidden punishment.',
+            tone: 'hard',
+            tag: 'Punishment',
+            effect: () => funnelChoice({ violence: 3, honour: -1.1, next: 'transition4', summary: 'You turn revenge into craft. Precision becomes its own form of savagery.' })
+          },
+          {
+            text: 'Make the feast itself an act of monstrous revelation.',
+            tone: 'brutal',
+            tag: 'Monstrosity',
+            effect: () => funnelChoice({ violence: 4, honour: -1.5, next: 'transition4', summary: 'You embrace the grotesque completely. The house learns to digest shame.' })
+          }
+        ]
+      }
+    ]
+  },
+  transition4: {
+    steps: [
+      {
+        speaker: 'Chorus',
+        portrait: 'none',
+        text: `No route preserved innocence.
+Some only took longer to confess what they wanted.`
+      },
+      {
+        speaker: 'System',
+        portrait: 'none',
+        text: `Walk toward the throne.`,
+        choices: [{ text: 'Face the final judgment.', tone: 'hard', effect: () => nextLevel() }]
+      }
+    ]
+  },
+  intro5: {
+    steps: [
+      {
+        speaker: 'Chorus',
+        portrait: 'none',
+        text: `This is the end that all branches concealed inside themselves.
+Throne, ash, accusation, and blood.`
+      },
+      {
+        speaker: () => state.role === 'lavinia' ? 'Lavinia' : 'Titus',
+        portrait: () => state.role,
+        text: () => state.role === 'lavinia'
+          ? `What was taken from me now speaks through spectacle, through pity, through rage in other mouths.`
+          : `I once believed Rome could shape men into something above appetite. Now I know how quickly we return to teeth.`
+      }
+    ]
+  },
+  choice5: {
+    steps: [
+      {
+        speaker: 'Decision',
+        portrait: 'none',
+        text: `Choose the final posture of tragedy.`,
+        choices: [
+          {
+            text: 'Seek confession and justice.',
+            tone: 'mild',
+            tag: 'Justice',
+            effect: () => funnelChoice({ violence: 2, honour: -0.5, next: 'ending', summary: 'Confession comes tangled with murder. Justice arrives already stained.' })
+          },
+          {
+            text: 'Demand revenge and call it balance.',
+            tone: 'hard',
+            tag: 'Balance',
+            effect: () => funnelChoice({ violence: 3, honour: -1, next: 'ending', summary: 'You name revenge balance, but the scales break under the weight of blood.' })
+          },
+          {
+            text: 'End it in open slaughter.',
+            tone: 'brutal',
+            tag: 'Slaughter',
+            effect: () => funnelChoice({ violence: 4, honour: -1.4, next: 'ending', summary: 'You choose slaughter without disguise. Tragedy thanks you for your honesty and ends the same way.' })
+          }
+        ]
+      }
+    ]
+  },
+  ending: {
+    steps: [
+      {
+        speaker: 'Chorus',
+        portrait: 'none',
+        text: () => `The end is fixed.
+You gathered ${state.memoryCount} of 3 memory fragments.
+You chose violence ${state.violence} times in spirit, though the road was laid before you.`
+      },
+      {
+        speaker: 'Chorus',
+        portrait: 'none',
+        text: () => state.role === 'lavinia'
+          ? `Lavinia has been made into a sign of what others did and what others avenged.
+The tragedy lies not only in the violence, but in how every person learned to resemble the beasts they feared.`
+          : `Titus entered as a Roman general who believed discipline could ennoble force.
+He ends as proof that revenge does not merely answer barbarity; it becomes it.`
+      },
+      {
+        speaker: 'System',
+        portrait: 'none',
+        text: `All paths led here.
+Refresh the page to begin again beneath the bright sky that is never innocent.`,
+        choices: [{ text: 'End.', tone: 'brutal', effect: () => finishGame() }]
+      }
+    ]
+  }
+};
+
+function updateCharacterState() {
+  playerEl.className = `front ${state.role || 'titus'} neutral`;
+  if (state.role === 'lavinia' && levels[state.levelIndex].phase === 2) {
+    playerEl.classList.add('silent');
+  }
+  if (state.role === 'titus') {
+    updateTitusStage();
+  }
+  updatePortraits();
+}
+
+function init() {
+  bindControls();
+  loadLevel(0);
+  openScene('opening');
+  requestAnimationFrame(loop);
+}
+
+function bindControls() {
+  window.addEventListener('keydown', (e) => {
+    keys[e.key.toLowerCase()] = true;
+    if ([" ", "ArrowUp", "ArrowLeft", "ArrowRight"].includes(e.key)) e.preventDefault();
+    if ((e.key === 'e' || e.key === 'Enter') && !state.lockMovement) tryInteract();
+    if ((e.key === 'r' || e.key === 'Shift') && !state.lockMovement) startRoll();
+  });
+  window.addEventListener('keyup', (e) => {
+    keys[e.key.toLowerCase()] = false;
+  });
+  worldView.addEventListener('click', () => {
+    if (!state.lockMovement) tryInteract();
+  });
+}
+
+function selectRole(role) {
+  state.role = role;
+  roleIndicator.textContent = `Role: ${role === 'titus' ? 'Titus' : 'Lavinia'}`;
+  playerEl.className = `front ${role} neutral`;
+  updatePortraits();
+  closeScene();
+}
+
+function loadLevel(index) {
+  state.levelIndex = index;
+  const level = levels[index];
+  gameShell.classList.toggle('phase-2', level.phase === 2);
+  actIndicator.textContent = level.title;
+  renderScenery(level.scenery);
+  renderMarkers(level.markers);
+  state.player.x = 140;
+  state.player.y = 0;
+  state.player.vy = 0;
+  state.lockMovement = true;
+  updateCharacterState();
+}
+
+function renderScenery(items) {
+  scenery.innerHTML = '';
+  items.forEach(item => {
+    const el = document.createElement('div');
+    el.className = item.type;
+    el.style.left = `${item.x}px`;
+    scenery.appendChild(el);
+  });
+}
+
+function renderMarkers(markers) {
+  interactables.innerHTML = '';
+  markers.forEach(marker => {
+    if (state.usedMarkers[marker.id]) return;
+    const el = document.createElement('div');
+    el.className = `marker ${marker.type}`;
+    el.dataset.id = marker.id;
+    el.dataset.scene = marker.scene;
+    el.dataset.label = marker.label;
+    el.style.left = `${marker.x}px`;
+    interactables.appendChild(el);
+  });
+}
+
+function openScene(sceneName) {
+  state.currentScene = scenes[sceneName];
+  state.sceneIndex = sceneName;
+  state.sceneStep = 0;
+  state.lockMovement = true;
+  dialogueOverlay.classList.add('visible');
+  showCurrentStep();
+}
+
+function closeScene() {
+  state.currentScene = null;
+  state.sceneIndex = null;
+  state.sceneStep = 0;
+  dialogueOverlay.classList.remove('visible');
+  state.lockMovement = false;
+}
+
+function resolveField(value) {
+  return typeof value === 'function' ? value(state) : value;
+}
+
+function showCurrentStep() {
+  const scene = state.currentScene;
+  if (!scene) return;
+  const step = scene.steps[state.sceneStep];
+  if (!step) { closeScene(); return; }
+
+  const speaker = resolveField(step.speaker);
+  const text = resolveField(step.text);
+  const portrait = resolveField(step.portrait);
+  speakerEl.textContent = speaker;
+  textEl.textContent = text;
+  updatePortraits(portrait);
+  choicesEl.innerHTML = '';
+  dialogueBox.classList.toggle('light', levels[state.levelIndex].phase === 1);
+
+  if (step.choices) {
+    step.choices.forEach(choice => {
+      const btn = document.createElement('button');
+      btn.className = `choice-btn ${choice.tone || 'mild'}`;
+      const tag = choice.tag ? `<span class="illusion-label">${choice.tag}</span>` : '';
+      btn.innerHTML = `${tag}${choice.text}`;
+      btn.addEventListener('click', () => choice.effect());
+      choicesEl.appendChild(btn);
+    });
+  } else {
+    const btn = document.createElement('button');
+    btn.className = 'choice-btn mild';
+    btn.textContent = 'Continue';
+    btn.addEventListener('click', () => {
+      state.sceneStep += 1;
+      showCurrentStep();
+    });
+    choicesEl.appendChild(btn);
+  }
+}
+
+function updatePortraits(active = null) {
+  portraitLeft.className = 'portrait titus-portrait';
+  portraitRight.className = 'portrait lavinia-portrait';
+
+  if (state.role === 'lavinia' && playerEl.classList.contains('silent')) portraitRight.classList.add('silent');
+  if (state.role === 'lavinia' && playerEl.classList.contains('maimed')) portraitRight.classList.add('maimed');
+  if (playerEl.classList.contains('frown-2') || playerEl.classList.contains('frown-3')) {
+    portraitLeft.style.filter = 'brightness(.85) saturate(.8)';
+  } else {
+    portraitLeft.style.filter = '';
+  }
+  if (active === 'titus') portraitLeft.classList.add('active');
+  else if (active === 'lavinia') portraitRight.classList.add('active');
+  else {
+    portraitLeft.classList.remove('active');
+    portraitRight.classList.remove('active');
+  }
+}
+
+function funnelChoice({ violence, honour, next, summary }) {
+  state.violence += violence;
+  state.honour += honour;
+  if (state.role === 'titus') updateTitusStage();
+  openTransientSummary(summary, next);
+}
+
+function brutalShift({ violence, honour, next, laviniaStage, titusStage, summary }) {
+  state.violence += violence;
+  state.honour += honour;
+  if (state.role === 'lavinia') {
+    playerEl.classList.remove('silent', 'maimed');
+    playerEl.classList.add(laviniaStage);
+  }
+  if (state.role === 'titus') {
+    playerEl.classList.remove('frown-1', 'frown-2', 'frown-3');
+    playerEl.classList.add(titusStage);
+  }
+  updatePortraits();
+  openTransientSummary(summary, next);
+}
+
+function openTransientSummary(summary, next) {
+  state.currentScene = {
+    steps: [
+      { speaker: 'Consequence', portrait: 'none', text: summary },
+      { speaker: 'Chorus', portrait: 'none', text: `Different gesture. Same descent.` },
+      { speaker: 'System', portrait: 'none', text: `Continue.`, choices: [{ text: 'Go on.', tone: 'hard', effect: () => { closeScene(); if (next && scenes[next]) openScene(next); } }] }
+    ]
+  };
+  state.sceneStep = 0;
+  dialogueOverlay.classList.add('visible');
+  showCurrentStep();
+}
+
+function collectMemory(id) {
+  if (!state.memorySeen[id]) {
+    state.memorySeen[id] = true;
+    state.memoryCount += 1;
+    memoryIndicator.textContent = `Memory Fragments: ${state.memoryCount} / 3`;
+    state.usedMarkers[id] = true;
+    renderMarkers(levels[state.levelIndex].markers);
+  }
+  closeScene();
+}
+
+function nextLevel() {
+  const nextIndex = state.levelIndex + 1;
+  if (nextIndex < levels.length) {
+    loadLevel(nextIndex);
+    closeScene();
+  }
+}
+
+function finishGame() {
+  document.body.classList.add('ending');
+  state.lockMovement = true;
+  choicesEl.innerHTML = '';
+}
+
+function updateTitusStage() {
+  if (state.role !== 'titus') return;
+  playerEl.classList.remove('frown-1', 'frown-2', 'frown-3');
+  if (state.violence >= 10) playerEl.classList.add('frown-3');
+  else if (state.violence >= 6) playerEl.classList.add('frown-2');
+  else if (state.violence >= 3) playerEl.classList.add('frown-1');
+}
+
+function tryInteract() {
+  const currentMarkers = [...document.querySelectorAll('.marker')];
+  const marker = currentMarkers.find(m => {
+    const mx = parseFloat(m.style.left);
+    return Math.abs((mx + 18) - state.player.x) < 70;
+  });
+  if (!marker) return;
+  const id = marker.dataset.id;
+  const scene = marker.dataset.scene;
+  state.usedMarkers[id] = true;
+  renderMarkers(levels[state.levelIndex].markers);
+  openScene(scene);
+}
+
+function startRoll() {
+  if (state.player.jumping || state.player.rolling) return;
+  state.player.rolling = true;
+  state.player.rollTimer = 18;
+}
+
+function loop() {
+  updatePlayer();
+  updateCamera();
+  requestAnimationFrame(loop);
+}
+
+function updatePlayer() {
+  if (!state.lockMovement) {
+    let moving = false;
+    if (keys['a'] || keys['arrowleft']) {
+      state.player.x -= state.player.speed + (state.player.rolling ? 3.2 : 0);
+      state.player.facing = 'left';
+      moving = true;
+    }
+    if (keys['d'] || keys['arrowright']) {
+      state.player.x += state.player.speed + (state.player.rolling ? 3.2 : 0);
+      state.player.facing = 'right';
+      moving = true;
+    }
+    if ((keys['w'] || keys['arrowup'] || keys[' ']) && !state.player.jumping) {
+      state.player.vy = 14;
+      state.player.jumping = true;
+    }
+    if (state.player.rolling) {
+      state.player.rollTimer -= 1;
+      if (state.player.rollTimer <= 0) state.player.rolling = false;
+    }
+
+    state.player.x = Math.max(20, Math.min(WORLD_WIDTH - 120, state.player.x));
+    state.player.y += state.player.vy;
+    state.player.vy -= 0.8;
+    if (state.player.y <= 0) {
+      state.player.y = 0;
+      state.player.vy = 0;
+      state.player.jumping = false;
+    }
+
+    updateCharacterPose(moving);
+  }
+
+  playerEl.style.left = `${state.player.x}px`;
+  playerEl.style.bottom = `${GROUND_Y + state.player.y}px`;
+}
+
+function updateCharacterPose(moving) {
+  playerEl.classList.remove('front', 'side', 'left', 'right', 'jump', 'roll');
+  playerEl.classList.add(state.role || 'titus');
+
+  if (state.player.rolling) {
+    playerEl.classList.add('roll');
+    playerEl.classList.add(state.player.facing);
+  } else if (state.player.jumping) {
+    playerEl.classList.add('side');
+    playerEl.classList.add(state.player.facing);
+    playerEl.classList.add('jump');
+  } else if (moving) {
+    playerEl.classList.add('side');
+    playerEl.classList.add(state.player.facing);
+  } else {
+    playerEl.classList.add('front');
+  }
+
+  if (state.role === 'lavinia') {
+    if (levels[state.levelIndex].phase === 2 && !playerEl.classList.contains('silent') && !playerEl.classList.contains('maimed')) {
+      playerEl.classList.add('silent');
+    }
+  }
+}
+
+function updateCamera() {
+  const viewWidth = window.innerWidth;
+  const cameraX = Math.max(0, Math.min(WORLD_WIDTH - viewWidth, state.player.x - viewWidth / 2));
+  world.style.transform = `translateX(${-cameraX}px)`;
+}
+
+window.addEventListener('resize', updateCamera);
+
+// illusion system helpers: choices look different but are intentionally convergent.
+function markCurrentSceneComplete() {
+  if (state.sceneIndex) state.usedMarkers[state.sceneIndex] = true;
+}
+
+// Override closeScene to free movement after non-transition scenes.
+const originalCloseScene = closeScene;
+closeScene = function() {
+  dialogueOverlay.classList.remove('visible');
+  state.currentScene = null;
+  state.sceneIndex = null;
+  state.sceneStep = 0;
+  state.lockMovement = false;
+};
+
+// Start.
+init();
