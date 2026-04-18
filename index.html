@@ -6,77 +6,87 @@
   <title>Ash of Rome</title>
   <style>
     :root{
-      --bg:#efe7dc;
-      --panel:rgba(255,248,239,0.88);
-      --panel-solid:#fff8ef;
-      --text:#211c18;
-      --muted:#655d55;
-      --gold:#b08946;
-      --line:#d9c8ad;
-      --choice:#f7eedf;
-      --choice-hover:#eedfc7;
-      --shadow:0 18px 48px rgba(0,0,0,0.14);
-      --soft-shadow:0 8px 22px rgba(0,0,0,0.12);
+      --bg:#f6efe4;
+      --sky1:#8ec5ff;
+      --sky2:#f6efe4;
+      --panel:#fff9f0;
+      --text:#1f1a17;
+      --muted:#6c655d;
+      --accent:#b08a47;
+      --border:#d8cab4;
+      --choice:#f8efdf;
+      --choiceHover:#efe0c6;
+      --shadow:rgba(0,0,0,0.10);
     }
 
-    body.theme-1{
-      --bg:#efe7dc;
-      --panel:rgba(255,248,239,0.88);
-      --panel-solid:#fff8ef;
-      --text:#211c18;
-      --muted:#655d55;
-      --gold:#b08946;
-      --line:#d9c8ad;
-      --choice:#f7eedf;
-      --choice-hover:#eedfc7;
+    body.stage-1{
+      --bg:#f6efe4;
+      --sky1:#8ec5ff;
+      --sky2:#f6efe4;
+      --panel:#fff9f0;
+      --text:#1f1a17;
+      --muted:#6c655d;
+      --accent:#b08a47;
+      --border:#d8cab4;
+      --choice:#f8efdf;
+      --choiceHover:#efe0c6;
+      --shadow:rgba(0,0,0,0.10);
     }
 
-    body.theme-2{
-      --bg:#e5d8c7;
-      --panel:rgba(241,229,215,0.89);
-      --panel-solid:#f1e5d7;
-      --text:#2a231e;
-      --muted:#62584f;
-      --gold:#906a49;
-      --line:#c2af98;
-      --choice:#e9dbc8;
-      --choice-hover:#dbc6ad;
+    body.stage-2{
+      --bg:#e7dbc9;
+      --sky1:#c9b38b;
+      --sky2:#e7dbc9;
+      --panel:#efe2d0;
+      --text:#2a231d;
+      --muted:#64594f;
+      --accent:#8a6948;
+      --border:#c1ae97;
+      --choice:#e7d8c5;
+      --choiceHover:#d8c2a7;
+      --shadow:rgba(0,0,0,0.15);
     }
 
-    body.theme-3{
-      --bg:#b8ab9d;
-      --panel:rgba(205,192,178,0.88);
-      --panel-solid:#cdc0b2;
-      --text:#28221e;
-      --muted:#534a42;
-      --gold:#755843;
-      --line:#a08d7b;
-      --choice:#c5b5a4;
-      --choice-hover:#b39d89;
+    body.stage-3{
+      --bg:#b8aa9a;
+      --sky1:#9d8975;
+      --sky2:#b8aa9a;
+      --panel:#cbbcab;
+      --text:#25201b;
+      --muted:#50473f;
+      --accent:#6d5440;
+      --border:#a28f7d;
+      --choice:#c2b19f;
+      --choiceHover:#b19a86;
+      --shadow:rgba(0,0,0,0.22);
     }
 
-    body.theme-4{
-      --bg:#6d6760;
-      --panel:rgba(132,123,114,0.88);
-      --panel-solid:#847b72;
-      --text:#f1ebe4;
-      --muted:#ddd2c9;
-      --gold:#6f4136;
-      --line:#5d554f;
-      --choice:#776d65;
-      --choice-hover:#665c55;
+    body.stage-4{
+      --bg:#706760;
+      --sky1:#5f5751;
+      --sky2:#706760;
+      --panel:#82776d;
+      --text:#f1ebe3;
+      --muted:#ddd1c7;
+      --accent:#673730;
+      --border:#5a524c;
+      --choice:#766b63;
+      --choiceHover:#655b54;
+      --shadow:rgba(0,0,0,0.30);
     }
 
-    body.theme-5{
-      --bg:#383635;
-      --panel:rgba(74,69,67,0.9);
-      --panel-solid:#4a4543;
-      --text:#f4eee8;
-      --muted:#cdc3ba;
-      --gold:#5a2b26;
-      --line:#34302e;
+    body.stage-5{
+      --bg:#3c3836;
+      --sky1:#303032;
+      --sky2:#3c3836;
+      --panel:#4b4542;
+      --text:#f4efe8;
+      --muted:#cec4bb;
+      --accent:#552823;
+      --border:#342f2d;
       --choice:#514947;
-      --choice-hover:#433d3a;
+      --choiceHover:#423d3a;
+      --shadow:rgba(0,0,0,0.45);
     }
 
     *{ box-sizing:border-box; }
@@ -85,654 +95,98 @@
       margin:0;
       font-family: Georgia, "Times New Roman", serif;
       color:var(--text);
-      background:var(--bg);
-      transition:background 0.8s ease,color 0.5s ease;
+      background:linear-gradient(180deg, var(--sky1) 0%, var(--sky2) 42%, var(--bg) 100%);
       min-height:100vh;
+      transition:background 0.8s ease, color 0.5s ease;
     }
 
-    .app{
-      max-width:1100px;
+    .container{
+      max-width:980px;
       margin:0 auto;
-      padding:22px 16px 56px;
+      padding:24px 16px 56px;
     }
 
-    .top{
+    .header{
       display:flex;
       justify-content:space-between;
       align-items:flex-start;
       gap:16px;
       flex-wrap:wrap;
-      margin-bottom:16px;
+      margin-bottom:18px;
     }
 
-    .title-wrap h1{
+    h1{
       margin:0;
-      font-size:clamp(2rem,4vw,3rem);
+      font-size:clamp(2rem, 4vw, 3rem);
       letter-spacing:0.02em;
     }
 
-    .subtitle{
-      margin-top:7px;
+    .sub{
+      margin-top:6px;
       color:var(--muted);
-      line-height:1.55;
-      max-width:720px;
+      line-height:1.5;
     }
 
     .stats{
       display:flex;
-      gap:10px;
       flex-wrap:wrap;
-      justify-content:flex-end;
+      gap:10px;
     }
 
     .pill{
-      padding:8px 12px;
-      border:1px solid var(--line);
+      background:var(--panel);
+      border:1px solid var(--border);
       border-radius:999px;
-      background:var(--panel-solid);
-      box-shadow:var(--soft-shadow);
+      padding:8px 12px;
+      box-shadow:0 8px 24px var(--shadow);
       color:var(--muted);
       font-size:0.92rem;
-      white-space:nowrap;
     }
 
-    .layout{
-      display:grid;
-      grid-template-columns: 1.2fr 0.95fr;
-      gap:18px;
-      align-items:start;
-    }
-
-    @media (max-width: 900px){
-      .layout{
-        grid-template-columns:1fr;
-      }
-    }
-
-    .scene-card, .story-card{
+    .card{
       background:var(--panel);
-      backdrop-filter: blur(6px);
-      border:1px solid var(--line);
+      border:1px solid var(--border);
       border-radius:24px;
-      box-shadow:var(--shadow);
-      overflow:hidden;
-    }
-
-    .scene-stage{
-      position:relative;
-      width:100%;
-      min-height:620px;
-      background:#ddd;
-    }
-
-    @media (max-width: 900px){
-      .scene-stage{
-        min-height:480px;
-      }
-    }
-
-    @media (max-width: 640px){
-      .scene-stage{
-        min-height:400px;
-      }
-    }
-
-    .sky{
-      position:absolute;
-      inset:0;
-      transition:all 0.8s ease;
-    }
-
-    .sky.bright{
-      background:
-        radial-gradient(circle at 18% 20%, rgba(255,255,255,0.38) 0 9%, transparent 10%),
-        linear-gradient(180deg, #86c9ff 0%, #d7f0ff 42%, #f5e8d5 100%);
-    }
-
-    .sky.warm{
-      background:
-        radial-gradient(circle at 20% 18%, rgba(255,246,212,0.45) 0 8%, transparent 10%),
-        linear-gradient(180deg, #d3bc8f 0%, #ead7bb 44%, #d8cab5 100%);
-    }
-
-    .sky.dirty{
-      background:
-        radial-gradient(circle at 25% 20%, rgba(210,196,164,0.15) 0 8%, transparent 10%),
-        linear-gradient(180deg, #8a8277 0%, #99907f 38%, #746d67 100%);
-    }
-
-    .sky.ash{
-      background:
-        radial-gradient(circle at 22% 18%, rgba(179,172,160,0.12) 0 7%, transparent 9%),
-        linear-gradient(180deg, #4b4a49 0%, #585552 38%, #3a3837 100%);
-    }
-
-    .sun-moon{
-      position:absolute;
-      top:44px;
-      left:68px;
-      width:90px;
-      height:90px;
-      border-radius:50%;
-      transition:all 0.8s ease;
-      box-shadow:0 0 40px rgba(255,255,255,0.25);
-    }
-
-    .sunny{
-      background:radial-gradient(circle at 35% 35%, #fffbe7 0%, #ffe39c 42%, #efba4d 82%, rgba(239,186,77,0.1) 100%);
-      opacity:1;
-    }
-
-    .fading-sun{
-      background:radial-gradient(circle at 35% 35%, #efe4c0 0%, #c7a971 45%, #937151 80%, rgba(147,113,81,0.12) 100%);
-      opacity:0.85;
-    }
-
-    .hidden-sun{
-      background:radial-gradient(circle at 35% 35%, #8d8377 0%, #625d58 48%, #4a4744 82%, rgba(74,71,68,0.12) 100%);
-      opacity:0.4;
-      filter:blur(1px);
-    }
-
-    .architecture,
-    .forest-layer,
-    .feast-room,
-    .ruin-layer{
-      position:absolute;
-      inset:0;
-      pointer-events:none;
-    }
-
-    .rome-bright .col,
-    .rome-warm .col,
-    .rome-dirty .col,
-    .rome-ash .col{
-      position:absolute;
-      bottom:150px;
-      width:56px;
-      border-radius:14px 14px 0 0;
-    }
-
-    .rome-bright .col{
-      background:linear-gradient(180deg, #fffdf8 0%, #f3ece2 70%, #d8c6aa 100%);
-      box-shadow:inset 0 -16px 28px rgba(145,119,73,0.08);
-    }
-
-    .rome-warm .col{
-      background:linear-gradient(180deg, #efe6d9 0%, #d9ccb9 70%, #b99f7e 100%);
-    }
-
-    .rome-dirty .col{
-      background:linear-gradient(180deg, #b9afa2 0%, #968977 70%, #706255 100%);
-    }
-
-    .rome-ash .col{
-      background:linear-gradient(180deg, #7f7871 0%, #5c5752 70%, #413d3a 100%);
-    }
-
-    .rome-bright .wall,
-    .rome-warm .wall,
-    .rome-dirty .wall,
-    .rome-ash .wall{
-      position:absolute;
-      left:8%;
-      right:8%;
-      bottom:0;
-      height:190px;
-      border-radius:28px 28px 0 0;
-    }
-
-    .rome-bright .wall{
-      background:
-        linear-gradient(180deg, #fffaf1 0%, #f5ead8 56%, #e0cfb4 100%);
-      box-shadow: inset 0 -16px 20px rgba(185,156,111,0.12);
-    }
-
-    .rome-warm .wall{
-      background:linear-gradient(180deg, #efe0cb 0%, #d7c2a2 56%, #b39173 100%);
-    }
-
-    .rome-dirty .wall{
-      background:linear-gradient(180deg, #b8aa9c 0%, #8f7f6d 56%, #675849 100%);
-    }
-
-    .rome-ash .wall{
-      background:linear-gradient(180deg, #7b756f 0%, #595550 56%, #3f3d3a 100%);
-    }
-
-    .stain{
-      position:absolute;
-      border-radius:50%;
-      opacity:0.18;
-      filter:blur(2px);
-    }
-
-    .stain.s1{ width:120px; height:48px; left:16%; top:38%; background:#7f4e3a; }
-    .stain.s2{ width:140px; height:54px; right:19%; top:46%; background:#5f4639; }
-    .stain.s3{ width:86px; height:32px; left:48%; top:58%; background:#4e3d33; }
-
-    .crack{
-      position:absolute;
-      width:2px;
-      background:#453d39;
-      opacity:0.42;
-      transform-origin:top center;
-    }
-
-    .cr1{ height:110px; left:25%; top:38%; transform:rotate(24deg); }
-    .cr2{ height:86px; left:57%; top:42%; transform:rotate(-18deg); }
-    .cr3{ height:92px; right:24%; top:34%; transform:rotate(13deg); }
-
-    .forest-layer .tree{
-      position:absolute;
-      bottom:120px;
-      width:28px;
-      border-radius:10px 10px 0 0;
-      background:linear-gradient(180deg, #6f4a2b 0%, #4f341e 100%);
-    }
-
-    .forest-layer .crown{
-      position:absolute;
-      border-radius:50%;
-    }
-
-    .forest-bright .tree{ background:linear-gradient(180deg, #7b4f30 0%, #5a3921 100%); }
-    .forest-dark .tree{ background:linear-gradient(180deg, #463428 0%, #31241c 100%); }
-
-    .forest-bright .crown{ background:radial-gradient(circle at 35% 35%, #8bd16d 0%, #5f9e43 68%, #497534 100%); }
-    .forest-dark .crown{ background:radial-gradient(circle at 35% 35%, #5e6d55 0%, #3f4a3d 68%, #2f372d 100%); }
-
-    .ground{
-      position:absolute;
-      left:0;
-      right:0;
-      bottom:0;
-      height:140px;
-    }
-
-    .ground.bright{
-      background:linear-gradient(180deg, #a3c26d 0%, #78934a 65%, #617238 100%);
-    }
-
-    .ground.dirty{
-      background:linear-gradient(180deg, #746b58 0%, #574f43 65%, #443d35 100%);
-    }
-
-    .feast-room .back-wall{
-      position:absolute;
-      inset:0;
-      background:linear-gradient(180deg, #6a5950 0%, #50423b 48%, #413733 100%);
-    }
-
-    .feast-room .table{
-      position:absolute;
-      left:8%;
-      right:8%;
-      bottom:60px;
-      height:110px;
-      border-radius:18px 18px 0 0;
-      background:linear-gradient(180deg, #5f4336 0%, #3b2a23 100%);
-      box-shadow:0 -6px 0 rgba(255,255,255,0.05) inset;
-    }
-
-    .feast-room .candle{
-      position:absolute;
-      width:16px;
-      bottom:158px;
-      background:#e4d8c1;
-      border-radius:4px 4px 0 0;
-    }
-
-    .feast-room .flame{
-      position:absolute;
-      width:18px;
-      height:26px;
-      border-radius:50% 50% 50% 50%;
-      background:radial-gradient(circle at 50% 30%, #fff8da 0%, #ffc96f 45%, rgba(255,184,66,0.12) 100%);
-      top:-22px;
-      left:-1px;
-      box-shadow:0 0 18px rgba(255,195,92,0.55);
-    }
-
-    .scene-fade{
-      position:absolute;
-      inset:0;
-      background:linear-gradient(180deg, rgba(0,0,0,0.04) 0%, rgba(0,0,0,0.07) 42%, rgba(0,0,0,0.3) 100%);
-      pointer-events:none;
-    }
-
-    .character-layer{
-      position:absolute;
-      inset:0;
-      pointer-events:none;
-    }
-
-    .character{
-      position:absolute;
-      bottom:0;
-      width:260px;
-      height:470px;
-      transition:all 0.6s ease;
-      filter:drop-shadow(0 10px 22px rgba(0,0,0,0.38));
-    }
-
-    .character.right{ right:30px; }
-    .character.left{ left:30px; }
-
-    @media (max-width: 640px){
-      .character{
-        width:205px;
-        height:380px;
-      }
-      .character.right{ right:10px; }
-      .character.left{ left:10px; }
-    }
-
-    .body-robe{
-      position:absolute;
-      bottom:0;
-      left:50%;
-      transform:translateX(-50%);
-      width:170px;
-      height:280px;
-      border-radius:80px 80px 26px 26px;
-      overflow:hidden;
-    }
-
-    .titus .body-robe{
-      background:linear-gradient(180deg, #c9ced7 0%, #aab2bf 56%, #7d8694 100%);
-      border:4px solid #c39a4a;
-    }
-
-    .titus.dark .body-robe{
-      background:linear-gradient(180deg, #8e8d96 0%, #6d6e78 56%, #4b4f56 100%);
-      border-color:#6a4b35;
-    }
-
-    .lavinia .body-robe{
-      background:linear-gradient(180deg, #f1dbc7 0%, #d7b89a 55%, #b89074 100%);
-      border:4px solid #d0a86f;
-    }
-
-    .lavinia.silent .body-robe{
-      background:linear-gradient(180deg, #b89f90 0%, #8b7465 55%, #645248 100%);
-      border-color:#6e5443;
-    }
-
-    .head{
-      position:absolute;
-      top:52px;
-      left:50%;
-      transform:translateX(-50%);
-      width:112px;
-      height:126px;
-      border-radius:52px 52px 48px 48px;
-      background:linear-gradient(180deg, #f1cfaf 0%, #ddb28d 100%);
-      z-index:3;
-    }
-
-    .lavinia .head{
-      background:linear-gradient(180deg, #f3d7c1 0%, #e1b79b 100%);
-    }
-
-    .hair{
-      position:absolute;
-      top:34px;
-      left:50%;
-      transform:translateX(-50%);
-      width:132px;
-      height:130px;
-      border-radius:60px 60px 48px 48px;
-      z-index:2;
-    }
-
-    .titus .hair{
-      background:linear-gradient(180deg, #6f6f74 0%, #505057 100%);
-      clip-path:ellipse(50% 44% at 50% 28%);
-    }
-
-    .lavinia .hair{
-      background:linear-gradient(180deg, #7e4e32 0%, #5f3925 100%);
-      height:170px;
-      width:142px;
-      clip-path:ellipse(50% 48% at 50% 24%);
-    }
-
-    .eye{
-      position:absolute;
-      top:58px;
-      width:14px;
-      height:10px;
-      border-radius:50%;
-      background:#31231d;
-      z-index:4;
-    }
-
-    .eye.left{ left:28px; }
-    .eye.right{ right:28px; }
-
-    .brow{
-      position:absolute;
-      top:48px;
-      width:22px;
-      height:5px;
-      background:#5d463a;
-      border-radius:10px;
-      z-index:4;
-    }
-
-    .brow.left{ left:22px; transform:rotate(-8deg); }
-    .brow.right{ right:22px; transform:rotate(8deg); }
-
-    .nose{
-      position:absolute;
-      top:68px;
-      left:50%;
-      transform:translateX(-50%);
-      width:10px;
-      height:20px;
-      border-radius:5px;
-      background:rgba(171,110,79,0.46);
-      z-index:4;
-    }
-
-    .mouth{
-      position:absolute;
-      bottom:28px;
-      left:50%;
-      transform:translateX(-50%);
-      z-index:4;
-      transition:all 0.5s ease;
-    }
-
-    .titus .mouth{
-      width:34px;
-      height:16px;
-      border-bottom:4px solid #7c4337;
-      border-radius:0 0 30px 30px;
-    }
-
-    .titus.neutral .mouth{
-      width:30px;
-      height:4px;
-      border-bottom:3px solid #6e4036;
-      border-radius:6px;
-    }
-
-    .titus.grim .mouth{
-      width:34px;
-      height:10px;
-      border-top:4px solid #603730;
-      border-bottom:none;
-      border-radius:18px 18px 0 0;
-      bottom:34px;
-    }
-
-    .lavinia .mouth{
-      width:28px;
-      height:4px;
-      background:#8b4c45;
-      border-radius:999px;
-    }
-
-    .lavinia.silent .mouth{
-      width:44px;
-      height:14px;
-      background:linear-gradient(180deg, #6a4038 0%, #4d2f2c 100%);
-      border-radius:999px;
-      box-shadow:
-        0 0 0 2px rgba(56,34,33,0.24) inset,
-        0 0 0 1px rgba(0,0,0,0.18);
-    }
-
-    .lavinia.silent .mouth::before,
-    .lavinia.silent .mouth::after{
-      content:"";
-      position:absolute;
-      top:-2px;
-      bottom:-2px;
-      width:2px;
-      background:#2a1c1b;
-      opacity:0.55;
-    }
-
-    .lavinia.silent .mouth::before{ left:11px; }
-    .lavinia.silent .mouth::after{ right:11px; }
-
-    .arm{
-      position:absolute;
-      top:186px;
-      width:34px;
-      height:150px;
-      border-radius:20px;
-      z-index:1;
-      transition:all 0.5s ease;
-    }
-
-    .titus .arm{
-      background:linear-gradient(180deg, #d9dee4 0%, #9ba5b2 100%);
-      border:3px solid #c39a4a;
-    }
-
-    .titus.dark .arm{
-      background:linear-gradient(180deg, #8a8a94 0%, #646873 100%);
-      border-color:#6a4b35;
-    }
-
-    .lavinia .arm{
-      background:linear-gradient(180deg, #f0d4bf 0%, #d9b297 100%);
-      border:3px solid #d0a86f;
-    }
-
-    .lavinia.silent .arm{
-      background:linear-gradient(180deg, #b8a090 0%, #896f62 100%);
-      border-color:#6e5443;
-    }
-
-    .arm.left{ left:28px; transform:rotate(9deg); }
-    .arm.right{ right:28px; transform:rotate(-9deg); }
-
-    .hand{
-      position:absolute;
-      bottom:-12px;
-      left:50%;
-      transform:translateX(-50%);
-      width:34px;
-      height:34px;
-      border-radius:50%;
-      background:#e1b490;
-    }
-
-    .lavinia .hand{ background:#e4baa0; }
-    .titus .hand{ background:#ddb18d; }
-
-    .lavinia.silent .hand{
-      display:none;
-    }
-
-    .lavinia.silent .arm{
-      height:118px;
-      opacity:0.72;
-    }
-
-    .lavinia.silent .arm::after{
-      content:"";
-      position:absolute;
-      bottom:-6px;
-      left:50%;
-      transform:translateX(-50%);
-      width:26px;
-      height:16px;
-      border-radius:10px;
-      background:linear-gradient(180deg, #633b36 0%, #442927 100%);
-      box-shadow:0 0 0 1px rgba(0,0,0,0.18);
-    }
-
-    .sword{
-      position:absolute;
-      right:18px;
-      top:174px;
-      width:18px;
-      height:200px;
-      z-index:0;
-    }
-
-    .blade{
-      position:absolute;
-      left:50%;
-      transform:translateX(-50%);
-      width:8px;
-      height:164px;
-      border-radius:6px;
-      background:linear-gradient(180deg, #f7fbff 0%, #d6dbe2 46%, #9aa1ab 100%);
-      box-shadow:0 0 0 1px rgba(0,0,0,0.16);
-    }
-
-    .hilt{
-      position:absolute;
-      bottom:26px;
-      left:50%;
-      transform:translateX(-50%);
-      width:46px;
-      height:10px;
-      border-radius:999px;
-      background:#c39a4a;
-    }
-
-    .grip{
-      position:absolute;
-      bottom:0;
-      left:50%;
-      transform:translateX(-50%);
-      width:12px;
-      height:34px;
-      border-radius:8px;
-      background:#7d5640;
-    }
-
-    .sword.stained .blade{
-      background:linear-gradient(180deg, #d9d9db 0%, #a99f99 30%, #786968 68%, #534447 100%);
-      box-shadow:
-        0 0 0 1px rgba(0,0,0,0.22),
-        inset 0 -40px 18px rgba(92,37,35,0.28);
-    }
-
-    .sword.stained .hilt{ background:#85593d; }
-    .sword.stained .grip{ background:#573d2f; }
-
-    .blood-smear{
-      position:absolute;
-      width:18px;
-      height:72px;
-      left:50%;
-      top:48px;
-      transform:translateX(-50%) rotate(7deg);
-      background:linear-gradient(180deg, rgba(112,32,30,0.05) 0%, rgba(112,32,30,0.46) 40%, rgba(60,14,15,0.12) 100%);
-      border-radius:16px;
-    }
-
-    .dialogue{
+      box-shadow:0 16px 44px var(--shadow);
       padding:22px;
+    }
+
+    .visual-stage{
+      width:100%;
+      height:360px;
+      position:relative;
+      overflow:hidden;
+      border-radius:18px;
+      margin-bottom:18px;
+      border:1px solid var(--border);
+      background:#d9d1c6;
+      box-shadow:0 10px 24px rgba(0,0,0,0.12) inset;
+    }
+
+    #bgVisual{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      filter:saturate(0.98) contrast(1.02);
+    }
+
+    .scene-overlay{
+      position:absolute;
+      inset:0;
+      background:linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.02) 45%, rgba(0,0,0,0.28) 100%);
+      pointer-events:none;
+    }
+
+    #charVisual{
+      position:absolute;
+      bottom:0;
+      right:24px;
+      height:96%;
+      max-width:40%;
+      object-fit:contain;
+      filter:drop-shadow(0 8px 18px rgba(0,0,0,0.35));
+      display:none;
     }
 
     .scene-title{
@@ -748,90 +202,86 @@
 
     .story{
       min-height:210px;
-      line-height:1.84;
-      font-size:1.06rem;
       white-space:pre-line;
+      line-height:1.82;
+      font-size:1.06rem;
       margin-bottom:18px;
     }
 
     .choices{
       display:grid;
       gap:12px;
-      margin-top:16px;
+      margin-top:14px;
+    }
+
+    button{
+      font:inherit;
     }
 
     .choice{
       width:100%;
       text-align:left;
-      border:1px solid var(--line);
-      border-radius:16px;
-      padding:14px 16px;
+      border:1px solid var(--border);
       background:var(--choice);
       color:var(--text);
+      border-radius:16px;
+      padding:14px 16px;
       cursor:pointer;
-      font:inherit;
       transition:background 0.18s ease, transform 0.12s ease, border-color 0.18s ease;
     }
 
     .choice:hover{
-      background:var(--choice-hover);
+      background:var(--choiceHover);
       transform:translateY(-1px);
-    }
-
-    .choice:active{
-      transform:translateY(0);
     }
 
     .character-grid{
       display:grid;
-      grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns:repeat(auto-fit, minmax(240px,1fr));
       gap:14px;
       margin-top:16px;
     }
 
-    .char-card{
-      border:1px solid var(--line);
-      border-radius:18px;
+    .character-card{
+      border:1px solid var(--border);
       background:var(--choice);
+      border-radius:18px;
       padding:16px;
-      text-align:left;
       cursor:pointer;
+      text-align:left;
       transition:background 0.18s ease, transform 0.12s ease;
-      font:inherit;
-      color:var(--text);
     }
 
-    .char-card:hover{
-      background:var(--choice-hover);
+    .character-card:hover{
+      background:var(--choiceHover);
       transform:translateY(-2px);
     }
 
-    .char-card h3{
-      margin:0 0 8px;
+    .character-card h3{
+      margin:0 0 8px 0;
       font-size:1.2rem;
     }
 
-    .char-card p{
+    .character-card p{
       margin:0;
       color:var(--muted);
       line-height:1.6;
     }
 
-    .controls{
+    .footer-row{
       display:flex;
       gap:10px;
       flex-wrap:wrap;
-      margin-top:14px;
+      margin-top:18px;
     }
 
     .small-btn{
-      border:1px solid var(--line);
-      border-radius:12px;
-      padding:10px 12px;
+      border:1px solid var(--border);
       background:transparent;
       color:var(--text);
+      border-radius:12px;
+      padding:10px 12px;
       cursor:pointer;
-      font:inherit;
     }
 
     .small-btn:hover{
@@ -841,7 +291,7 @@
     .note{
       margin-top:16px;
       padding-top:14px;
-      border-top:1px solid var(--line);
+      border-top:1px solid var(--border);
       color:var(--muted);
       line-height:1.6;
       font-size:0.95rem;
@@ -849,13 +299,13 @@
 
     .memory-list{
       display:flex;
-      gap:8px;
       flex-wrap:wrap;
+      gap:8px;
       margin-top:12px;
     }
 
     .memory{
-      border:1px solid var(--line);
+      border:1px solid var(--border);
       border-radius:999px;
       padding:6px 10px;
       background:rgba(255,255,255,0.08);
@@ -867,26 +317,31 @@
       font-style:italic;
     }
 
-    .sound-box{
-      margin-top:12px;
-      border-top:1px solid var(--line);
-      padding-top:12px;
-      color:var(--muted);
-      font-size:0.95rem;
-      line-height:1.5;
+    .broken .choice{
+      border-style:dashed;
     }
 
-    .ending-story{
-      min-height:auto;
+    .silent .choice{
+      font-style:italic;
+    }
+
+    @media (max-width:640px){
+      .card{ padding:18px; }
+      .visual-stage{ height:250px; }
+      #charVisual{
+        right:10px;
+        max-width:52%;
+      }
+      .story{ min-height:250px; }
     }
   </style>
 </head>
-<body class="theme-1">
-  <div class="app">
-    <div class="top">
-      <div class="title-wrap">
+<body class="stage-1">
+  <div class="container">
+    <div class="header">
+      <div>
         <h1>Ash of Rome</h1>
-        <div class="subtitle">A visual interactive tragedy inspired by Titus Andronicus. Act 1 begins bright and ceremonial. Act 2 sinks into revenge, silence, and ruin.</div>
+        <div class="sub">A visual interactive tragedy inspired by Titus Andronicus. Act 1 is bright and ordered. Act 2 decays into revenge, silence, and inevitability.</div>
       </div>
       <div class="stats">
         <div class="pill" id="actStat">Act —</div>
@@ -897,36 +352,13 @@
       </div>
     </div>
 
-    <div class="layout">
-      <div class="scene-card">
-        <div class="scene-stage" id="sceneStage">
-          <div class="sky bright" id="sky"></div>
-          <div class="sun-moon sunny" id="sun"></div>
-
-          <div class="architecture rome-bright" id="architectureLayer"></div>
-          <div class="forest-layer" id="forestLayer"></div>
-          <div class="ruin-layer" id="ruinLayer"></div>
-          <div class="feast-room" id="feastLayer"></div>
-
-          <div class="character-layer" id="characterLayer"></div>
-          <div class="scene-fade"></div>
-        </div>
+    <div class="card" id="card">
+      <div class="visual-stage">
+        <img id="bgVisual" src="" alt="Scene background">
+        <div class="scene-overlay"></div>
+        <img id="charVisual" src="" alt="Character">
       </div>
-
-      <div class="story-card">
-        <div class="dialogue">
-          <div id="game"></div>
-
-          <div class="sound-box">
-            <div>Sound: simple built-in ambient tones and click sounds.</div>
-            <div class="controls">
-              <button class="small-btn" id="toggleSoundBtn">Sound On</button>
-              <button class="small-btn" id="playToneBtn">Play Ambience</button>
-              <button class="small-btn" id="stopToneBtn">Stop Ambience</button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div id="game"></div>
     </div>
   </div>
 
@@ -939,9 +371,7 @@
       memories: [],
       sword: "Honorable",
       log: [],
-      laviniaSilent: false,
-      soundOn: true,
-      ambienceOn: false
+      laviniaSilent: false
     };
 
     const memoryNames = {
@@ -950,118 +380,30 @@
       grief: "The Seed of Grief"
     };
 
-    let audioCtx = null;
-    let ambienceNodes = [];
-
-    function ensureAudio(){
-      if (!audioCtx) {
-        const Ctx = window.AudioContext || window.webkitAudioContext;
-        if (Ctx) audioCtx = new Ctx();
-      }
-      return audioCtx;
-    }
-
-    function simpleTone(freq = 220, duration = 0.09, type = "triangle", gainValue = 0.02){
-      if (!state.soundOn) return;
-      const ctx = ensureAudio();
-      if (!ctx) return;
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = type;
-      osc.frequency.value = freq;
-      gain.gain.value = gainValue;
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      const now = ctx.currentTime;
-      gain.gain.setValueAtTime(gainValue, now);
-      gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
-      osc.start(now);
-      osc.stop(now + duration);
-    }
-
-    function choiceClickSound(){
-      simpleTone(250, 0.08, "triangle", 0.018);
-      setTimeout(() => simpleTone(180, 0.11, "sine", 0.014), 45);
-    }
-
-    function startAmbience(){
-      if (!state.soundOn) return;
-      const ctx = ensureAudio();
-      if (!ctx) return;
-      stopAmbience();
-
-      const master = ctx.createGain();
-      master.gain.value = 0.018;
-      master.connect(ctx.destination);
-
-      const osc1 = ctx.createOscillator();
-      const osc2 = ctx.createOscillator();
-      const lfo = ctx.createOscillator();
-      const lfoGain = ctx.createGain();
-
-      osc1.type = "sine";
-      osc2.type = "triangle";
-      lfo.type = "sine";
-
-      const base = state.act < 2 ? 196 : 132;
-      osc1.frequency.value = base;
-      osc2.frequency.value = base / 2;
-      lfo.frequency.value = 0.15;
-      lfoGain.gain.value = 8;
-
-      lfo.connect(lfoGain);
-      lfoGain.connect(osc1.frequency);
-
-      osc1.connect(master);
-      osc2.connect(master);
-
-      osc1.start();
-      osc2.start();
-      lfo.start();
-
-      ambienceNodes = [osc1, osc2, lfo, master];
-      state.ambienceOn = true;
-      updateSoundButtons();
-    }
-
-    function stopAmbience(){
-      if (ambienceNodes.length) {
-        ambienceNodes.forEach(node => {
-          try { node.stop && node.stop(); } catch(e){}
-          try { node.disconnect && node.disconnect(); } catch(e){}
-        });
-      }
-      ambienceNodes = [];
-      state.ambienceOn = false;
-      updateSoundButtons();
-    }
-
-    function updateSoundButtons(){
-      const toggle = document.getElementById("toggleSoundBtn");
-      const play = document.getElementById("playToneBtn");
-      const stop = document.getElementById("stopToneBtn");
-      if (toggle) toggle.textContent = state.soundOn ? "Sound On" : "Sound Off";
-      if (play) play.disabled = !state.soundOn;
-      if (stop) stop.disabled = !state.soundOn;
-    }
-
     function addMemory(key){
-      if(!state.memories.includes(key)) {
+      if(!state.memories.includes(key)){
         state.memories.push(key);
       }
     }
 
     function updateTheme(){
       let level = 1;
+
       if (state.act === 1) {
         if (state.violence >= 3) level = 2;
       }
+
       if (state.act === 2) {
         if (state.violence <= 4) level = 3;
         else if (state.violence <= 8) level = 4;
         else level = 5;
       }
-      document.body.className = "theme-" + level;
+
+      document.body.className = "stage-" + level;
+
+      const card = document.getElementById("card");
+      card.classList.toggle("broken", state.act === 2);
+      card.classList.toggle("silent", state.laviniaSilent);
     }
 
     function updateStats(){
@@ -1076,7 +418,6 @@
       state.character = character;
       state.node = character === "Titus" ? "titus1" : "lavinia1";
       state.log.push("Character selected: " + character);
-      choiceClickSound();
       render();
     }
 
@@ -1091,7 +432,6 @@
       if(selected.silent === true) state.laviniaSilent = true;
       if(selected.note) state.log.push(selected.note);
 
-      choiceClickSound();
       state.node = selected.next;
       render();
     }
@@ -1105,7 +445,6 @@
       state.sword = "Honorable";
       state.log = [];
       state.laviniaSilent = false;
-      choiceClickSound();
       render();
     }
 
@@ -1119,210 +458,61 @@
       }
     }
 
-    function currentSceneType(){
-      if (["lavinia2", "turningPoint"].includes(state.node)) return "forest";
-      if (["act2silence", "act2breaking", "memoryGrief", "bloodDemandsBlood"].includes(state.node)) return "ruins";
-      if (["feast", "finalChoice"].includes(state.node)) return "feast";
-      if (state.node === "ending") return "ash";
-      return "rome";
+    function setVisuals(bg, char){
+      const bgVisual = document.getElementById("bgVisual");
+      const charVisual = document.getElementById("charVisual");
+      bgVisual.src = bg || "";
+      charVisual.src = char || "";
+      charVisual.style.display = char ? "block" : "none";
     }
 
-    function currentVisualMood(){
-      if (state.act === 0) return "bright";
-      if (state.act === 1 && state.violence < 3) return "bright";
-      if (state.act === 1) return "warm";
-      if (state.act === 2 && state.violence <= 4) return "dirty";
-      return "ash";
-    }
+    function currentVisual(){
+      const brightRome = "https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=1400&q=80";
+      const forestBright = "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1400&q=80";
+      const forestDark = "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1400&q=80";
+      const ruinsDark = "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1400&q=80";
+      const hallDark = "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1400&q=80";
+      const ashEnding = "https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=1400&q=80";
 
-    function renderArchitecture(type, mood){
-      const architecture = document.getElementById("architectureLayer");
-      const forest = document.getElementById("forestLayer");
-      const ruins = document.getElementById("ruinLayer");
-      const feast = document.getElementById("feastLayer");
+      const titusBright = "https://via.placeholder.com/420x700/e2d7c5/222222?text=Titus";
+      const titusMid = "https://via.placeholder.com/420x700/c8b59f/222222?text=Titus";
+      const titusDark = "https://via.placeholder.com/420x700/6e6158/f5f0eb?text=Dark+Titus";
+      const titusCorrupt = "https://via.placeholder.com/420x700/4e4440/f5f0eb?text=Corrupted+Titus";
+      const laviniaBright = "https://via.placeholder.com/420x700/f1e4dc/222222?text=Lavinia";
+      const laviniaSilent = "https://via.placeholder.com/420x700/8a7f77/f5f0eb?text=Silent+Lavinia";
+      const memoryTitus = "https://via.placeholder.com/420x700/e0d7c8/222222?text=Young+Titus";
 
-      architecture.innerHTML = "";
-      forest.innerHTML = "";
-      ruins.innerHTML = "";
-      feast.innerHTML = "";
-
-      if (type === "rome") {
-        const cls = mood === "bright" ? "rome-bright" : mood === "warm" ? "rome-warm" : mood === "dirty" ? "rome-dirty" : "rome-ash";
-        architecture.className = "architecture " + cls;
-        architecture.innerHTML = `
-          <div class="wall"></div>
-          <div class="col" style="left:12%; height:270px;"></div>
-          <div class="col" style="left:28%; height:310px;"></div>
-          <div class="col" style="left:44%; height:285px;"></div>
-          <div class="col" style="left:60%; height:320px;"></div>
-          <div class="col" style="left:76%; height:268px;"></div>
-          ${mood !== "bright" ? `
-            <div class="stain s1"></div>
-            <div class="stain s2"></div>
-            <div class="stain s3"></div>
-          ` : ``}
-          ${mood === "ash" || mood === "dirty" ? `
-            <div class="crack cr1"></div>
-            <div class="crack cr2"></div>
-            <div class="crack cr3"></div>
-          ` : ``}
-        `;
-      } else if (type === "forest") {
-        architecture.className = "architecture";
-        const forestClass = mood === "bright" ? "forest-bright" : "forest-dark";
-        forest.className = "forest-layer " + forestClass;
-        forest.innerHTML = `
-          <div class="tree" style="left:8%; height:230px;"></div>
-          <div class="crown" style="left:2%; bottom:260px; width:130px; height:130px;"></div>
-
-          <div class="tree" style="left:24%; height:300px;"></div>
-          <div class="crown" style="left:16%; bottom:310px; width:170px; height:150px;"></div>
-
-          <div class="tree" style="left:47%; height:255px;"></div>
-          <div class="crown" style="left:39%; bottom:280px; width:160px; height:140px;"></div>
-
-          <div class="tree" style="left:72%; height:320px;"></div>
-          <div class="crown" style="left:65%; bottom:330px; width:175px; height:150px;"></div>
-
-          <div class="ground ${mood === "bright" ? "bright" : "dirty"}"></div>
-        `;
-      } else if (type === "ruins") {
-        ruins.className = "ruin-layer";
-        ruins.innerHTML = `
-          <div class="architecture rome-ash">
-            <div class="wall"></div>
-            <div class="col" style="left:12%; height:190px;"></div>
-            <div class="col" style="left:28%; height:230px;"></div>
-            <div class="col" style="left:44%; height:200px;"></div>
-            <div class="col" style="left:60%; height:250px;"></div>
-            <div class="col" style="left:76%; height:180px;"></div>
-            <div class="stain s1"></div>
-            <div class="stain s2"></div>
-            <div class="stain s3"></div>
-            <div class="crack cr1"></div>
-            <div class="crack cr2"></div>
-            <div class="crack cr3"></div>
-          </div>
-        `;
-      } else if (type === "feast") {
-        feast.className = "feast-room";
-        feast.innerHTML = `
-          <div class="back-wall"></div>
-          <div class="table"></div>
-          <div class="candle" style="left:18%;"><div class="flame"></div></div>
-          <div class="candle" style="left:36%;"><div class="flame"></div></div>
-          <div class="candle" style="right:36%;"><div class="flame"></div></div>
-          <div class="candle" style="right:18%;"><div class="flame"></div></div>
-        `;
-      } else if (type === "ash") {
-        ruins.className = "ruin-layer";
-        ruins.innerHTML = `
-          <div class="architecture rome-ash">
-            <div class="wall"></div>
-            <div class="col" style="left:12%; height:140px;"></div>
-            <div class="col" style="left:28%; height:180px;"></div>
-            <div class="col" style="left:44%; height:130px;"></div>
-            <div class="col" style="left:60%; height:170px;"></div>
-            <div class="col" style="left:76%; height:120px;"></div>
-            <div class="stain s1"></div>
-            <div class="stain s2"></div>
-            <div class="stain s3"></div>
-            <div class="crack cr1"></div>
-            <div class="crack cr2"></div>
-            <div class="crack cr3"></div>
-          </div>
-        `;
-      }
-    }
-
-    function renderSky(type, mood){
-      const sky = document.getElementById("sky");
-      const sun = document.getElementById("sun");
-
-      if (mood === "bright") {
-        sky.className = "sky bright";
-        sun.className = "sun-moon sunny";
-      } else if (mood === "warm") {
-        sky.className = "sky warm";
-        sun.className = "sun-moon fading-sun";
-      } else if (mood === "dirty") {
-        sky.className = "sky dirty";
-        sun.className = "sun-moon hidden-sun";
-      } else {
-        sky.className = "sky ash";
-        sun.className = "sun-moon hidden-sun";
-      }
-
-      if (type === "forest" && mood === "bright") {
-        sun.style.top = "36px";
-        sun.style.left = "78px";
-      } else {
-        sun.style.top = "44px";
-        sun.style.left = "68px";
-      }
-    }
-
-    function titusMoodClass(){
-      if (state.act === 0) return "";
-      if (state.act === 1 && state.violence <= 2) return "";
-      if (state.act === 1) return "neutral";
-      if (state.act === 2 && state.violence <= 6) return "neutral";
-      return "grim";
-    }
-
-    function renderCharacter(){
-      const layer = document.getElementById("characterLayer");
-      layer.innerHTML = "";
-
-      if (state.node === "intro" || state.node === "ending") return;
-
-      if (state.character === "Titus" || ["titus1","titus2","titus3","memoryHonor","memoryGrief","act2breaking","bloodDemandsBlood","feast","finalChoice"].includes(state.node)) {
-        const mood = titusMoodClass();
-        const dark = state.act === 2 ? "dark" : "";
-        const swordClass = state.sword === "Honorable" ? "" : "stained";
-        layer.innerHTML = `
-          <div class="character titus ${dark} ${mood} right">
-            <div class="hair"></div>
-            <div class="head">
-              <div class="brow left"></div>
-              <div class="brow right"></div>
-              <div class="eye left"></div>
-              <div class="eye right"></div>
-              <div class="nose"></div>
-              <div class="mouth"></div>
-            </div>
-            <div class="body-robe"></div>
-            <div class="arm left"><div class="hand"></div></div>
-            <div class="arm right"><div class="hand"></div></div>
-            <div class="sword ${swordClass}">
-              <div class="blade"></div>
-              ${swordClass ? `<div class="blood-smear"></div>` : ``}
-              <div class="hilt"></div>
-              <div class="grip"></div>
-            </div>
-          </div>
-        `;
-        return;
-      }
-
-      if (state.character === "Lavinia" || ["lavinia1","lavinia2","turningPoint","act2silence"].includes(state.node)) {
-        const silent = state.laviniaSilent || state.node === "act2silence";
-        layer.innerHTML = `
-          <div class="character lavinia ${silent ? "silent" : ""} left">
-            <div class="hair"></div>
-            <div class="head">
-              <div class="brow left"></div>
-              <div class="brow right"></div>
-              <div class="eye left"></div>
-              <div class="eye right"></div>
-              <div class="nose"></div>
-              <div class="mouth"></div>
-            </div>
-            <div class="body-robe"></div>
-            <div class="arm left"><div class="hand"></div></div>
-            <div class="arm right"><div class="hand"></div></div>
-          </div>
-        `;
+      switch(state.node){
+        case "intro":
+          return { bg: brightRome, char: "" };
+        case "titus1":
+        case "titus2":
+          return { bg: brightRome, char: titusBright };
+        case "titus3":
+          return { bg: brightRome, char: titusMid };
+        case "lavinia1":
+          return { bg: brightRome, char: laviniaBright };
+        case "lavinia2":
+          return { bg: forestBright, char: laviniaBright };
+        case "memoryHonor":
+        case "memoryFamily":
+          return { bg: brightRome, char: memoryTitus };
+        case "turningPoint":
+          return { bg: forestDark, char: state.character === "Lavinia" ? laviniaBright : titusMid };
+        case "act2silence":
+          return { bg: ruinsDark, char: state.character === "Lavinia" ? laviniaSilent : titusDark };
+        case "act2breaking":
+        case "memoryGrief":
+          return { bg: ruinsDark, char: titusDark };
+        case "bloodDemandsBlood":
+          return { bg: ruinsDark, char: titusCorrupt };
+        case "feast":
+        case "finalChoice":
+          return { bg: hallDark, char: titusCorrupt };
+        case "ending":
+          return { bg: ashEnding, char: "" };
+        default:
+          return { bg: brightRome, char: "" };
       }
     }
 
@@ -1335,18 +525,19 @@
 
 You may begin as Titus, a Roman general who looks honorable and rational before revenge consumes him.
 
-Or you may begin as Lavinia, who starts with voice, presence, and freedom before the story reduces her to silence and mutilation.
+Or you may begin as Lavinia, who starts with voice, presence, and freedom before the story reduces her to silence.
 
 No matter what path you choose, the tragedy closes in the same place.</div>
 
           <div class="character-grid">
-            <button class="char-card" data-character="Titus">
+            <button class="character-card" data-character="Titus">
               <h3>Titus</h3>
-              <p>He begins composed, respected, and almost warm. As revenge grows, his face hardens, his smile disappears, and his sword becomes a shameful thing.</p>
+              <p>Begin as a respected general. Your decisions sound measured at first, but gradually become more violent. Your sword begins as a sign of honor and ends as a shameful instrument.</p>
             </button>
-            <button class="char-card" data-character="Lavinia">
+
+            <button class="character-card" data-character="Lavinia">
               <h3>Lavinia</h3>
-              <p>She begins vivid and expressive. In Act 2, the game makes her silence visible: her mouth is sealed and her hands are gone.</p>
+              <p>Begin with full voice and expression. As the game darkens, your ability to speak and act is taken away. The player feels helplessness instead of control.</p>
             </button>
           </div>
         `
@@ -1355,7 +546,7 @@ No matter what path you choose, the tragedy closes in the same place.</div>
       titus1: {
         act: 1,
         title: "Level 1 — Return to Rome",
-        meta: "Act 1. Ceremony, sunlight, and public honor.",
+        meta: "Act 1. The better state. Ceremony, sunlight, and public honor.",
         text: `The city receives you in warmth and applause. Pearl-white marble catches the light. Gold glints across armor, banners, and temple stone. At your side hangs Virtus, a sword polished so brightly it resembles a promise.
 
 A captured enemy kneels before you and begs for mercy. The crowd watches, eager to see what form Roman strength will take.`,
@@ -1397,7 +588,7 @@ Virtus still gleams, but now it feels less ceremonial in your hand. Less oath th
       lavinia1: {
         act: 1,
         title: "Level 1 — Bright Rome",
-        meta: "Act 1. Voice, grace, and daylight.",
+        meta: "Act 1. The better state. Voice, grace, and daylight.",
         text: `You are Lavinia. The city is still beautiful enough to trust. Light pours over the palace halls, and the marble seems too clean for anything monstrous to happen within it.
 
 Your voice still belongs to you. Your body still obeys you. The world still appears answerable to language.`,
@@ -1467,7 +658,7 @@ For one last moment, the game pretends that caution, confidence, or speed might 
       act2silence: {
         act: 2,
         title: "Level 4 — Silence",
-        meta: "Act 2. Speech collapses. Beauty decays.",
+        meta: "Act 2. The worse state. Speech collapses. Beauty decays.",
         text: () => {
           if(state.character === "Lavinia"){
             return `You wake in a changed world. The sky has gone dirty. The light is no longer warm but sickly. Brown and grey have replaced ivory and gold.
@@ -1478,9 +669,9 @@ Nothing comes.
 
 You try to reach forward.
 
-Your hands are gone.
+The absence of your hands becomes the center of the scene.
 
-The game has taken from you the powers it gave you at the start, and now it makes that loss visible.`;
+The game has taken from you the powers it gave you at the start.`;
           } else {
             return `Rome no longer looks clean. The walls seem yellowed, cracked, and tired. News reaches Titus and changes the texture of the entire world.
 
@@ -1585,13 +776,13 @@ Virtus now feels nothing like honor. It feels like history reduced to a weapon.`
           <h2 class="scene-title">Ending — Ash</h2>
           <p class="scene-meta">All paths end in tragedy. What changes is only the tone of the descent.</p>
 
-          <div class="story ending-story">The sky has turned grey and ugly. The brightness of Act 1 is gone. Pearl white walls have become brown, dull, and stained. Rome no longer looks like civilization at peace with itself. It looks like the ruins of people who called their violence justice until they could no longer tell the difference.
+          <div class="story">The sky has turned grey and ugly. The brightness of Act 1 is gone. Pearl white walls have become brown, dull, and stained. Rome no longer looks like civilization at peace with itself. It looks like the ruins of people who called their violence justice until they could no longer tell the difference.
 
 ${getEndingTone()}
 
 ${state.character === "Lavinia"
-? "Lavinia's path makes the loss of agency painfully literal. She begins with voice and ends with visible silence: her mouth sealed, her hands gone, her meaning forced through suffering."
-: "Titus's path makes corruption gradual. He begins as an honorable Roman general and ends as a man whose face hardens as surely as his choices do."}
+? "Lavinia's path makes the loss of agency painfully literal. She begins with voice and ends in forced silence. The player experiences helplessness instead of heroism."
+: "Titus's path makes corruption gradual. He begins as an honorable Roman general and ends as a man who has taught himself to call revenge by nobler names."}
 
 ${state.memories.length === 3
 ? "You collected all three memory fragments. Together they reveal that the tragedy was not a sudden break, but a slow exposure of what was already present beneath the surface."
@@ -1606,7 +797,7 @@ No matter what choices you made, the story ends the same way: revenge consumes h
             }
           </div>
 
-          <div class="controls">
+          <div class="footer-row">
             <button class="small-btn" id="restartBtn">Play again</button>
           </div>
 
@@ -1644,64 +835,31 @@ No matter what choices you made, the story ends the same way: revenge consumes h
         `;
       }
 
-      const type = currentSceneType();
-      const mood = currentVisualMood();
-
-      renderSky(type, mood);
-      renderArchitecture(type, mood);
-      renderCharacter();
+      const visual = currentVisual();
+      setVisuals(visual.bg, visual.char);
 
       updateStats();
       updateTheme();
       bindEvents();
-
-      if (state.ambienceOn) {
-        stopAmbience();
-        startAmbience();
-      }
     }
 
     function bindEvents(){
       document.querySelectorAll("[data-character]").forEach(btn => {
-        btn.addEventListener("click", () => chooseCharacter(btn.getAttribute("data-character")));
+        btn.addEventListener("click", () => {
+          chooseCharacter(btn.getAttribute("data-character"));
+        });
       });
 
       document.querySelectorAll(".choice").forEach(btn => {
-        btn.addEventListener("click", () => choose(Number(btn.getAttribute("data-index"))));
+        btn.addEventListener("click", () => {
+          choose(Number(btn.getAttribute("data-index")));
+        });
       });
 
       const restartBtn = document.getElementById("restartBtn");
       if(restartBtn){
         restartBtn.addEventListener("click", restart);
       }
-
-      const toggleSoundBtn = document.getElementById("toggleSoundBtn");
-      if (toggleSoundBtn) {
-        toggleSoundBtn.onclick = () => {
-          state.soundOn = !state.soundOn;
-          if (!state.soundOn) stopAmbience();
-          else choiceClickSound();
-          updateSoundButtons();
-        };
-      }
-
-      const playToneBtn = document.getElementById("playToneBtn");
-      if (playToneBtn) {
-        playToneBtn.onclick = () => {
-          if (!state.soundOn) return;
-          choiceClickSound();
-          startAmbience();
-        };
-      }
-
-      const stopToneBtn = document.getElementById("stopToneBtn");
-      if (stopToneBtn) {
-        stopToneBtn.onclick = () => {
-          stopAmbience();
-        };
-      }
-
-      updateSoundButtons();
     }
 
     render();
