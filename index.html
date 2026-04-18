@@ -6,13 +6,15 @@
   <title>Titus Andronicus — Tragedy of Revenge</title>
   <style>
     :root{
-      --world-width: 3000px;
+      --world-width: 3200px;
       --sky-top:#9fdcff;
       --sky-bottom:#fff0cf;
       --sun:#ffd567;
       --cloud:#ffffff55;
       --ground-top:#9ccc76;
       --ground-bottom:#69874d;
+      --grass:#75ad52;
+      --grass-dark:#57803d;
       --stone:#f8f2ec;
       --marble:#fffdf8;
       --roof:#d6a07d;
@@ -22,7 +24,7 @@
       --flower2:#fff3a8;
       --flower3:#d7d1ff;
 
-      --panel:rgba(255,255,255,0.9);
+      --panel:rgba(255,255,255,0.92);
       --panel-border:rgba(102,80,70,0.18);
       --text:#241b18;
 
@@ -71,7 +73,7 @@
       height:100%;
     }
 
-    #sky, #sun, #clouds, #far, #backBuildings, #midDecor, #flowers, #ground, #interactables, #vignette{
+    #sky, #sun, #clouds, #far, #backBuildings, #midDecor, #flowers, #grassLayer, #ground, #interactables, #vignette{
       position:absolute;
       inset:0;
     }
@@ -98,18 +100,14 @@
       filter:blur(4px);
       border-radius:50%;
     }
-    #clouds::before{
-      top:110px; left:480px; width:260px; height:80px;
-    }
-    #clouds::after{
-      top:150px; right:390px; width:320px; height:90px;
-    }
+    #clouds::before{ top:110px; left:480px; width:260px; height:80px; }
+    #clouds::after{ top:150px; right:390px; width:320px; height:90px; }
 
     #far::before,#far::after{
       content:"";
       position:absolute;
       bottom:210px;
-      width:650px;
+      width:700px;
       border-radius:45% 45% 0 0;
       background:rgba(255,255,255,0.18);
       filter:blur(7px);
@@ -146,6 +144,9 @@
       width:60px; height:108px;
       background:#8d664d;
       border-radius:12px 12px 0 0;
+      box-shadow:
+        -80px -85px 0 -70px rgba(120,95,80,0.22),
+        80px -85px 0 -70px rgba(120,95,80,0.22);
     }
 
     .building{
@@ -304,9 +305,10 @@
     .ruin::before{left:24px; top:42px; width:34px; height:100px}
     .ruin::after{right:28px; top:20px; width:90px; height:40px}
 
-    #flowers{
+    #flowers, #grassLayer{
       pointer-events:none;
     }
+
     .flowerPatch{
       position:absolute;
       bottom:162px;
@@ -323,6 +325,17 @@
         radial-gradient(circle at 68% 74%, var(--flower1) 0 5px, transparent 6px),
         radial-gradient(circle at 78% 58%, #6c9b46 0 2px, transparent 3px),
         radial-gradient(circle at 86% 70%, var(--flower2) 0 5px, transparent 6px);
+    }
+
+    .grassPatch{
+      position:absolute;
+      bottom:160px;
+      width:220px;
+      height:34px;
+      opacity:0.95;
+      background:
+        linear-gradient(70deg, transparent 0 6%, var(--grass) 6% 8%, transparent 8% 12%, var(--grass-dark) 12% 14%, transparent 14% 19%, var(--grass) 19% 21%, transparent 21% 26%, var(--grass-dark) 26% 28%, transparent 28% 33%, var(--grass) 33% 35%, transparent 35% 40%, var(--grass-dark) 40% 42%, transparent 42% 47%, var(--grass) 47% 49%, transparent 49% 54%, var(--grass-dark) 54% 56%, transparent 56% 61%, var(--grass) 61% 63%, transparent 63% 68%, var(--grass-dark) 68% 70%, transparent 70% 75%, var(--grass) 75% 77%, transparent 77% 82%, var(--grass-dark) 82% 84%, transparent 84% 100%);
+      filter:drop-shadow(0 1px 0 rgba(0,0,0,0.06));
     }
 
     #ground{
@@ -345,29 +358,41 @@
       background-size:170px 90px;
     }
 
+    /* Player */
     #player{
       position:absolute;
       left:200px;
       bottom:142px;
-      width:112px;
-      height:195px;
+      width:120px;
+      height:210px;
       z-index:20;
-      transition: filter .35s ease;
+      transition:filter .35s ease;
     }
     .shadow{
       position:absolute;
-      left:18px; bottom:-2px;
-      width:72px; height:14px;
+      left:20px; bottom:-2px;
+      width:76px; height:14px;
       border-radius:50%;
       background:rgba(0,0,0,0.25);
       filter:blur(2px);
     }
     .sprite{position:absolute; inset:0;}
 
+    .cape{
+      position:absolute;
+      left:14px; top:54px;
+      width:30px; height:92px;
+      border-radius:16px;
+      background:linear-gradient(to bottom,#8c2f2f,#4b1717);
+      z-index:0;
+      opacity:0.8;
+    }
+
     .head{
       position:absolute;
-      left:30px; top:0;
-      width:52px; height:56px;
+      left:34px; top:0;
+      width:54px; height:58px;
+      z-index:3;
     }
     .face{
       position:absolute;
@@ -380,7 +405,7 @@
     .hair{
       position:absolute;
       left:2px; top:0;
-      width:48px; height:22px;
+      width:50px; height:24px;
       border-radius:50% 50% 14px 14px;
     }
     .eye{
@@ -392,6 +417,16 @@
     }
     .eye.left{left:11px}
     .eye.right{right:11px}
+    .brow{
+      position:absolute;
+      top:10px;
+      width:10px;
+      height:3px;
+      background:#553b2d;
+      border-radius:4px;
+    }
+    .brow.left{left:8px}
+    .brow.right{right:8px}
     .mouth{
       position:absolute;
       left:13px; bottom:9px;
@@ -402,34 +437,45 @@
 
     .torso{
       position:absolute;
-      left:28px; top:48px;
-      width:48px; height:64px;
+      left:30px; top:50px;
+      width:50px; height:68px;
       border-radius:12px;
       border:2px solid rgba(47,58,73,0.23);
+      z-index:2;
+    }
+
+    .skirt{
+      position:absolute;
+      left:26px; top:112px;
+      width:58px; height:26px;
+      border-radius:0 0 16px 16px;
+      z-index:2;
     }
 
     .arm, .leg, .hand{
       position:absolute;
       border-radius:12px;
+      z-index:2;
     }
-    .arm{width:15px; height:54px; top:52px;}
+    .arm{width:15px; height:56px; top:56px;}
     .arm.left{left:14px}
     .arm.right{right:14px}
-    .hand{width:13px; height:13px; top:101px}
+    .hand{width:13px; height:13px; top:108px}
     .hand.left{left:15px}
     .hand.right{right:15px}
-    .leg{width:17px; height:68px; top:109px;}
+    .leg{width:18px; height:72px; top:132px;}
     .leg.left{left:30px}
     .leg.right{right:30px}
 
     .sword{
       position:absolute;
-      left:82px; top:44px;
-      width:10px; height:104px;
+      left:88px; top:44px;
+      width:10px; height:110px;
       background:linear-gradient(to bottom,#f5f5f5,#b7c6d0 52%, #88766d);
       border-radius:8px;
       transform:rotate(10deg);
       box-shadow:0 0 8px rgba(255,255,255,0.35);
+      z-index:1;
     }
     .sword::before{
       content:"";
@@ -442,62 +488,72 @@
 
     /* Titus */
     #player.titus .hair{
-      background:linear-gradient(to bottom,#8a8c91,#66686e);
+      background:linear-gradient(to bottom,#9da0a6,#6f7378);
     }
     #player.titus .torso{
       background:linear-gradient(to bottom,#dde3ea,#98a5b2);
     }
-    #player.titus .arm{
-      background:#ccb2a0;
-    }
-    #player.titus .hand{
-      background:#efceb9;
-    }
-    #player.titus .leg{
-      background:#67606b;
-    }
     #player.titus .torso::before{
       content:"";
       position:absolute;
-      left:13px; top:0;
-      width:20px; height:64px;
+      left:14px; top:0;
+      width:20px; height:68px;
       background:linear-gradient(to bottom,#d9b46c,#9d7c3d);
-      opacity:0.8;
+      opacity:0.85;
     }
+    #player.titus .skirt{
+      background:
+        linear-gradient(to right, transparent 0 8%, #d9b46c 8% 16%, transparent 16% 24%, #d9b46c 24% 32%, transparent 32% 40%, #d9b46c 40% 48%, transparent 48% 56%, #d9b46c 56% 64%, transparent 64% 72%, #d9b46c 72% 80%, transparent 80% 100%);
+    }
+    #player.titus .arm{ background:#ccb2a0; }
+    #player.titus .hand{ background:#efceb9; }
+    #player.titus .leg{ background:#67606b; }
+    #player.titus .cape{ display:block; }
 
     /* Lavinia */
     #player.lavinia .hair{
       background:linear-gradient(to bottom,#6a4039,#4d2b26);
-      height:26px;
+      height:28px;
     }
     #player.lavinia .torso{
-      background:linear-gradient(to bottom,#f2d9e4,#ba869c);
+      background:linear-gradient(to bottom,#f3dbe5,#bc8aa0);
+      border-color:rgba(94,56,72,0.18);
     }
-    #player.lavinia .arm{
-      background:#efceb9;
+    #player.lavinia .torso::before{
+      content:"";
+      position:absolute;
+      left:18px; top:8px;
+      width:14px; height:14px;
+      border-radius:50%;
+      background:rgba(255,255,255,0.55);
+      box-shadow:
+        -10px 18px 0 rgba(255,255,255,0.35),
+        10px 18px 0 rgba(255,255,255,0.35);
     }
-    #player.lavinia .hand{
-      background:#efceb9;
+    #player.lavinia .skirt{
+      background:linear-gradient(to bottom,#d9a8bc,#936677);
+      height:38px;
+      top:108px;
+      border-radius:0 0 22px 22px;
     }
-    #player.lavinia .leg{
-      background:#7b6072;
-    }
-    #player.lavinia .sword{
-      display:none;
-    }
+    #player.lavinia .arm{ background:#efceb9; }
+    #player.lavinia .hand{ background:#efceb9; }
+    #player.lavinia .leg{ background:#7b6072; }
+    #player.lavinia .sword{ display:none; }
+    #player.lavinia .cape{ display:none; }
     #player.lavinia .head::after{
       content:"";
       position:absolute;
-      left:4px; top:6px;
-      width:44px; height:34px;
-      border-radius:50% 50% 42% 42%;
-      border:2px solid rgba(86,52,42,0.1);
+      left:2px; top:10px;
+      width:50px; height:40px;
+      border-radius:50% 50% 44% 44%;
+      border:2px solid rgba(86,52,42,0.08);
     }
 
     /* Front / side */
     #player.front .arm.left{left:12px}
     #player.front .arm.right{right:12px}
-    #player.side .head{left:33px}
+    #player.side .head{left:36px}
     #player.side .face{border-radius:54% 44% 40% 52%}
     #player.side.left .sprite{transform:scaleX(-1); transform-origin:center;}
 
@@ -521,7 +577,7 @@
     @keyframes armA { from{transform:rotate(-10deg)} to{transform:rotate(12deg)} }
     @keyframes armB { from{transform:rotate(12deg)} to{transform:rotate(-10deg)} }
 
-    /* Titus moral decline */
+    /* Titus decline */
     #player.titus.frown1 .mouth{
       width:12px; left:14px; border-bottom-width:2px;
     }
@@ -571,7 +627,7 @@
     }
     #player.lavinia.maimed .arm{
       height:38px;
-      top:58px;
+      top:60px;
       border-radius:10px 10px 18px 18px;
       background:linear-gradient(to bottom,#ddb2b2,#a55b5b);
     }
@@ -584,6 +640,12 @@
         radial-gradient(circle at 70% 46%, rgba(150,32,32,0.55) 0 7px, transparent 8px),
         radial-gradient(circle at 52% 70%, rgba(130,28,28,0.5) 0 6px, transparent 7px),
         linear-gradient(to bottom,#ceb2ba,#946675);
+    }
+    #player.lavinia.maimed .skirt{
+      background:
+        radial-gradient(circle at 30% 24%, rgba(130,20,20,0.45) 0 7px, transparent 8px),
+        radial-gradient(circle at 70% 46%, rgba(120,22,22,0.35) 0 6px, transparent 7px),
+        linear-gradient(to bottom,#bc879a,#7c5260);
     }
 
     /* Markers */
@@ -625,7 +687,7 @@
       50%{transform:translateY(-8px) scale(1.08); opacity:1}
     }
 
-    /* UI */
+    /* HUD */
     #hud{
       position:absolute;
       inset:0 0 auto 0;
@@ -667,6 +729,7 @@
       backdrop-filter:blur(4px);
     }
 
+    /* Overlay */
     #overlay{
       position:absolute;
       inset:0;
@@ -779,7 +842,6 @@
     .btn.mild{background:var(--choice1)}
     .btn.hard{background:var(--choice2)}
     .btn.brutal{background:var(--choice3)}
-
     .tag{
       display:inline-block;
       margin-right:8px;
@@ -857,6 +919,8 @@
       --sun:#896d58;
       --ground-top:#7b6a53;
       --ground-bottom:#564a43;
+      --grass:#6a5e48;
+      --grass-dark:#514737;
       --leaf:#64574d;
       --trunk:#5d4637;
       --stone:#c2b4aa;
@@ -881,7 +945,6 @@
       background:linear-gradient(to bottom,#8ab3c4,#586f78);
       box-shadow:none;
     }
-
   </style>
 </head>
 <body>
@@ -895,21 +958,26 @@
         <div id="backBuildings"></div>
         <div id="midDecor"></div>
         <div id="flowers"></div>
+        <div id="grassLayer"></div>
         <div id="ground"></div>
         <div id="interactables"></div>
 
         <div id="player" class="front titus">
           <div class="shadow"></div>
           <div class="sprite">
+            <div class="cape"></div>
             <div class="head">
               <div class="hair"></div>
               <div class="face">
+                <div class="brow left"></div>
+                <div class="brow right"></div>
                 <div class="eye left"></div>
                 <div class="eye right"></div>
                 <div class="mouth"></div>
               </div>
             </div>
             <div class="torso"></div>
+            <div class="skirt"></div>
             <div class="arm left"></div>
             <div class="arm right"></div>
             <div class="hand left"></div>
@@ -964,6 +1032,7 @@
     const backBuildings = document.getElementById('backBuildings');
     const midDecor = document.getElementById('midDecor');
     const flowers = document.getElementById('flowers');
+    const grassLayer = document.getElementById('grassLayer');
     const interactables = document.getElementById('interactables');
     const player = document.getElementById('player');
     const overlay = document.getElementById('overlay');
@@ -978,7 +1047,7 @@
     const startScreen = document.getElementById('startScreen');
     const startBtn = document.getElementById('startBtn');
 
-    const WORLD_WIDTH = 3000;
+    const WORLD_WIDTH = 3200;
     const GROUND_Y = 142;
     const keys = {};
 
@@ -1015,7 +1084,7 @@
           { layer:'back', type:'villa', x:650 },
           { layer:'back', type:'arch', x:1140 },
           { layer:'back', type:'building', x:1600 },
-          { layer:'back', type:'villa', x:2140 },
+          { layer:'back', type:'villa', x:2240 },
 
           { layer:'mid', type:'pillar', x:360 },
           { layer:'mid', type:'pillar', x:440 },
@@ -1024,14 +1093,15 @@
           { layer:'mid', type:'tree', x:1490 },
           { layer:'mid', type:'cypress', x:1560 },
           { layer:'mid', type:'tree', x:1690 },
-          { layer:'mid', type:'altar', x:2440 }
+          { layer:'mid', type:'altar', x:2640 }
         ],
-        flowerPatches: [180, 520, 760, 1040, 1330, 1730, 2050, 2310, 2650],
+        flowerPatches: [180, 520, 760, 1040, 1330, 1730, 2050, 2310, 2650, 2920],
+        grassPatches: [100, 360, 660, 920, 1200, 1450, 1700, 1940, 2210, 2480, 2740, 3000],
         markers: [
-          { id:'s1', type:'story', x:320, label:'Senate', scene:'s1' },
+          { id:'s1', type:'story', x:320, label:'Task', scene:'s1' },
           { id:'m1', type:'memory', x:1110, label:'Memory', scene:'m1' },
-          { id:'c1', type:'story', x:1960, label:'Choice', scene:'c1' },
-          { id:'n1', type:'end', x:2790, label:'Proceed', scene:'t1' }
+          { id:'c1', type:'story', x:1960, label:'Task', scene:'c1' },
+          { id:'n1', type:'end', x:2990, label:'Proceed', scene:'t1' }
         ]
       },
       {
@@ -1042,7 +1112,7 @@
           { layer:'back', type:'villa', x:120 },
           { layer:'back', type:'building', x:720 },
           { layer:'back', type:'arch', x:1300 },
-          { layer:'back', type:'villa', x:1960 },
+          { layer:'back', type:'villa', x:2160 },
 
           { layer:'mid', type:'tree', x:620 },
           { layer:'mid', type:'tree', x:720 },
@@ -1050,14 +1120,15 @@
           { layer:'mid', type:'fountain', x:1120 },
           { layer:'mid', type:'statue', x:1510 },
           { layer:'mid', type:'tree', x:1760 },
-          { layer:'mid', type:'altar', x:2420 }
+          { layer:'mid', type:'altar', x:2640 }
         ],
-        flowerPatches: [120, 430, 690, 930, 1220, 1510, 1820, 2200, 2540],
+        flowerPatches: [120, 430, 690, 930, 1220, 1510, 1820, 2200, 2540, 2890],
+        grassPatches: [60, 300, 560, 860, 1130, 1380, 1660, 1940, 2220, 2490, 2760, 3010],
         markers: [
-          { id:'s2', type:'story', x:300, label:'Garden', scene:'s2' },
-          { id:'c2', type:'story', x:1370, label:'Choice', scene:'c2' },
+          { id:'s2', type:'story', x:300, label:'Task', scene:'s2' },
+          { id:'c2', type:'story', x:1370, label:'Task', scene:'c2' },
           { id:'m2', type:'memory', x:1840, label:'Memory', scene:'m2' },
-          { id:'n2', type:'end', x:2790, label:'Proceed', scene:'t2' }
+          { id:'n2', type:'end', x:2990, label:'Proceed', scene:'t2' }
         ]
       },
       {
@@ -1067,21 +1138,22 @@
         scenery: [
           { layer:'back', type:'ruin', x:160 },
           { layer:'back', type:'ruin', x:980 },
-          { layer:'back', type:'building', x:1850 },
+          { layer:'back', type:'building', x:2050 },
 
           { layer:'mid', type:'tree', x:300 },
           { layer:'mid', type:'cypress', x:520 },
           { layer:'mid', type:'tree', x:720 },
           { layer:'mid', type:'ruin', x:1310 },
           { layer:'mid', type:'tree', x:1890 },
-          { layer:'mid', type:'altar', x:2420 }
+          { layer:'mid', type:'altar', x:2640 }
         ],
-        flowerPatches: [210, 660, 1010, 1490, 2100, 2590],
+        flowerPatches: [210, 660, 1010, 1490, 2100, 2590, 2900],
+        grassPatches: [90, 340, 610, 900, 1190, 1460, 1710, 1990, 2250, 2510, 2780, 3020],
         markers: [
-          { id:'s3', type:'story', x:360, label:'Forest', scene:'s3' },
-          { id:'c3', type:'story', x:1260, label:'Choice', scene:'c3' },
+          { id:'s3', type:'story', x:360, label:'Task', scene:'s3' },
+          { id:'c3', type:'story', x:1260, label:'Task', scene:'c3' },
           { id:'m3', type:'memory', x:1770, label:'Memory', scene:'m3' },
-          { id:'n3', type:'end', x:2790, label:'Proceed', scene:'t3' }
+          { id:'n3', type:'end', x:2990, label:'Proceed', scene:'t3' }
         ]
       },
       {
@@ -1091,19 +1163,20 @@
         scenery: [
           { layer:'back', type:'villa', x:260 },
           { layer:'back', type:'ruin', x:1280 },
-          { layer:'back', type:'building', x:2110 },
+          { layer:'back', type:'building', x:2210 },
 
           { layer:'mid', type:'statue', x:680 },
           { layer:'mid', type:'pillar', x:980 },
           { layer:'mid', type:'pillar', x:1060 },
           { layer:'mid', type:'ruin', x:1550 },
-          { layer:'mid', type:'altar', x:2420 }
+          { layer:'mid', type:'altar', x:2640 }
         ],
-        flowerPatches: [430, 860, 1440, 2320],
+        flowerPatches: [430, 860, 1440, 2320, 2860],
+        grassPatches: [120, 410, 740, 1030, 1290, 1560, 1830, 2090, 2360, 2620, 2890, 3060],
         markers: [
-          { id:'s4', type:'story', x:430, label:'House', scene:'s4' },
-          { id:'c4', type:'story', x:1520, label:'Choice', scene:'c4' },
-          { id:'n4', type:'end', x:2790, label:'Proceed', scene:'t4' }
+          { id:'s4', type:'story', x:430, label:'Task', scene:'s4' },
+          { id:'c4', type:'story', x:1520, label:'Task', scene:'c4' },
+          { id:'n4', type:'end', x:2990, label:'Proceed', scene:'t4' }
         ]
       },
       {
@@ -1113,7 +1186,7 @@
         scenery: [
           { layer:'back', type:'arch', x:260 },
           { layer:'back', type:'ruin', x:1120 },
-          { layer:'back', type:'building', x:2010 },
+          { layer:'back', type:'building', x:2210 },
 
           { layer:'mid', type:'pillar', x:420 },
           { layer:'mid', type:'pillar', x:500 },
@@ -1121,11 +1194,12 @@
           { layer:'mid', type:'altar', x:1420 },
           { layer:'mid', type:'ruin', x:1820 }
         ],
-        flowerPatches: [260, 700, 1240, 2140],
+        flowerPatches: [260, 700, 1240, 2140, 2860],
+        grassPatches: [80, 340, 610, 880, 1160, 1430, 1710, 1980, 2250, 2520, 2790, 3050],
         markers: [
-          { id:'s5', type:'story', x:350, label:'Throne', scene:'s5' },
-          { id:'c5', type:'story', x:1410, label:'Choice', scene:'c5' },
-          { id:'end', type:'end', x:2790, label:'End', scene:'endingChoice' }
+          { id:'s5', type:'story', x:350, label:'Task', scene:'s5' },
+          { id:'c5', type:'story', x:1410, label:'Task', scene:'c5' },
+          { id:'end', type:'end', x:2990, label:'End', scene:'endingChoice' }
         ]
       }
     ];
@@ -1136,7 +1210,7 @@
           {
             speaker: '',
             portrait: 'none',
-            text: ``,
+            text: `Who will you be?`,
             choices: [
               { text:'Titus', tone:'mild', effect:() => chooseRole('titus') },
               { text:'Lavinia', tone:'mild', effect:() => chooseRole('lavinia') }
@@ -1151,10 +1225,10 @@
             "Rome.",
             "Rome."
           )},
-          { speaker: '', portrait:'none', text:'What will you do?', choices:[
-            choice('Spare him.', 'mild', 'Mercy', () => funnel(1,'t1', "Mercy is spoken. Blood still follows.")),
-            choice('Condemn him.', 'hard', 'Law', () => funnel(2,'t1', "Law lifts the blade and calls itself clean.")),
-            choice('Take blood for blood.', 'brutal', 'Blood', () => funnel(3,'t1', "Grief is answered with spectacle. Rome looks on."))
+          { speaker: '', portrait:'none', text:'What do you choose?', choices:[
+            choice('Spare him.', 'mild', 'Mercy', () => autoAdvance(() => funnel(1,'t1', "Mercy is spoken. Blood still follows."))),
+            choice('Condemn him.', 'hard', 'Law', () => autoAdvance(() => funnel(2,'t1', "Law lifts the blade and calls itself clean."))),
+            choice('Take blood for blood.', 'brutal', 'Blood', () => autoAdvance(() => funnel(3,'t1', "Grief is answered with spectacle. Rome looks on.")))
           ]}
         ]
       },
@@ -1162,8 +1236,8 @@
       m1: {
         steps: [
           { speaker:'', portrait:'none', text:'A warm table. Laughter. A house not yet broken.' },
-          { speaker:'', portrait:'none', text:'Take it?', choices:[
-            { text:'Take the memory.', tone:'mild', effect:() => takeMemory('m1') }
+          { speaker:'', portrait:'none', text:'Will you take the memory?', choices:[
+            { text:'Take the memory.', tone:'mild', effect:() => autoAdvance(() => takeMemory('m1')) }
           ]}
         ]
       },
@@ -1174,18 +1248,18 @@
             "Honour is a hard thing to carry.",
             "I still have my voice. I still have my hands."
           )},
-          { speaker:'', portrait:'none', text:'Choose.', choices:[
-            choice('Wait.', 'mild', 'Stillness', () => funnel(1,'t1', "Waiting only teaches violence patience.")),
-            choice('Threaten.', 'hard', 'Threat', () => funnel(2,'t1', "Threat turns quickly into action.")),
-            choice('Strike first.', 'brutal', 'Strike', () => funnel(3,'t1', "The first strike invites the rest."))
+          { speaker:'', portrait:'none', text:'What do you choose?', choices:[
+            choice('Wait.', 'mild', 'Stillness', () => autoAdvance(() => funnel(1,'t1', "Waiting only teaches violence patience."))),
+            choice('Threaten.', 'hard', 'Threat', () => autoAdvance(() => funnel(2,'t1', "Threat turns quickly into action."))),
+            choice('Strike first.', 'brutal', 'Strike', () => autoAdvance(() => funnel(3,'t1', "The first strike invites the rest.")))
           ]}
         ]
       },
 
       t1: {
         steps: [
-          { speaker:'', portrait:'none', text:'Go on.', choices:[
-            { text:'Continue.', tone:'mild', effect:() => nextLevel() }
+          { speaker:'', portrait:'none', text:'Will you go on?', choices:[
+            { text:'Go on.', tone:'mild', effect:() => nextLevel() }
           ]}
         ]
       },
@@ -1196,10 +1270,10 @@
             "This garden is too beautiful for what men bring into it.",
             "The flowers are bright. I want to believe that means something."
           )},
-          { speaker:'', portrait:'none', text:'What will you do?', choices:[
-            choice('Appeal softly.', 'mild', 'Appeal', () => funnel(1,'t2', "Softness is heard and dismissed.")),
-            choice('Demand justice.', 'hard', 'Demand', () => funnel(2,'t2', "Justice becomes pride in another mouth.")),
-            choice('Force the answer.', 'brutal', 'Force', () => funnel(3,'t2', "Force multiplies what it touches."))
+          { speaker:'', portrait:'none', text:'What do you choose?', choices:[
+            choice('Appeal softly.', 'mild', 'Appeal', () => autoAdvance(() => funnel(1,'t2', "Softness is heard and dismissed."))),
+            choice('Demand justice.', 'hard', 'Demand', () => autoAdvance(() => funnel(2,'t2', "Justice becomes pride in another mouth."))),
+            choice('Force the answer.', 'brutal', 'Force', () => autoAdvance(() => funnel(3,'t2', "Force multiplies what it touches.")))
           ]}
         ]
       },
@@ -1210,10 +1284,10 @@
             "My sword still shines.",
             "My smile still belongs to me."
           )},
-          { speaker:'', portrait:'none', text:'Choose.', choices:[
-            choice('Trust.', 'mild', 'Trust', () => funnel(1,'t2', "Trust is met with appetite.")),
-            choice('Warn them.', 'hard', 'Warning', () => funnel(2,'t2', "Warnings sharpen fear, and fear sharpens harm.")),
-            choice('Answer rage with rage.', 'brutal', 'Rage', () => funnel(3,'t2', "Rage recognizes itself and grows."))
+          { speaker:'', portrait:'none', text:'What do you choose?', choices:[
+            choice('Trust.', 'mild', 'Trust', () => autoAdvance(() => funnel(1,'t2', "Trust is met with appetite."))),
+            choice('Warn them.', 'hard', 'Warning', () => autoAdvance(() => funnel(2,'t2', "Warnings sharpen fear, and fear sharpens harm."))),
+            choice('Answer rage with rage.', 'brutal', 'Rage', () => autoAdvance(() => funnel(3,'t2', "Rage recognizes itself and grows.")))
           ]}
         ]
       },
@@ -1221,16 +1295,16 @@
       m2: {
         steps: [
           { speaker:'', portrait:'none', text:'Morning light over a family untouched by ruin.' },
-          { speaker:'', portrait:'none', text:'Take it?', choices:[
-            { text:'Take the memory.', tone:'mild', effect:() => takeMemory('m2') }
+          { speaker:'', portrait:'none', text:'Will you take the memory?', choices:[
+            { text:'Take the memory.', tone:'mild', effect:() => autoAdvance(() => takeMemory('m2')) }
           ]}
         ]
       },
 
       t2: {
         steps: [
-          { speaker:'', portrait:'none', text:'Go on.', choices:[
-            { text:'Continue.', tone:'hard', effect:() => nextLevel() }
+          { speaker:'', portrait:'none', text:'Will you go on?', choices:[
+            { text:'Go on.', tone:'hard', effect:() => nextLevel() }
           ]}
         ]
       },
@@ -1241,30 +1315,30 @@
             "The forest stinks of what men hide.",
             "The trees do not look like trees now. They look like teeth."
           )},
-          { speaker:'', portrait:'none', text:'What will you do?', choices:[
+          { speaker:'', portrait:'none', text:'What do you choose?', choices:[
             {
               text: roleSpecific('Seek Rome.', 'Run.'),
               tone:'mild',
-              effect:() => brutalShift(2,'t3','silent','frown1', roleSpecific(
+              effect:() => autoAdvance(() => brutalShift(2,'t3','silent','frown1', roleSpecific(
                 "Rome answers too slowly for pain.",
                 "You run. Silence begins."
-              ))
+              )))
             },
             {
               text: roleSpecific('Swear revenge.', 'Resist.'),
               tone:'hard',
-              effect:() => brutalShift(3,'t3','maimed','frown2', roleSpecific(
+              effect:() => autoAdvance(() => brutalShift(3,'t3','maimed','frown2', roleSpecific(
                 "The oath enters him and will not leave.",
                 "You resist. The world answers with cruelty."
-              ))
+              )))
             },
             {
               text: roleSpecific('Promise atrocity.', 'Refuse to beg.'),
               tone:'brutal',
-              effect:() => brutalShift(4,'t3','maimed','frown3', roleSpecific(
+              effect:() => autoAdvance(() => brutalShift(4,'t3','maimed','frown3', roleSpecific(
                 "The sword no longer looks honourable.",
                 "You do not bend. Tragedy does not spare the brave."
-              ))
+              )))
             }
           ]}
         ]
@@ -1273,16 +1347,16 @@
       m3: {
         steps: [
           { speaker:'', portrait:'none', text:'A clear voice. A whole body. A day before the fall.' },
-          { speaker:'', portrait:'none', text:'Take it?', choices:[
-            { text:'Take the memory.', tone:'mild', effect:() => takeMemory('m3') }
+          { speaker:'', portrait:'none', text:'Will you take the memory?', choices:[
+            { text:'Take the memory.', tone:'mild', effect:() => autoAdvance(() => takeMemory('m3')) }
           ]}
         ]
       },
 
       t3: {
         steps: [
-          { speaker:'', portrait:'none', text:'Go on.', choices:[
-            { text:'Continue.', tone:'hard', effect:() => nextLevel() }
+          { speaker:'', portrait:'none', text:'Will you go on?', choices:[
+            { text:'Go on.', tone:'hard', effect:() => nextLevel() }
           ]}
         ]
       },
@@ -1293,10 +1367,10 @@
             "This house will remember what is done inside it.",
             "I am still here. That is the tragedy."
           )},
-          { speaker:'', portrait:'none', text:'Choose.', choices:[
-            choice('Hide it in ceremony.', 'mild', 'Ceremony', () => funnel(2,'t4', "Ceremony becomes another mask for cruelty.")),
-            choice('Prepare punishment.', 'hard', 'Punishment', () => funnel(3,'t4', "Punishment ripens into monstrosity.")),
-            choice('Make the horror plain.', 'brutal', 'Horror', () => funnel(4,'t4', "At last the violence stops pretending."))
+          { speaker:'', portrait:'none', text:'What do you choose?', choices:[
+            choice('Hide it in ceremony.', 'mild', 'Ceremony', () => autoAdvance(() => funnel(2,'t4', "Ceremony becomes another mask for cruelty."))),
+            choice('Prepare punishment.', 'hard', 'Punishment', () => autoAdvance(() => funnel(3,'t4', "Punishment ripens into monstrosity."))),
+            choice('Make the horror plain.', 'brutal', 'Horror', () => autoAdvance(() => funnel(4,'t4', "At last the violence stops pretending.")))
           ]}
         ]
       },
@@ -1307,18 +1381,18 @@
             "I can no longer tell honour from appetite.",
             "Whatever beauty was left in me has been made into grief."
           )},
-          { speaker:'', portrait:'none', text:'Choose.', choices:[
-            choice('Continue.', 'mild', 'Forward', () => funnel(2,'t4', "Forward means deeper.")),
-            choice('Continue harder.', 'hard', 'Harder', () => funnel(3,'t4', "Hardness is only another name for loss.")),
-            choice('Continue in blood.', 'brutal', 'Blood', () => funnel(4,'t4', "Blood answers blood and asks for more."))
+          { speaker:'', portrait:'none', text:'What do you choose?', choices:[
+            choice('Continue forward.', 'mild', 'Forward', () => autoAdvance(() => funnel(2,'t4', "Forward means deeper."))),
+            choice('Continue harder.', 'hard', 'Harder', () => autoAdvance(() => funnel(3,'t4', "Hardness is only another name for loss."))),
+            choice('Continue in blood.', 'brutal', 'Blood', () => autoAdvance(() => funnel(4,'t4', "Blood answers blood and asks for more.")))
           ]}
         ]
       },
 
       t4: {
         steps: [
-          { speaker:'', portrait:'none', text:'Go on.', choices:[
-            { text:'Continue.', tone:'hard', effect:() => nextLevel() }
+          { speaker:'', portrait:'none', text:'Will you go on?', choices:[
+            { text:'Go on.', tone:'hard', effect:() => nextLevel() }
           ]}
         ]
       },
@@ -1329,20 +1403,20 @@
             "Rome is only stone now.",
             "There is no bright place left."
           )},
-          { speaker:'', portrait:'none', text:'Choose.', choices:[
-            choice('Seek justice.', 'mild', 'Justice', () => funnel(2,'endingChoice', "Justice arrives stained.")),
-            choice('Seek revenge.', 'hard', 'Revenge', () => funnel(3,'endingChoice', "Revenge calls itself balance.")),
-            choice('Seek slaughter.', 'brutal', 'Slaughter', () => funnel(4,'endingChoice', "Slaughter is the most honest word left."))
+          { speaker:'', portrait:'none', text:'What do you choose?', choices:[
+            choice('Seek justice.', 'mild', 'Justice', () => autoAdvance(() => funnel(2,'endingChoice', "Justice arrives stained."))),
+            choice('Seek revenge.', 'hard', 'Revenge', () => autoAdvance(() => funnel(3,'endingChoice', "Revenge calls itself balance."))),
+            choice('Seek slaughter.', 'brutal', 'Slaughter', () => autoAdvance(() => funnel(4,'endingChoice', "Slaughter is the most honest word left.")))
           ]}
         ]
       },
 
       c5: {
         steps: [
-          { speaker:'', portrait:'none', text:'Choose.', choices:[
-            choice('End it.', 'mild', '', () => openScene('endingChoice')),
-            choice('End it.', 'hard', '', () => openScene('endingChoice')),
-            choice('End it.', 'brutal', '', () => openScene('endingChoice'))
+          { speaker:'', portrait:'none', text:'How will you end it?', choices:[
+            choice('End it.', 'mild', '', () => autoAdvance(() => openScene('endingChoice'))),
+            choice('End it.', 'hard', '', () => autoAdvance(() => openScene('endingChoice'))),
+            choice('End it.', 'brutal', '', () => autoAdvance(() => openScene('endingChoice')))
           ]}
         ]
       },
@@ -1352,11 +1426,11 @@
           {
             speaker:'',
             portrait:'none',
-            text:'Choose.',
+            text:'How will you end it?',
             choices:[
-              { text:'End it.', tone:'mild', effect:() => openScene('reveal') },
-              { text:'End it.', tone:'hard', effect:() => openScene('reveal') },
-              { text:'End it.', tone:'brutal', effect:() => openScene('reveal') }
+              { text:'End it.', tone:'mild', effect:() => autoAdvance(() => openScene('reveal')) },
+              { text:'End it.', tone:'hard', effect:() => autoAdvance(() => openScene('reveal')) },
+              { text:'End it.', tone:'brutal', effect:() => autoAdvance(() => openScene('reveal')) }
             ]
           }
         ]
@@ -1396,7 +1470,7 @@ revenge drives everyone toward tragedy.`
           {
             speaker:'',
             portrait:'none',
-            text:'Refresh the page to begin again.',
+            text:'Will you end it?',
             choices:[
               { text:'End.', tone:'brutal', effect:() => endGame() }
             ]
@@ -1436,6 +1510,7 @@ revenge drives everyone toward tragedy.`
       game.classList.toggle('phase2', level.phase === 2);
       renderScenery(level.scenery);
       renderFlowers(level.flowerPatches);
+      renderGrass(level.grassPatches);
       renderMarkers(level.markers);
       state.player.x = 120;
       state.player.y = 0;
@@ -1467,6 +1542,16 @@ revenge drives everyone toward tragedy.`
       });
     }
 
+    function renderGrass(list){
+      grassLayer.innerHTML = '';
+      list.forEach(x => {
+        const el = document.createElement('div');
+        el.className = 'grassPatch';
+        el.style.left = x + 'px';
+        grassLayer.appendChild(el);
+      });
+    }
+
     function renderMarkers(markers){
       interactables.innerHTML = '';
       markers.forEach(marker => {
@@ -1484,15 +1569,6 @@ revenge drives everyone toward tragedy.`
     function openScene(name){
       state.currentScene = scenes[name];
       state.sceneName = name;
-      state.step = 0;
-      state.lockMovement = true;
-      overlay.classList.add('visible');
-      showStep();
-    }
-
-    function openCustomScene(scene){
-      state.currentScene = scene;
-      state.sceneName = null;
       state.step = 0;
       state.lockMovement = true;
       overlay.classList.add('visible');
@@ -1580,18 +1656,7 @@ revenge drives everyone toward tragedy.`
     function funnel(amount, nextScene, summary){
       state.violence += amount;
       updateCharacterVisuals();
-
-      openCustomScene({
-        steps:[
-          { speaker:'', portrait:'none', text:summary },
-          { speaker:'', portrait:'none', text:'Go on.', choices:[
-            { text:'Continue.', tone:'hard', effect:() => {
-              closeScene();
-              openScene(nextScene);
-            }}
-          ]}
-        ]
-      });
+      openAutoMessage(summary, () => openScene(nextScene));
     }
 
     function brutalShift(amount, nextScene, laviniaStage, titusStage, summary){
@@ -1605,19 +1670,27 @@ revenge drives everyone toward tragedy.`
         player.classList.remove('frown1','frown2','frown3');
         player.classList.add(titusStage);
       }
-      updateCharacterVisuals();
 
-      openCustomScene({
-        steps:[
-          { speaker:'', portrait:'none', text:summary },
-          { speaker:'', portrait:'none', text:'Go on.', choices:[
-            { text:'Continue.', tone:'hard', effect:() => {
-              closeScene();
-              openScene(nextScene);
-            }}
-          ]}
-        ]
-      });
+      updateCharacterVisuals();
+      openAutoMessage(summary, () => openScene(nextScene));
+    }
+
+    function openAutoMessage(text, nextFn){
+      overlay.classList.add('visible');
+      state.lockMovement = true;
+      speakerEl.textContent = '';
+      textEl.textContent = text;
+      choicesEl.innerHTML = '';
+      updatePortraits('none');
+
+      setTimeout(() => {
+        if(nextFn) nextFn();
+      }, 900);
+    }
+
+    function autoAdvance(fn){
+      choicesEl.innerHTML = '';
+      fn();
     }
 
     function updateCharacterVisuals(){
